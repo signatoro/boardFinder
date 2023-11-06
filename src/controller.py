@@ -10,5 +10,8 @@ class Controller(App):
         self.GUI = Builder.load_file("src/kv/main.kv")
         return self.GUI
     
+    def l_print(self, words: str):
+        print (words)
+    
 
     
