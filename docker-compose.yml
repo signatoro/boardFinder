@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 version: '3'
 
 services:
@@ -7,3 +8,15 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:80"  # Map container port 80 to host port 8000
+=======
+version: '3.4'
+
+services:
+  boardfinder:
+    image: boardfinder
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8000:8000
+>>>>>>> 7d7afa1b2511a00dcacc64a4fbadbcbf98219169
