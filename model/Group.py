@@ -1,9 +1,11 @@
 
+from pydantic import BaseModel
+
 from model.User import User
 from model.JoinGroupRequest import JoinGroupRequest
 
 
-class Group():
+class Group(BaseModel):
 
 
     title: str
@@ -21,5 +23,6 @@ class Group():
     # TODO: Decide what tags are.
     tag_list: list[str]
 
-    def __init__(self) -> None:
-        pass
+    def __init__(self, **data) -> None:
+        super().__init__(**data)
+        

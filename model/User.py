@@ -1,14 +1,15 @@
+from pydantic import BaseModel
 
-from model.Group import Group
 
-class User():
+class User(BaseModel):
 
     username: str = None
     email: str 
     password: str
 
-    owned_groups_list: list[Group]
-    joined_groups_list: list[Group]
+    __owned_groups_list: list
+    __joined_groups_list: list
 
-    def __init__(self):
+    def __init__(self, **data):
+        super().__init__(**data)
         pass
