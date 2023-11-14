@@ -1,9 +1,4 @@
 
-<<<<<<< HEAD
-.vscode/
-
-
-=======
 # You added these
 .vscode/
 
@@ -15,7 +10,6 @@
 
 
 
->>>>>>> 7d7afa1b2511a00dcacc64a4fbadbcbf98219169
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

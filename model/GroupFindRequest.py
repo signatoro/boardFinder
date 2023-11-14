@@ -1,18 +1,26 @@
 
-from enum import Enum
 from pydantic import BaseModel
 
+from util.BoardEnum import BoardGameGenre
 from model.User import User
-
-class BoardGameTypes(Enum):
-    STRATEGY= "strategy"
-    # TODO: Fill in the rest
 
 
 class FindGroupRequest():
 
+    __id: int
+
     user: User
-    game_type_pref: list[BoardGameTypes]
+    game_type_pref: list[BoardGameGenre]
+
+    number_of_player: int
+
+    # TODO: This is cursed 
+    days_free: list[list[tuple[int,int]]]
+
+    session_time: tuple[int,int]
+
+
+
     # TODO: Figure out if I need custom objects for times available
 
     def __init__(self, **data):

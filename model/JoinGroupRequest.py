@@ -4,6 +4,8 @@ from model.User import User
 
 class JoinGroupRequest(BaseModel):
 
+    __id: int
+
     user: User
     message: str
     time_sent: str
