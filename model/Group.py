@@ -30,7 +30,7 @@ class Group(BaseModel):
     day: Days
 
     # TODO: need to figure out what time of data this should be
-    time: tuple[int, int]
+    time: tuple[float, float]
 
     location: str
 

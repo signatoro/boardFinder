@@ -1,5 +1,5 @@
 # PYTHON VERSION
- This application uses python 3.10.8.
+ This application uses python 3.10.9.
  Also in order to run this code you need to install the dependencies 
 
 # boardFinder

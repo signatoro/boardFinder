@@ -5,7 +5,7 @@ from util.BoardEnum import BoardGameGenre
 from model.User import User
 
 
-class FindGroupRequest():
+class FindGroupRequest(BaseModel):
 
     __id: int
 
@@ -17,7 +17,7 @@ class FindGroupRequest():
     # TODO: This is cursed 
     days_free: list[list[tuple[int,int]]]
 
-    session_time: tuple[int,int]
+    session_time: tuple[float,float]
 
 
 
