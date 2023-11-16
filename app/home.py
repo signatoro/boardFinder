@@ -22,7 +22,7 @@ class HomeScreen(Screen):
         self.anchorLayout = AnchorLayout(
             anchor_x='center', anchor_y='top', size_hint=(1, .2))
         self.profile_button = Button(text='Profile',
-                               on_press=lambda func: slide_transition_to_screen(self, "profile", "left"))
+                                     on_press=lambda func: slide_transition_to_screen(self, "create_account", "left"))
         self.anchorLayout.add_widget(self.profile_button)
         self.window.add_widget(self.anchorLayout)
 

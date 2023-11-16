@@ -4,7 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
 
 from home import HomeScreen
-from profile import ProfileScreen
+from createAccount import CreateAccountScreen
 
 fixed_size = (Window.size[1] * 0.66 * 1, Window.size[1] * 1)
 
@@ -28,7 +28,7 @@ class MyApp(App):
         # Set up screen manager and all screens
         screen_manager = ScreenManager()
         screen_manager.add_widget(HomeScreen(name="home"))
-        screen_manager.add_widget(ProfileScreen(name="profile"))
+        screen_manager.add_widget(CreateAccountScreen(name="create_account"))
         return screen_manager
 
     def reSize(*args):
