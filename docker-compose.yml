@@ -1,10 +1,28 @@
-version: '3.4'
+version: '3.8'
 
 services:
-  boardfinder:
-    image: boardfinder
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: boardFinderDb
+    networks:
+      - boardFinder-net
+
+  fastapi:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: Dockerfile
+    container_name: fastapi
     ports:
-      - 8000:8000
+      - "8000:8000"
+    depends_on:
+      - mongodb
+    networks:
+      - boardFinder-net
+
+networks:
+  boardFinder-net:
+    driver: bridge

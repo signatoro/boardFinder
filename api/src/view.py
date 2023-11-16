@@ -3,7 +3,7 @@ from fastapi import APIRouter
 
 
 from model.User import User
-
+from api.src.controller import Controller
 
 class APIEndpoints():
 
@@ -14,7 +14,9 @@ class APIEndpoints():
 
 
 
-    def __init__(self) -> None:
+    def __init__(self, controller: Controller) -> None:
+        self.controller = controller
+
         self.router.add_api_route("/", self.get_website, methods=["GET"])
         self.router.add_api_route("/user", self.get_users, methods=["GET"])
         self.router.add_api_route("/user", self.add_user, methods=["POST"])
@@ -27,10 +29,8 @@ class APIEndpoints():
         return {"Message": "Hello World"}
     
 
-    def add_user(self, user:User):
-        self.user_list.append(user)
-
-        return {"Message": "User Added successfully"}
+    def add_user(self, user: User, password: str):
+        return self.controller.create_user(user, password)
 
     def get_users(self):
 
