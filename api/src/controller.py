@@ -32,12 +32,17 @@ class Controller():
         self.local_events_collection = db["localEvents"]
         self.boardgames_collection = db["boardgames"]
 
+    async def get_users(self) -> dict:
+        users = self.users_collection.find().to_list(length=None)
+
+        return {'user': users}
+
 
     def create_user(self, user: User, password: str):
         try:
             db_user = self.authenticator.create_db_user(user, password)
 
-            self.users_collection.insert_one(db_user.dict(by_alias=True))
+            self.users_collection.insert_one(db_user.model_dump(by_alias=True))
 
             return {"Message": "Successfully create user"}
         except Exception as ex:

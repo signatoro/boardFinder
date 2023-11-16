@@ -56,7 +56,11 @@ class Authenticator(object):
         if not cls._initialized:
             raise Exception("Authenticator has not been Initialized")
         
-        user_db = UserDb(**user, hashed_password=cls.get_password_hashed(plain_pass))
+        user_db = UserDb(username=user.username,
+                         email=user.email,
+                         phone_number=user.phone_number,
+                         disable=user.disable,
+                         hashed_password=cls.get_password_hashed(plain_pass))
         return user_db
         
 

@@ -3,14 +3,12 @@ import uvicorn
 from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
 
-import sys
-sys.path.append('/app')
 
-from src.view import APIEndpoints
-from src.controller import Controller
+from api.src.view import APIEndpoints
+from api.src.controller import Controller
 
 
-MONGO_URI = "mongodb://localhost:27017"
+MONGO_URI = "mongodb://mongodb:27017"
 MONGO_DB_NAME = "boardFinderDb"
 
 
@@ -23,7 +21,14 @@ app.include_router(api_endpoints.router)
 
 def start_program():
 
-    uvicorn.run("main:app", host="10.110.177.171", port=8000, reload="True")
+    # TODO: Ok so you need to start with setting up the getting the data base async using the chatgpt stuff
+    # Then you need to ping it and make sure that it is connected
+    # Then Start making the user work
+
+
+    print(f'\n\n\nPinging \n\n\n')
+
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload="True")
 
     return 0
 

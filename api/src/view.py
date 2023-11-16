@@ -32,9 +32,14 @@ class APIEndpoints():
     def add_user(self, user: User, password: str):
         return self.controller.create_user(user, password)
 
-    def get_users(self):
+    async def get_users(self):
+        mes = await self.controller.get_users()
 
-        return {"Message": self.user_list}
+        print(mes)
+
+        return {"Message": "Hellow"}
+    
+    
         
 
 
