@@ -1,7 +1,8 @@
 from enum import Enum
 from pydantic import BaseModel
 
-from util.EventEnums import Months, Location_Type
+from util.DateTimes import Months
+from util.EventEnums import Location_Type
 
 
 class LocalEvent(BaseModel):
