@@ -1,0 +1,20 @@
+<CreateAGroupScreen>
+    name: "create_a_group_screen"
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDFloatingActionButton:
+            text: "Home"
+            md_bg_color: "#5D3FD3"
+            on_release:
+                app.change_screen("friends_list_screen", direction='left', mode='push')
+
+        MDLabel:
+            text: "Create a Group"
+            align: "center"
+
+
+
+
+

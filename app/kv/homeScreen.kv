@@ -1,0 +1,58 @@
+<HomeScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        cols: 1
+
+        # Anchor Layout widget at top of window
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'top'
+            size_hint: (1, .2)
+
+            Button:
+                text:'Profile'
+                on_press: app.change_screen("create_account")
+
+        # BoxLayout widget for central buttons
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, 0.6)
+
+            Button:
+                text: 'Find a Group'
+            Button:
+                text: 'Learn a Game'
+            Button:
+                text: 'Create a Group'
+                on_press: app.change_screen("create_a_group_screen")
+
+        # TabbedPanel widget for local events and my groups
+        TabbedPanel:
+            size_hint: (1, 0.8)
+            do_default_tab: False
+
+            TabbedPanelItem:
+                text: 'Local Events'
+
+                Carousel:
+                    Button:
+                        text: 'Local Event 1'
+                    Button:
+                        text: 'Local Event 2'
+                    Button:
+                        text: 'Local Event 3'
+                    Button:
+                        text: 'Local Event 4'
+            TabbedPanelItem:
+                text: 'My Groups'
+
+                Carousel:
+                    Button:
+                        text: 'Group 1'
+                    Button:
+                        text: 'Group 2'
+                    Button:
+                        text: 'Group 3'
+                    Button:
+                        text: 'Group 4'
+
