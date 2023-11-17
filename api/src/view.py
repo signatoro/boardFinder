@@ -1,10 +1,12 @@
 
 import asyncio
 import logging
-from fastapi import APIRouter
+from fastapi import Depends, APIRouter
+from fastapi.security import OAuth2PasswordRequestForm
 
 
-from model.User import User
+from model.User import User, Token
+from api.src.user_authenticator import Authenticator
 from api.src.controller import Controller
 
 class APIEndpoints():
@@ -19,24 +21,30 @@ class APIEndpoints():
         self.controller = controller
 
         self.router.add_api_route("/", self.get_website, methods=["GET"])
+        self.router.add_api_route("/login", self.login_user, methods=["POST"], response_model=Token)
         self.router.add_api_route("/user", self.get_users, methods=["GET"])
         self.router.add_api_route("/user", self.add_user, methods=["POST"])
+        self.router.add_api_route("/user/me", self.read_users_me, methods=["GET"], response_model=User)
 
 
         self.user_list: list[User] = []
 
 
     async def get_website(self):
-        logging.info("Get Request")
+        # logging.info("Get Request")
         try:
-            return await self.controller.check_db_connection()
+            response = await self.controller.check_db_connection()
+            # logging.debug(response)
+            return {"Message": response}
+            return
         except Exception as ex:
-            print (f"\n\n Error: {ex}")
+            logging.debug(f"\n\n Error: {ex}")
             return {"Error": ex}
+        
 
     async def add_user(self, user: User, password: str):
-        return self.controller.create_user(user, password)
-
+        return await self.controller.create_user(user, password)
+        pass
 
     async def get_users(self):
         mes = asyncio.run(self.controller.get_users())
@@ -44,4 +52,12 @@ class APIEndpoints():
         print(mes)
 
         return {"Message": "Hello"}
+    
+    async def login_user(self, form_data: OAuth2PasswordRequestForm = Depends()):
+        return await self.controller.login_for_token(form_data)
 
+    async def read_users_me(self, current_user: User = Depends(lambda: Controller.get_current_active_user)):
+        # TODO: oK so you got most of it working and this will probably work once u get it working 
+        # You need to make it so the fast api docs page requires authentication for calls like this
+        # Look at the last chat gpt thing and maybe do some more research
+        return current_user
