@@ -2,6 +2,7 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen, NoTransition, CardTransition
 from kivy.core.window import Window
 from kivymd.app import MDApp
+from app.createAccount import CreateAccountScreen
 import kivy.utils
 
 Window.size = [300, 600]
