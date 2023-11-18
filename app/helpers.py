@@ -12,12 +12,12 @@ def transition_to_screen(self, screen_name):
 
 
 # Static method that transitions between screens with a slide transition given a direction
-def slide_transition_to_screen(self, screen_name, transition_direction):
-    self.manager.transition = SlideTransition()
+def slide_transition_to_screen(main, screen_name, transition_direction):
+    main.manager.transition = SlideTransition()
     if transition_direction != "right" and transition_direction != "left":
         transition_direction = "left"
-    self.manager.transition.direction = transition_direction
-    self.manager.current = screen_name
+    main.manager.transition.direction = transition_direction
+    main.manager.current = screen_name
 
 
 # Transition types:

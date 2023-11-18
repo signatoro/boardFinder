@@ -1,0 +1,28 @@
+#:import utils kivy.utils
+#:include kv/homeScreen.kv
+#:include kv/createAGroupScreen.kv
+
+MDScreen:
+    BoxLayout:
+        orientation: "vertical"
+        cols: 1
+        size_hint: (None, None)  # Disable automatic size_hint
+        width: app.fixed_size[0]  # Set an initial width
+        height: app.fixed_size[1]  # Set an initial height
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+        FloatLayout:
+            # Set up screen manager and all screens
+            ScreenManager:
+                size_hint: 1, 1
+                pos_hint: {"top": 1, "left": 1}
+                id: screen_manager
+                HomeScreen:
+                    name: "home_screen"
+                    id: home_screen
+                CreateAGroupScreen:
+                    name: "create_a_group_screen"
+                    id: create_a_group_screen
+                CreateAccountScreen:
+                    name: "create_account_screen"
+                    id: create_account_screen
