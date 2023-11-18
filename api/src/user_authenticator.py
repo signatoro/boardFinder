@@ -107,31 +107,31 @@ class Authenticator(object):
 
         return encoded_jw_token
 
-    async def get_current_user(cls, token: str = Depends(lambda: Authenticator.oauth2_scheme)) -> UserDb:
-        credential_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                                         detail="Could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
-        username: str = ''
-        try: 
-            payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-            username: str = payload.get("sub")
-            if username is None:
-                raise credential_exception
+    # async def get_current_user(cls, token: str = Depends(lambda: Authenticator.oauth2_scheme)) -> UserDb:
+    #     credential_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+    #                                      detail="Could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
+    #     username: str = ''
+    #     try: 
+    #         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    #         username: str = payload.get("sub")
+    #         if username is None:
+    #             raise credential_exception
             
-        except JWTError as ex:
-            logging.error(f"There was an error while trying to get jwt token payload. {ex}")
+    #     except JWTError as ex:
+    #         logging.error(f"There was an error while trying to get jwt token payload. {ex}")
 
-        user = cls.get_user(username=username)
+    #     user = cls.get_user(username=username)
 
-        if user is None:
-            raise credential_exception
+    #     if user is None:
+    #         raise credential_exception
         
-        return user
+    #     return user
     
-    async def get_current_active_user(cls, current_user: UserDb= Depends(get_current_user)) -> UserDb:
-        if current_user.disable:
-            raise HTTPException(status_code=400, detail="User is Inactive")
+    # async def get_current_active_user(cls, current_user: UserDb= Depends(get_current_user)) -> UserDb:
+    #     if current_user.disable:
+    #         raise HTTPException(status_code=400, detail="User is Inactive")
         
-        return current_user
+    #     return current_user
 
         
 

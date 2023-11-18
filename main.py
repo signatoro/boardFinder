@@ -4,6 +4,7 @@ import logging
 import uvicorn
 from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
+from fastapi.middleware.cors import CORSMiddleware
 
 
 from api.src.view import APIEndpoints
@@ -22,6 +23,7 @@ def start_program():
     return 0
 
 def run_program():
+
     console_handler = logging.StreamHandler()
     file_handler = logging.FileHandler(filename="logs/log.log")
 
@@ -36,6 +38,18 @@ def run_program():
     # Setting Up Logging
     logging.debug("Creating FastApi App")
     app = FastAPI()
+
+    # Allow all origins (replace "*" with your frontend URL in production)
+    origins = ["*"]
+
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
     controller = Controller()
     api_endpoints = APIEndpoints(controller)
     app.include_router(api_endpoints.router)
