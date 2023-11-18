@@ -11,7 +11,7 @@
 
             Button:
                 text:'Profile'
-                on_press: app.change_screen("create_account")
+                on_release: app.change_screen("create_account")
 
         # BoxLayout widget for central buttons
         BoxLayout:
@@ -24,7 +24,7 @@
                 text: 'Learn a Game'
             Button:
                 text: 'Create a Group'
-                on_press: app.change_screen("create_a_group_screen")
+                on_release: app.change_screen("create_a_group_screen")
 
         # TabbedPanel widget for local events and my groups
         TabbedPanel:
