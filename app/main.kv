@@ -1,4 +1,6 @@
 #:import utils kivy.utils
+#:import Window kivy.core.window.Window
+
 #:include kv/homeScreen.kv
 #:include kv/createAccountScreen.kv
 #:include kv/createAGroupScreen.kv
@@ -10,8 +12,8 @@ MDScreen:
         orientation: "vertical"
         cols: 1
         size_hint: (None, None)  # Disable automatic size_hint
-        width: app.fixed_size[0]  # Set an initial width
-        height: app.fixed_size[1]  # Set an initial height
+        width: Window.width  # Set an initial width
+        height: Window.height  # Set an initial height
         pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
         FloatLayout:
