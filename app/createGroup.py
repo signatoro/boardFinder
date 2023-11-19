@@ -1,9 +1,12 @@
 from kivy.app import App
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen, SlideTransition
+from kivymd.uix.menu import MDDropdownMenu
+from kivymd.uix.pickers import MDTimePicker
 
 games_list = 'sorry,monopoly,risk,catan,mancala,gameoflife,chess,gloomhaven,scrabble,jenga,codenames'.split(
     ',')
+days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
 
 class CreateGroupScreen(Screen):
@@ -16,17 +19,22 @@ class CreateGroupScreen(Screen):
         self.screen_name = "create_group_pref1"
         self.child1 = CreateGroupScreenPref1(self)
         self.child2 = CreateGroupScreenPref2(self)
+        self.child3 = CreateGroupScreenPref3(self)
 
     def on_parent(self, widget, parent):
         if parent:
             # The parent is set, meaning the widget tree is constructed
             self.ids.create_group_screen_manager.add_widget(self.child1)
             self.ids.create_group_screen_manager.add_widget(self.child2)
-    def load_next_pref_page(self, pref_page):
+            self.ids.create_group_screen_manager.add_widget(self.child3)
+    def load_next_pref_page(self, pref_page, direction="left"):
         # Get the screen manager from the kv file
         screen_manager = self.ids.create_group_screen_manager
         # If going left, change the transition. Else make left the default
         screen_name = ""
+        if pref_page == 0:
+            self.currPrefPage = 1
+            screen_name = "create_group_pref1"
         if pref_page == 1:
             self.currPrefPage = 2
             screen_name = "create_group_pref2"
@@ -43,9 +51,10 @@ class CreateGroupScreen(Screen):
             self.currPrefPage = 6
             screen_name = "create_group_pref6"
 
-        screen_manager.transition = SlideTransition(direction="left")
-
+        screen_manager.transition = SlideTransition(direction=direction)
         screen_manager.current = screen_name
+        self.ids.progress_bar.value = self.display_progress_bar_value()
+        self.ids.progress_bar_value_label.text = self.display_progress_bar_label()
 
     def display_progress_bar_value(self):
         if self.currPrefPage == 1:
@@ -59,7 +68,21 @@ class CreateGroupScreen(Screen):
         elif self.currPrefPage == 5:
             return 5 / 6
         elif self.currPrefPage == 6:
-            return 1
+            return 6 / 6
+
+    def display_progress_bar_label(self):
+        if self.currPrefPage == 1:
+            return "1 / 6"
+        elif self.currPrefPage == 2:
+            return "2 / 6"
+        elif self.currPrefPage == 3:
+            return "3 / 6"
+        elif self.currPrefPage == 4:
+            return "4 / 6"
+        elif self.currPrefPage == 5:
+            return "5 / 6"
+        elif self.currPrefPage == 6:
+            return "6 / 6"
 
 
 class CreateGroupScreenPref1(Screen):
@@ -98,7 +121,6 @@ class CreateGroupScreenPref2(Screen):
     def open_image_popup(self):
         self.imagePopup.open()
 
-
 class PopupImageSelection(Popup):
     def __init__(self, parent, **kwargs):
         super(PopupImageSelection, self).__init__(**kwargs)
@@ -107,6 +129,57 @@ class PopupImageSelection(Popup):
     def select_image(self, image_source):
         self.group_screen.ids.group_image.source = image_source
         self.dismiss()
+
+class CreateGroupScreenPref3(Screen):
+    menu_items = []
+    def __init__(self, parent, **kwargs):
+        super(CreateGroupScreenPref3, self).__init__(**kwargs)
+        self.class_parent = parent
+        self.setup_dow_menu()
+        self.menu = MDDropdownMenu(
+            caller=self.ids.dow_button,
+            items=self.menu_items,
+            width_mult=4,
+        )
+
+    def setup_dow_menu(self):
+        for day in days:
+            item =  {
+                    "text": f"{day}",
+                    "viewclass": "MDDropDownItem",
+                    "on_release": lambda x=f"{day}": self.menu_callback(x),
+            }
+            self.menu_items.append(item)
+
+    def menu_callback(self, text_item):
+        self.ids.dow_button.text = text_item
+        self.menu.dismiss()
+
+    def show_days_dropdown(self):
+
+        self.ids.dow_drop_down_selection.set_item(days)
+        self.ids.dow_drop_down_selection.bind(on_release=self.on_dropdown_select)
+
+    def on_dropdown_select(self, instance_drop):
+        selected_day = instance_drop.get_item()
+        if selected_day:
+            self.ids.dow_drop_down_selection.text = selected_day
+
+    def get_start_time(self, instance, time):
+        self.ids.start_time_button.text = str(time)
+
+    def get_end_time(self, instance, time):
+        self.ids.end_time_button.text = str(time)
+    def open_time_button(self, btn_type):
+        time_dialog = MDTimePicker()
+        if btn_type == "start":
+            time_dialog.bind(time=self.get_start_time)
+        elif btn_type == "end":
+            time_dialog.bind(time=self.get_end_time)
+        time_dialog.open()
+
+
+
 
 
 

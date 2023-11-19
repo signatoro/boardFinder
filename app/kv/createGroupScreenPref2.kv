@@ -16,9 +16,9 @@
 
         MDLabel:
             text: 'Upload Group Image'
-            pos_hint: {"center_x":.5, "center_y": 0.7}
+            pos_hint: {"center_x": 0.5, "center_y": 0.6}
             underline: "true"
-            font_style: "H5"
+            font_style: "H6"
             size_hint_y: None
             height: self.texture_size[1]
             spacing: 5
@@ -34,11 +34,54 @@
             text: "Choose Image"
             on_release: root.open_image_popup()
 
+        MDLabel:
+            text: 'Group Name'
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            underline: "true"
+            font_style: "H6"
+            size_hint_y: None
+            height: self.texture_size[1]
+            spacing: 5
 
-        MDFillRoundFlatIconButton:
-            text: "Next Pref"
-            pos_hint: {"right": 1, "y": 0.5}
-            icon: "arrow-right"
+        MDTextField:
+            hint_text: "Susie's Gamers"
+            mode: "fill"
+            multiline: False
+            required: True
+            helper_text: "Enter Group Name"
+
+        MDLabel:
+            text: 'General Description'
+            pos_hint: {"center_x": 0.5, "center_y": 0.4}
+            underline: "true"
+            font_style: "H6"
+            size_hint_y: None
+            height: self.texture_size[1]
+            spacing: 5
+
+        MDTextField:
+            hint_text: "Enter general description about boardgame and your group! Draw people in!"
+            mode: "fill"
+            multiline: True
+            required: True
+            max_input_size: 500
+            helper_text: "Enter General Description"
+
+        MDBoxLayout:
+            orientation: "horizontal"
+
+            MDFillRoundFlatIconButton:
+                text: "Prev Pref"
+                pos_hint: {"left": 1, "y": 0.5}
+                icon: "arrow-left"
+                on_release: root.class_parent.load_next_pref_page(0)
+
+            MDFillRoundFlatIconButton:
+                text: "Next Pref"
+                pos_hint: {"right": 1, "y": 0.5}
+                icon: "arrow-right"
+                on_release: root.class_parent.load_next_pref_page(2)
+
 
 <PopupImageSelection>:
     auto_dismiss: False

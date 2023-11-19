@@ -35,11 +35,14 @@
             MDList:
                 id: game_results
 
-        MDFillRoundFlatIconButton:
-            text: "Next Pref"
-            pos_hint: {"right": 1, "y": 0.5}
-            icon: "arrow-right"
-            on_release: root.class_parent.load_next_pref_page(1)
+        MDBoxLayout:
+            orientation: "horizontal"
+
+            MDFillRoundFlatIconButton:
+                text: "Next Pref"
+                pos_hint: {"right": 1, "y": 0.5}
+                icon: "arrow-right"
+                on_release: root.class_parent.load_next_pref_page(1)
 
 
 
