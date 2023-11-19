@@ -11,6 +11,8 @@ from src.gameCard import GameCard
 from src.learnGameScreen import LearnGameScreen
 from src.boardGameScreen import BoardGameScreen
 
+import time
+
 
 class HomeScreen(Screen):
     pass
@@ -18,13 +20,15 @@ class HomeScreen(Screen):
 
 # The main application
 class MyApp(MDApp):
-    
+
+    lastResize = 0
     searched_games = []
     returned_games_to_display = []
 
     def build(self):
         Window.minimum_width = 400
         Window.minimum_height = 600
+        self.lastResize = time.time()-20
         self.forceWindowRatio()
         self.title = 'BoardGame Group Finder'
         self.theme_cls.primary_palette = "Teal"
@@ -52,7 +56,10 @@ class MyApp(MDApp):
 
         screen_manager.current = screen_name
 
-    def forceWindowRatio(*args):
+    def forceWindowRatio(self, *args):
+        if self.lastResize + 0.1 > time.time():
+            return
+        self.lastResize = time.time()
         Window.size_hint = ((2/3), 1)
         averageSize = (Window.size[0] + Window.size[1]) / 2
         Window.size = (averageSize * 2 * 2 / 5, averageSize * 2 * 3 / 5)
