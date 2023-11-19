@@ -1,9 +1,10 @@
 from kivy.lang import Builder
-from kivy.uix.screenmanager import Screen, NoTransition, CardTransition
+from kivy.uix.screenmanager import Screen, NoTransition, SlideTransition
 from kivy.core.window import Window
 from kivymd.app import MDApp
-from createAccount import CreateAccountScreen
+from createAccountScreen import CreateAccountScreen
 import kivy.utils
+import createAccountScreen
 
 from src.gameCard import GameCard
 from src.learnGameScreen import LearnGameScreen
@@ -84,7 +85,7 @@ class MyApp(MDApp):
             screen_manager.current = screen_name
             return
 
-        screen_manager.transition = CardTransition(direction=direction, mode=mode)
+        screen_manager.transition = SlideTransition(direction=direction)  # mode=mode)
 
         screen_manager.current = screen_name
 

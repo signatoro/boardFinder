@@ -1,0 +1,23 @@
+
+
+<BoardGameScreen>
+    name: 'board_game_screen'
+
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: 10
+
+        MDTopAppBar:
+            title: "BoardGameTopBar"
+            left_action_items:
+                [["home", lambda x: app.change_screen("home_screen", direction='right'), "Home", "Home"]]
+
+        # Title and Backbutton
+        MDBoxLayout:
+            orientation: "horizontal"
+            spacing: 10
+
+            # Title
+            MDLabel:
+                text: f"{self.title}"
+
