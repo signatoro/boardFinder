@@ -53,6 +53,7 @@ class MyApp(MDApp):
         screen_manager.current = screen_name
 
     def forceWindowRatio(*args):
+        Window.size_hint = ((2/3), 1)
         averageSize = (Window.size[0] + Window.size[1]) / 2
         Window.size = (averageSize * 2 * 2 / 5, averageSize * 2 * 3 / 5)
         return True
