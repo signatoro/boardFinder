@@ -3,6 +3,7 @@ from kivy.uix.screenmanager import Screen, NoTransition, SlideTransition
 from kivy.core.window import Window
 from kivymd.app import MDApp
 from createAccountScreen import CreateAccountScreen
+from createGroup import CreateGroupScreen
 import kivy.utils
 import createAccountScreen
 
@@ -18,35 +19,6 @@ option_list = 'sorry,monopoly,risk,catan,mancala,gameoflife,chess,gloomhaven,scr
 
 class HomeScreen(Screen):
     pass
-
-
-class CreateAGroupScreen(Screen):
-    current_progress_bar_window_value = 0
-
-    def __init__(self, **kwargs):
-        super(CreateAGroupScreen, self).__init__(**kwargs)
-
-    def generate_search_game_options(self, value):
-        # filtered_option_list = list(set(option_list + value[:value.rfind(' ')].split(' ')))
-        # val = value[value.rfind(' ') + 1:]
-        # if not val:
-        #     return
-        # try:
-        #     option_data = []
-        #     for i in range(len(option_list)):
-        #         word = [word for word in option_list if word.startswith(val)][0][len(val):]
-        #         if not word:
-        #             return
-        #         if self.text + word in option_list:
-        #             if self.text + word not in app.option_data:
-        #                 popped_suggest = option_list.pop(option_list.index(str(self.text + word)))
-        #                 app.option_data.append(popped_suggest)
-        #         app.update_data(app.option_data)
-        #
-        #     except IndexError:
-        #
-        #         pass
-        return
 
 
 # Set minimum window size for desktop and mobile

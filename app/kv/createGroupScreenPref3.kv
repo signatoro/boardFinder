@@ -1,0 +1,120 @@
+<CreateGroupScreenPref3>
+    name: "create_group_pref3"
+
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 10
+
+        MDLabel:
+            text: 'Meeting Information'
+            halign: "center"
+            pos_hint: {"center_x":.5, "center_y": 0.8}
+            underline: "true"
+            font_style: "H4"
+            size_hint_y: None
+            height: self.texture_size[1]
+            spacing: 5
+
+        MDBoxLayout:
+            orientation: "vertical"
+
+            MDLabel:
+                id: dow_label
+                text: 'Choose Day Of Week'
+                pos_hint: {"center_x": 0.5, "center_y": 0.6}
+                underline: "true"
+                font_style: "H6"
+                size_hint_y: None
+                height: self.texture_size[1]
+                spacing: 5
+
+            MDFillRoundFlatIconButton:
+                id: dow_button
+                text: "Select Day"
+                icon: "arrow-down"
+                pos_hint: {"left": 1, "center_y": .5}
+                on_release: root.menu.open()
+
+        MDBoxLayout:
+            orientation: "horizontal"
+
+
+            MDLabel:
+                size_hint: .8, None
+                text: "Recurring"
+
+            MDCheckbox:
+                size_hint: .2, None
+
+        MDBoxLayout:
+            orientation: "vertical"
+
+            MDLabel:
+                id: start_time_label
+                text: 'Choose Start Time'
+                pos_hint: {"center_x": 0.5, "center_y": 0.6}
+                underline: "true"
+                font_style: "H6"
+                size_hint_y: None
+                height: self.texture_size[1]
+                spacing: 5
+
+            MDRoundFlatButton:
+                id: start_time_button
+                text: "Select Start Time"
+                required: "true"
+                pos_hint: {"left": 1, "center_y": .5}
+                on_release: root.open_time_button("start")
+
+            MDLabel:
+                id: end_time_label
+                text: 'Choose End Time'
+                pos_hint: {"center_x": 0.5, "center_y": 0.6}
+                underline: "true"
+                font_style: "H6"
+                size_hint_y: None
+                height: self.texture_size[1]
+                spacing: 5
+
+            MDRoundFlatButton:
+                id: end_time_button
+                text: "Select End Time"
+                required: "true"
+                pos_hint: {"left": 1, "center_y": .5}
+                on_release: root.open_time_button("end")
+
+
+        MDLabel:
+            text: 'Location'
+            pos_hint: {"center_x": 0.5, "center_y": 0.4}
+            underline: "true"
+            font_style: "H6"
+            size_hint_y: None
+            height: self.texture_size[1]
+            spacing: 5
+
+        MDTextField:
+            hint_text: "Ex: Boston Public Library"
+            mode: "fill"
+            multiline: True
+            required: True
+            helper_text: "Enter General Description"
+
+        MDBoxLayout:
+            orientation: "horizontal"
+
+            MDFillRoundFlatIconButton:
+                text: "Prev Pref"
+                pos_hint: {"left": 1, "y": 0.5}
+                icon: "arrow-left"
+                on_release: root.class_parent.load_next_pref_page(1, "right")
+
+            MDFillRoundFlatIconButton:
+                text: "Next Pref"
+                pos_hint: {"right": 1, "y": 0.5}
+                icon: "arrow-right"
+                on_release: root.class_parent.load_next_pref_page(3)
+
+
+

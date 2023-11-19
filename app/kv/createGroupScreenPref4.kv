@@ -1,0 +1,94 @@
+<CreateGroupScreenPref4>
+    name: "create_group_pref4"
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDLabel:
+            text: 'Host Information'
+            halign: "center"
+            pos_hint: {"center_x":.5, "center_y": 0.8}
+            underline: "true"
+            font_style: "H4"
+            size_hint_y: None
+            height: self.texture_size[1]
+            spacing: 5
+
+        MDLabel:
+            text: 'First Name'
+            pos_hint: {"center_x": 0.5, "center_y": 0.4}
+            underline: "true"
+            font_style: "H6"
+            size_hint_y: None
+            height: self.texture_size[1]
+            spacing: 5
+
+        MDTextField:
+            hint_text: "Ex: Bob"
+            mode: "fill"
+            multiline: True
+            required: True
+
+        MDLabel:
+            text: 'Last Name'
+            pos_hint: {"center_x": 0.5, "center_y": 0.4}
+            underline: "true"
+            font_style: "H6"
+            size_hint_y: None
+            height: self.texture_size[1]
+            spacing: 5
+
+        MDTextField:
+            hint_text: "Ex: Smith"
+            mode: "fill"
+            multiline: True
+            required: True
+
+        MDLabel:
+            text: 'Email'
+            pos_hint: {"center_x": 0.5, "center_y": 0.4}
+            underline: "true"
+            font_style: "H6"
+            size_hint_y: None
+            height: self.texture_size[1]
+            spacing: 5
+
+        MDTextField:
+            hint_text: "Ex: bobsmith@gmail.com"
+            mode: "fill"
+            multiline: True
+            required: True
+
+        MDLabel:
+            text: 'Phone Number'
+            pos_hint: {"center_x": 0.5, "center_y": 0.4}
+            underline: "true"
+            font_style: "H6"
+            size_hint_y: None
+            height: self.texture_size[1]
+            spacing: 5
+
+        MDTextField:
+            hint_text: "Ex: XXX-XXX-XXXX"
+            mode: "fill"
+            multiline: True
+            required: True
+            max_input_size: 12
+
+        MDBoxLayout:
+            orientation: "horizontal"
+
+            MDFillRoundFlatIconButton:
+                text: "Prev Pref"
+                pos_hint: {"left": 1, "y": 0.5}
+                icon: "arrow-left"
+                on_release: root.class_parent.load_next_pref_page(2, "right")
+
+            MDFillRoundFlatIconButton:
+                text: "Next Pref"
+                pos_hint: {"right": 1, "y": 0.5}
+                icon: "arrow-right"
+                on_release: root.class_parent.load_next_pref_page(4)
+
+
+

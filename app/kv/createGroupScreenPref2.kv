@@ -1,0 +1,116 @@
+<CreateGroupScreenPref2>
+    name: "create_group_pref2"
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDLabel:
+            text: 'Public Information'
+            halign: "center"
+            pos_hint: {"center_x":.5, "center_y": 0.8}
+            underline: "true"
+            font_style: "H4"
+            size_hint_y: None
+            height: self.texture_size[1]
+            spacing: 5
+
+        MDLabel:
+            text: 'Upload Group Image'
+            pos_hint: {"center_x": 0.5, "center_y": 0.6}
+            underline: "true"
+            font_style: "H6"
+            size_hint_y: None
+            height: self.texture_size[1]
+            spacing: 5
+
+        FitImage:
+            size_hint_y: None
+            height: "200dp"
+            orientation: 'vertical'
+            source: ""
+            id: group_image
+
+        MDRectangleFlatButton:
+            text: "Choose Image"
+            on_release: root.open_image_popup()
+
+        MDBoxLayout:
+            orientation: "vertical"
+            spacing: 15
+
+            MDLabel:
+                text: 'Group Name'
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                underline: "true"
+                font_style: "H6"
+                size_hint_y: None
+                height: self.texture_size[1]
+                spacing: 5
+
+            MDTextField:
+                hint_text: "Susie's Gamers"
+                mode: "fill"
+                multiline: False
+                required: True
+                helper_text: "Enter Group Name"
+
+            MDLabel:
+                text: 'General Description'
+                pos_hint: {"center_x": 0.5, "center_y": 0.4}
+                underline: "true"
+                font_style: "H6"
+                size_hint_y: None
+                height: self.texture_size[1]
+                spacing: 5
+
+            MDTextField:
+                hint_text: "Enter general description about boardgame and your group! Draw people in!"
+                mode: "fill"
+                multiline: True
+                required: True
+                max_input_size: 500
+                helper_text: "Enter General Description"
+
+        MDBoxLayout:
+            orientation: "horizontal"
+
+            MDFillRoundFlatIconButton:
+                text: "Prev Pref"
+                pos_hint: {"left": 1, "y": 0.5}
+                icon: "arrow-left"
+                on_release: root.class_parent.load_next_pref_page(0, "right")
+
+            MDFillRoundFlatIconButton:
+                text: "Next Pref"
+                pos_hint: {"right": 1, "y": 0.5}
+                icon: "arrow-right"
+                on_release: root.class_parent.load_next_pref_page(2)
+
+
+<PopupImageSelection>:
+    auto_dismiss: False
+    size_hint: (0.8, 0.8)
+
+    GridLayout:
+        cols: 2
+        padding: 10
+
+        MDRectangleFlatButton:
+            on_release: root.select_image('images/pikachu.jpg')
+            FitImage:
+                source: 'images/pikachu.jpg'
+
+
+        MDRectangleFlatButton:
+            on_release: root.select_image('images/piplup.jpg')
+            FitImage:
+                source: 'images/piplup.jpg'
+
+
+        MDRectangleFlatButton:
+            on_release: root.select_image('images/celebi.jpg')
+            FitImage:
+                source: 'images/celebi.jpg'
+
+
+        # Add more images as needed
