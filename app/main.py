@@ -28,12 +28,12 @@ class MyApp(MDApp):
     def build(self):
         Window.minimum_width = 400
         Window.minimum_height = 600
-        self.lastResize = time.time()-20
+        # self.lastResize = time.time()-2
         self.forceWindowRatio()
         self.title = 'BoardGame Group Finder'
         self.theme_cls.primary_palette = "Teal"
         # self.theme_cls.theme_style = "Dark"
-        Window.bind(on_resize=self.forceWindowRatio)
+        # Window.bind(on_resize=self.forceWindowRatio)
         return Builder.load_file("main.kv")  # GUI
 
     def change_screen(self, screen_name, direction='left', mode="", load_deps=None):
