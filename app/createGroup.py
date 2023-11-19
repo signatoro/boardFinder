@@ -89,18 +89,24 @@ class CreateGroupScreenPref1(Screen):
         #         pass
         return
 
-
-class PopupImageSelection(Popup):
-    def select_image(self, image_source, class_ref):
-        class_ref.child2.ids.group_image.source = image_source
-        self.dismiss()
-
-
 class CreateGroupScreenPref2(Screen):
     def __init__(self, parent, **kwargs):
         super(CreateGroupScreenPref2, self).__init__(**kwargs)
         self.class_parent = parent
+        self.imagePopup = PopupImageSelection(self)
 
     def open_image_popup(self):
-        popup = PopupImageSelection()
-        popup.open()
+        self.imagePopup.open()
+
+
+class PopupImageSelection(Popup):
+    def __init__(self, parent, **kwargs):
+        super(PopupImageSelection, self).__init__(**kwargs)
+        self.group_screen = parent
+
+    def select_image(self, image_source):
+        self.group_screen.ids.group_image.source = image_source
+        self.dismiss()
+
+
+
