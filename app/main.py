@@ -2,8 +2,12 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen, NoTransition, SlideTransition
 from kivy.core.window import Window
 from kivymd.app import MDApp
+from createAccountScreen import CreateAccountScreen
 import kivy.utils
 import createAccountScreen
+
+from src.gameCard import GameCard
+from src.learnGameScreen import LearnGameScreen
 
 Window.size = [300, 600]
 fixed_size = (Window.size[1] * 0.66 * 1, Window.size[1] * 1)

@@ -2,9 +2,10 @@
 #:include kv/homeScreen.kv
 #:include kv/createAccountScreen.kv
 #:include kv/createAGroupScreen.kv
+#:include kv/learnGameScreen.kv
 
 MDScreen:
-    BoxLayout:
+    MDBoxLayout:
         orientation: "vertical"
         cols: 1
         size_hint: (None, None)  # Disable automatic size_hint
@@ -27,3 +28,6 @@ MDScreen:
                 CreateAccountScreen:
                     name: "create_account_screen"
                     id: create_account_screen
+                LearnGameScreen:
+                    name: "learn_game_screen"
+                    id: learn_game_screen
