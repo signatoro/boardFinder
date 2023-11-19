@@ -13,26 +13,30 @@ class CreateGroupScreen(Screen):
     # current_progress_bar_window_value = 0
     currPrefPage = 1
     screen_name = ""
+    initialized = False
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.screen_name = "create_group_pref1"
-        self.child1 = CreateGroupScreenPref1(self)
-        self.child2 = CreateGroupScreenPref2(self)
-        self.child3 = CreateGroupScreenPref3(self)
-        self.child4 = CreateGroupScreenPref4(self)
-        self.child5 = CreateGroupScreenPref5(self)
-        self.child6 = CreateGroupScreenPref6(self)
+        if not self.initialized:
+            self.child1 = CreateGroupScreenPref1(self)
+            self.child2 = CreateGroupScreenPref2(self)
+            self.child3 = CreateGroupScreenPref3(self)
+            self.child4 = CreateGroupScreenPref4(self)
+            self.child5 = CreateGroupScreenPref5(self)
+            self.child6 = CreateGroupScreenPref6(self)
 
     def on_parent(self, widget, parent):
         if parent:
             # The parent is set, meaning the widget tree is constructed
-            self.ids.create_group_screen_manager.add_widget(self.child1)
-            self.ids.create_group_screen_manager.add_widget(self.child2)
-            self.ids.create_group_screen_manager.add_widget(self.child3)
-            self.ids.create_group_screen_manager.add_widget(self.child4)
-            self.ids.create_group_screen_manager.add_widget(self.child5)
-            self.ids.create_group_screen_manager.add_widget(self.child6)
+            if not self.initialized:
+                self.ids.create_group_screen_manager.add_widget(self.child1)
+                self.ids.create_group_screen_manager.add_widget(self.child2)
+                self.ids.create_group_screen_manager.add_widget(self.child3)
+                self.ids.create_group_screen_manager.add_widget(self.child4)
+                self.ids.create_group_screen_manager.add_widget(self.child5)
+                self.ids.create_group_screen_manager.add_widget(self.child6)
+                self.initialized = True
 
     def load_next_pref_page(self, pref_page, direction="left"):
         # Get the screen manager from the kv file

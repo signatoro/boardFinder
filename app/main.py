@@ -18,6 +18,12 @@ class HomeScreen(Screen):
     pass
 
 
+# Set minimum window size for desktop and mobile
+# Window.minimum_width = fixed_size[0]
+# Window.minimum_height = fixed_size[1]
+# Window.size = fixed_size
+
+
 # The main application
 class MyApp(MDApp):
 
@@ -39,6 +45,7 @@ class MyApp(MDApp):
     def change_screen(self, screen_name, direction='left', mode="", load_deps=None):
         # Get the screen manager from the kv file
         screen_manager = self.root.ids['screen_manager']
+        # print(direction, mode)
         # If going left, change the transition. Else make left the default
         if direction == 'left':
             mode = "push"
@@ -51,6 +58,7 @@ class MyApp(MDApp):
 
         if load_deps: 
             screen_manager.get_screen(screen_name).load_depends(load_deps)
+
 
         screen_manager.transition = SlideTransition(direction=direction)  # mode=mode)
 
