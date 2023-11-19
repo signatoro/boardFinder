@@ -13,9 +13,6 @@ from src.boardGameScreen import BoardGameScreen
 
 # Window.size = [300, 600]
 # fixed_size = (Window.size[1] * 0.66 * 1, Window.size[1] * 1)
-option_list = 'sorry,monopoly,risk,catan,mancala,gameoflife,chess,gloomhaven,scrabble,jenga,codenames'.split(
-    ',')
-
 
 class HomeScreen(Screen):
     pass
