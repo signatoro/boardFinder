@@ -32,7 +32,7 @@
                 height: self.texture_size[1] + 5  # Set the height based on text size
                 theme_text_color: "Custom"
                 text_color: app.theme_cls.primary_color
-            
+
             MDFillRoundFlatIconButton:
                 text: "Back"
                 size_hint: (None, None)
@@ -49,6 +49,7 @@
             padding: [50,50,50,50]
 
             VideoPlayer:
+                id: video_player
                 source: f"{root.tutorial_video_link}"  # Replace with the path to your video file
                 allow_stretch: True
 
