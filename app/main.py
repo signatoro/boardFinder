@@ -1,9 +1,9 @@
 from kivy.lang import Builder
-from kivy.uix.screenmanager import Screen, NoTransition, CardTransition
+from kivy.uix.screenmanager import Screen, NoTransition, SlideTransition
 from kivy.core.window import Window
 from kivymd.app import MDApp
-from app.createAccount import CreateAccountScreen
 import kivy.utils
+import createAccountScreen
 
 Window.size = [300, 600]
 fixed_size = (Window.size[1] * 0.66 * 1, Window.size[1] * 1)
@@ -81,7 +81,7 @@ class MyApp(MDApp):
             screen_manager.current = screen_name
             return
 
-        screen_manager.transition = CardTransition(direction=direction, mode=mode)
+        screen_manager.transition = SlideTransition(direction=direction)  # mode=mode)
 
         screen_manager.current = screen_name
 
