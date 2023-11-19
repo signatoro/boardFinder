@@ -11,8 +11,8 @@
     Button:
         id: return_home_button
         text: "Return Home"
-        size_hint: (None, None)
-        size: (100, 50)
+        # size_hint: (None, None)
+        # size: (100, 50)
         pos_hint: {'center_x': 0.15, 'y': 0.9}
         on_release: app.change_screen("home_screen", direction="right")
 
@@ -31,8 +31,8 @@
         id: username_text_field
         text: ""
         font_size: 24
-        size_hint: (None, None)
-        size: (220, 60)
+        # size_hint: (None, None)
+        # size: (220, 60)
         pos_hint: {'center_x': 0.65, 'y': 0.65}
         multiline: False
         on_text_validate: root.submit_username()
@@ -62,8 +62,8 @@
         id: email_text_field
         text: ""
         font_size: 24
-        size_hint: (None, None)
-        size: (220, 60)
+        # size_hint: (None, None)
+        # size: (220, 60)
         pos_hint: {'center_x': 0.65, 'y': 0.5}
         multiline: False
         on_text_validate: root.submit_email()
@@ -94,8 +94,8 @@
         id: password_text_field
         text: ""
         font_size: 24
-        size_hint: (None, None)
-        size: (220, 60)
+        # size_hint: (None, None)
+        # size: (220, 60)
         pos_hint: {'center_x': 0.65, 'y': 0.35}
         multiline: False
         disabled: True
@@ -129,8 +129,8 @@
         id: password_confirm_text_field
         text: ""
         font_size: 24
-        size_hint: (None, None)
-        size: (220, 60)
+        # size_hint: (None, None)
+        # size: (220, 60)
         pos_hint: {'center_x': 0.65, 'y': 0.2}
         multiline: False
         disabled: True
