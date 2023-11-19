@@ -1,0 +1,53 @@
+
+
+<GameCard>:
+
+    radius: 36
+    pos_hint: {"center_x": .5, "center_y": .5}
+    size_hint_y: None
+    height: "100dp"  # Set an explicit height for testing
+    md_bg_color: app.theme_cls.primary_color  # Set a background color
+    
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: 0
+
+        #Top Sections
+        MDBoxLayout:
+            orientation: "horizontal"
+            spacing: 0
+
+
+            # Images
+            MDLabel:
+                
+                text: "Test Text"
+
+
+            # Right Size Text Image
+            MDBoxLayout:
+                orientation: "vertical"
+                spacing: 0
+
+
+                # Game Title
+                MDLabel:
+                    text: f"{root.title}"
+                    pos_hint: {"center_x":.5, "center_y": 0.9}
+                    underline: "true"
+                    font_style: "H5"
+                    size_hint_y: None
+                    height: self.texture_size[1] + 5  # Set the height based on text size
+
+                # Description
+                MDLabel:
+                    text: "CatanFiller"
+                    # font_style: "B1"
+
+        # Tags
+        MDBoxLayout:
+            orientation: "horizontal"
+            MDLabel:
+                text: "HELP MEEEEEEE"
+
+            
