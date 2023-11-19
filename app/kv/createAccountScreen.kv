@@ -1,0 +1,160 @@
+<CreateAccountScreen>
+    name: "create_account_screen"
+
+    MDLabel:
+        id: create_account_label
+        text: "Create an Account"
+        font_size: 26
+        pos_hint: {'center_x': 0.5, 'center_y': 0.85}
+        halign: "center"
+
+    Button:
+        id: return_home_button
+        text: "Return Home"
+        # size_hint: (None, None)
+        # size: (100, 50)
+        pos_hint: {'center_x': 0.15, 'y': 0.9}
+        on_release: app.change_screen("home_screen", direction="right")
+
+# USERNAME WIDGETS
+
+    MDLabel:
+        id: username_prompt_label
+        text: "Username:"
+        color: [.2, .2, .2, 1]
+        font_size: 24
+        pos_hint: {'x': -0.65, 'center_y': 0.7}
+        disabled: False
+        halign: "right"
+
+    MDTextField:
+        id: username_text_field
+        text: ""
+        font_size: 24
+        # size_hint: (None, None)
+        # size: (220, 60)
+        pos_hint: {'center_x': 0.65, 'y': 0.65}
+        multiline: False
+        on_text_validate: root.submit_username()
+        disabled: False
+
+    MDLabel:
+        id: username_message_label
+        text: "Please enter a username"
+        color: [.5, .5, .5, 1]
+        font_size: 18
+        pos_hint: {'x': 0, 'center_y': 0.64}
+        disabled: False
+        halign: "center"
+
+# EMAIL WIDGETS
+
+    MDLabel:
+        id: email_prompt_label
+        text: "Email:"
+        color: [.2, .2, .2, 1]
+        opacity: 0
+        font_size: 24
+        pos_hint: {'x': -0.65, 'center_y': 0.55}
+        halign: "right"
+
+    MDTextField:
+        id: email_text_field
+        text: ""
+        font_size: 24
+        # size_hint: (None, None)
+        # size: (220, 60)
+        pos_hint: {'center_x': 0.65, 'y': 0.5}
+        multiline: False
+        on_text_validate: root.submit_email()
+        disabled: True
+        opacity: 0
+
+    MDLabel:
+        id: email_message_label
+        text: "Please enter your email"
+        color: [.5, .5, .5, 1]
+        font_size: 18
+        pos_hint: {'x': 0, 'center_y': 0.49}
+        opacity: 0
+        halign: "center"
+
+# PASSWORD WIDGETS
+
+    MDLabel:
+        id: password_prompt_label
+        text: "Password:"
+        color: [.2, .2, .2, 1]
+        opacity: 0
+        font_size: 24
+        pos_hint: {'x': -0.65, 'center_y': 0.4}
+        halign: "right"
+
+    MDTextField:
+        id: password_text_field
+        text: ""
+        font_size: 24
+        # size_hint: (None, None)
+        # size: (220, 60)
+        pos_hint: {'center_x': 0.65, 'y': 0.35}
+        multiline: False
+        disabled: True
+        opacity: 0
+        password: True
+        on_text_validate: root.submit_password()
+
+    MDLabel:
+        id: password_message_label
+        text: "Please create a unique password"
+        color: [.5, .5, .5, 1]
+        font_size: 18
+        pos_hint: {'x': 0, 'center_y': 0.34}
+        opacity: 0
+        halign: "center"
+
+
+
+# PASSWORD CONFIRM WIDGETS
+
+    MDLabel:
+        id: password_confirm_prompt_label
+        text: "Confirm\nPassword:"
+        color: [.2, .2, .2, 1]
+        opacity: 0
+        font_size: 24
+        pos_hint: {'x': -0.65, 'center_y': 0.25}
+        halign: "right"
+
+    MDTextField:
+        id: password_confirm_text_field
+        text: ""
+        font_size: 24
+        # size_hint: (None, None)
+        # size: (220, 60)
+        pos_hint: {'center_x': 0.65, 'y': 0.2}
+        multiline: False
+        disabled: True
+        opacity: 0
+        password: True
+        on_text_validate: root.submit_password_confirm()
+
+    MDLabel:
+        id: password_confirm_message_label
+        text: "Please re-type your password"
+        color: [.5, .5, .5, 1]
+        font_size: 18
+        pos_hint: {'x': 0, 'center_y': 0.17}
+        opacity: 0
+        halign: "center"
+
+# CREATE ACCOUNT WIDGETS
+
+    Button:
+        id: create_account_button
+        text: "Create Account!"
+        size_hint: (None, None)
+        size: (150, 50)
+        pos_hint: {'center_x': 0.5, 'y': 0.05}
+        on_release: app.change_screen("home_screen", direction="left")
+        disabled: True
+        opacity: 0
