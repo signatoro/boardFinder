@@ -1,6 +1,9 @@
 #:include kv/createGroupScreenPref1.kv
 #:include kv/createGroupScreenPref2.kv
 #:include kv/createGroupScreenPref3.kv
+#:include kv/createGroupScreenPref4.kv
+#:include kv/createGroupScreenPref5.kv
+#:include kv/createGroupScreenPref6.kv
 
 <CreateGroupScreen>:
     name: "create_group_screen"
@@ -33,17 +36,21 @@
 
         MDBoxLayout:
             orientation: "horizontal"
+            size_hint_y: None
+            height: "48dp"
+
 
             MDProgressBar:
                 id: progress_bar
                 min: 0
                 max: 1
                 value: root.display_progress_bar_value()
-                size_hint: 0.5, 0.1
-                pos_hint: {"center_x": 0.5, "center_y": 0.2}
+                size_hint_x: 0.5
+                size_hint_y: None
+                pos_hint: {"center_x": 0.5}
 
             MDLabel:
                 id: progress_bar_value_label
                 text: root.display_progress_bar_label()
-                pos_hint: {"x": 0.9, "y": 0.1}
+                size_hint_x: 0.5
 

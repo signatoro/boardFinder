@@ -20,6 +20,9 @@ class CreateGroupScreen(Screen):
         self.child1 = CreateGroupScreenPref1(self)
         self.child2 = CreateGroupScreenPref2(self)
         self.child3 = CreateGroupScreenPref3(self)
+        self.child4 = CreateGroupScreenPref4(self)
+        self.child5 = CreateGroupScreenPref5(self)
+        self.child6 = CreateGroupScreenPref6(self)
 
     def on_parent(self, widget, parent):
         if parent:
@@ -27,6 +30,10 @@ class CreateGroupScreen(Screen):
             self.ids.create_group_screen_manager.add_widget(self.child1)
             self.ids.create_group_screen_manager.add_widget(self.child2)
             self.ids.create_group_screen_manager.add_widget(self.child3)
+            self.ids.create_group_screen_manager.add_widget(self.child4)
+            self.ids.create_group_screen_manager.add_widget(self.child5)
+            self.ids.create_group_screen_manager.add_widget(self.child6)
+
     def load_next_pref_page(self, pref_page, direction="left"):
         # Get the screen manager from the kv file
         screen_manager = self.ids.create_group_screen_manager
@@ -112,6 +119,7 @@ class CreateGroupScreenPref1(Screen):
         #         pass
         return
 
+
 class CreateGroupScreenPref2(Screen):
     def __init__(self, parent, **kwargs):
         super(CreateGroupScreenPref2, self).__init__(**kwargs)
@@ -121,17 +129,10 @@ class CreateGroupScreenPref2(Screen):
     def open_image_popup(self):
         self.imagePopup.open()
 
-class PopupImageSelection(Popup):
-    def __init__(self, parent, **kwargs):
-        super(PopupImageSelection, self).__init__(**kwargs)
-        self.group_screen = parent
-
-    def select_image(self, image_source):
-        self.group_screen.ids.group_image.source = image_source
-        self.dismiss()
 
 class CreateGroupScreenPref3(Screen):
     menu_items = []
+
     def __init__(self, parent, **kwargs):
         super(CreateGroupScreenPref3, self).__init__(**kwargs)
         self.class_parent = parent
@@ -170,6 +171,7 @@ class CreateGroupScreenPref3(Screen):
 
     def get_end_time(self, instance, time):
         self.ids.end_time_button.text = str(time)
+
     def open_time_button(self, btn_type):
         time_dialog = MDTimePicker()
         if btn_type == "start":
@@ -179,7 +181,29 @@ class CreateGroupScreenPref3(Screen):
         time_dialog.open()
 
 
+class CreateGroupScreenPref4(Screen):
+    def __init__(self, parent, **kwargs):
+        super(CreateGroupScreenPref4, self).__init__(**kwargs)
+        self.class_parent = parent
 
 
+class CreateGroupScreenPref5(Screen):
+    def __init__(self, parent, **kwargs):
+        super(CreateGroupScreenPref5, self).__init__(**kwargs)
+        self.class_parent = parent
 
 
+class CreateGroupScreenPref6(Screen):
+    def __init__(self, parent, **kwargs):
+        super(CreateGroupScreenPref6, self).__init__(**kwargs)
+        self.class_parent = parent
+
+
+class PopupImageSelection(Popup):
+    def __init__(self, parent, **kwargs):
+        super(PopupImageSelection, self).__init__(**kwargs)
+        self.group_screen = parent
+
+    def select_image(self, image_source):
+        self.group_screen.ids.group_image.source = image_source
+        self.dismiss()
