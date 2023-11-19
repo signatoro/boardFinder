@@ -1,11 +1,11 @@
 
 
-<BoardGameScreen>
+<BoardGameScreen>:
     name: 'board_game_screen'
 
     MDBoxLayout:
         orientation: "vertical"
-        spacing: 10
+        spacing: 5
 
         MDTopAppBar:
             title: "BoardGameTopBar"
@@ -15,9 +15,68 @@
         # Title and Backbutton
         MDBoxLayout:
             orientation: "horizontal"
-            spacing: 10
+            spacing: 50
+            pos_hint:{'top': 2}
+            size_hint_y: None
+            set_height: 100
+            padding: [0,0,50,0]
+            
 
             # Title
             MDLabel:
-                text: f"{self.title}"
+                text: f"{root.title}"
+                # pos_hint: {"center_x":.5, "center_y": 0.9}
+                underline: "true"
+                font_style: "H3"
+                size_hint_y: None
+                height: self.texture_size[1] + 5  # Set the height based on text size
+                theme_text_color: "Custom"
+                text_color: app.theme_cls.primary_color
 
+            MDFillRoundFlatIconButton:
+                text: "Back"
+                size_hint: (None, None)
+                size: (dp(100), dp(40))  # Adjust the size as needed
+                # theme_text_color: "Custom"
+                text_color: [1,1,1,1]  # Set text color to the primary color
+                
+                on_release: app.change_screen('learn_game_screen', direction="right")
+
+        #Video and General Description
+        MDBoxLayout:
+            orientation: "horizontal"
+            spacing: 10
+            padding: [50,50,50,50]
+
+            VideoPlayer:
+                id: video_player
+                source: f"{root.tutorial_video_link}"  # Replace with the path to your video file
+                allow_stretch: True
+
+                state: "play"  # You can set it to 'stop', 'pause', or 'play'
+                options: {"eos": "loop"}  # 'eos': 'loop' will make the video loop
+                # size_hint: (1, 1)  # Adjust the size as needed
+
+        MDLabel:
+            text: f"{root.general_description}"
+            font_style: "H6"
+            padding: [50,50,50,50]
+            theme_text_color: "Custom"
+            text_color: app.theme_cls.primary_color
+            size_hint_y: None
+            height: self.texture_size[1] # Set the height based on text size
+        
+        # Big Description
+        MDLabel:
+            text: f"{root.main_description}"
+            font_style: "H6"
+            padding: [50,50,50,50]
+            theme_text_color: "Custom"
+            text_color: app.theme_cls.primary_color
+            size_hint_y: None
+            height: self.texture_size[1]  # Set the height based on text size
+        
+        #Links and Tags
+        MDBoxLayout:
+            orientation: "horizontal"
+            spacing: 10
