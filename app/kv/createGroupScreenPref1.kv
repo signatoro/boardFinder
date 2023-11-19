@@ -1,26 +1,18 @@
-<CreateAGroupScreen>
-    name: "create_a_group_screen"
+<CreateGroupScreenPref1>
+    name: "create_group_pref1"
 
     MDBoxLayout:
         orientation: "vertical"
-        spacing: 0
-
-        MDTopAppBar:
-            title: "BoardGameTopBar"
-            left_action_items:
-                [["home", lambda x: app.change_screen("home_screen", direction='right'), "Home", "Home"]]
-
-        MDLabel:
-            text: 'Create a Group'
-            pos_hint: {"center_x":.5, "center_y": 0.9}
-            underline: "true"
-            font_style: "H3"
 
         MDLabel:
             text: 'Add your Board Game'
+            halign: "center"
             pos_hint: {"center_x":.5, "center_y": 0.8}
             underline: "true"
             font_style: "H4"
+            size_hint_y: None
+            height: self.texture_size[1]
+            spacing: 5
 
         # search board game text field
         MDTextField:
@@ -35,7 +27,7 @@
             # helper_text: "Search Board Game"
             line_color: [1,1,1,1]
             color_normal: [1,1,1,1]
-            font_size: .35 * self.height
+            font_size: 22
             active_line: False
             multiline: False
 
@@ -45,14 +37,12 @@
 
         MDFillRoundFlatIconButton:
             text: "Next Pref"
-            # icon-right: "arrow-right"
-            pos_hint: {"x": 0.8, "y": 0.5}
+            pos_hint: {"right": 1, "y": 0.5}
+            icon: "arrow-right"
+            on_release: root.class_parent.load_next_pref_page(1)
 
-        MDProgressBar:
-            id: progress_bar
-            min: 0
-            max: 1
-            pos_hint: {"center_x": 0.5, "center_y": 0.2}
+
+
 
 
 

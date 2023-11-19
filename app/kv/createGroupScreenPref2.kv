@@ -1,0 +1,69 @@
+<CreateGroupScreenPref2>
+    name: "create_group_pref2"
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDLabel:
+            text: 'Public Information'
+            halign: "center"
+            pos_hint: {"center_x":.5, "center_y": 0.8}
+            underline: "true"
+            font_style: "H4"
+            size_hint_y: None
+            height: self.texture_size[1]
+            spacing: 5
+
+        MDLabel:
+            text: 'Upload Group Image'
+            pos_hint: {"center_x":.5, "center_y": 0.7}
+            underline: "true"
+            font_style: "H5"
+            size_hint_y: None
+            height: self.texture_size[1]
+            spacing: 5
+
+        FitImage:
+            size_hint_y: None
+            height: "200dp"
+            orientation: 'vertical'
+            source: ""
+            id: group_image
+
+        MDRectangleFlatButton:
+            text: "Choose Image"
+            on_release: root.open_image_popup()
+
+
+        MDFillRoundFlatIconButton:
+            text: "Next Pref"
+            pos_hint: {"right": 1, "y": 0.5}
+            icon: "arrow-right"
+
+<PopupImageSelection>:
+    auto_dismiss: False
+    size_hint: (0.8, 0.8)
+
+    GridLayout:
+        cols: 2
+        padding: 10
+
+        MDRectangleFlatButton:
+            on_release: root.select_image('images/pikachu.jpg', root)
+            FitImage:
+                source: 'images/pikachu.jpg'
+
+
+        MDRectangleFlatButton:
+            on_release: root.select_image('images/piplup.jpg', root)
+            FitImage:
+                source: 'images/piplup.jpg'
+
+
+        MDRectangleFlatButton:
+            on_release: root.select_image('images/celebi.jpg', root)
+            FitImage:
+                source: 'images/celebi.jpg'
+
+
+        # Add more images as needed
