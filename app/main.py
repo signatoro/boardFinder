@@ -8,6 +8,7 @@ import createAccountScreen
 
 from src.gameCard import GameCard
 from src.learnGameScreen import LearnGameScreen
+from src.boardGameScreen import BoardGameScreen
 
 Window.size = [300, 600]
 fixed_size = (Window.size[1] * 0.66 * 1, Window.size[1] * 1)
@@ -71,11 +72,11 @@ class MyApp(MDApp):
         Window.size = fixed_size
         return True
 
-    def change_screen(self, screen_name, direction='left', mode=""):
+    def change_screen(self, screen_name, direction='left', mode="", load_deps=None):
         # Get the screen manager from the kv file
         screen_manager = self.root.ids['screen_manager']
         # print(direction, mode)
-        # If going left, change the transition. Else make lleft the default
+        # If going left, change the transition. Else make left the default
         if direction == 'left':
             mode = "push"
         elif direction == 'right':
@@ -84,6 +85,10 @@ class MyApp(MDApp):
             screen_manager.transition = NoTransition()
             screen_manager.current = screen_name
             return
+
+        if load_deps: 
+            screen_manager.get_screen(screen_name).load_depends(load_deps)
+
 
         screen_manager.transition = SlideTransition(direction=direction)  # mode=mode)
 
