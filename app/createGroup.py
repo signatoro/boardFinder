@@ -4,14 +4,17 @@ from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen, SlideTransition
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDRaisedButton
+from kivymd.uix.chip import MDChip
 from kivymd.uix.label import MDLabel
 from kivymd.uix.list import OneLineListItem
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.pickers import MDTimePicker
 
 games_list = ('sorry,monopoly,risk,catan,mancala,gameoflife,chess,gloomhaven,scrabble,jenga,codenames,carcassonne,'
-              'campaign').split(
-    ',')
+              'campaign').split(',')
+tags_list = ('AllLevels,Casual,Hardcore,LGBTQIA+,Food Included,Pet Friendly,21+,Public Location,Private Location,'
+             'Long-Term,Short-Term,Frequent Meeting,Free,New Players Welcome,Buy Materials,Materials Included,'
+             'Women Only,Easy To Learn,Short-Game Length,Long-Game Length,Cosplay').split(',')
 days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
 
@@ -114,8 +117,6 @@ class CreateGroupScreenPref1(Screen):
 
     def on_item_touch(self, instance, touch):
         if instance.collide_point(*touch.pos):
-            # Handle the click event on the search result item
-            print(f"Clicked on: {instance.text}")
             # Check if the item is not already in the selected items list
             if instance.text not in self.selected_games:
                 # Add the item to the selected items list
@@ -225,9 +226,84 @@ class CreateGroupScreenPref5(Screen):
 
 
 class CreateGroupScreenPref6(Screen):
+    added_tags = {}
+
     def __init__(self, parent, **kwargs):
         super(CreateGroupScreenPref6, self).__init__(**kwargs)
         self.class_parent = parent
+        self.display_database_tags()
+
+    def display_database_tags(self):
+        # Display the filtered results
+        for tag in tags_list:
+            chip = MDChip(
+                text=tag,
+                md_bg_color=(0.74, 0.74, 0.74, 1),
+                on_release=self.on_tag_click
+            )
+            self.ids.common_tags.add_widget(chip)
+
+    def search_tags(self, text):
+        # if there is an empty field, clear widgets
+        unique_tag = False
+        if text == "":
+            self.ids.tag_results.clear_widgets()
+            return
+
+        # Clear previous search results
+        self.ids.tag_results.clear_widgets()
+
+        # Filter data based on the search text
+        search_results = [item for item in tags_list if item.lower().startswith(text.lower())]
+
+        # add user created tag
+        if len(search_results) == 0:
+            search_results.append(text)
+            unique_tag = True
+
+        # Display the filtered results
+        for result in search_results:
+            list_item = OneLineListItem(text=result)
+            if unique_tag:
+                list_item.text_color = (1, 0, 0, 1)
+            list_item.bind(on_release=self.on_list_item_clicked)
+            self.ids.tag_results.add_widget(list_item)
+
+    def on_tag_click(self, instance):
+        if instance.text not in self.added_tags:
+            # Add the item to the selected items list
+            if self.is_tag_unique(instance.text):
+                self.added_tags[instance.text] = True
+            else:
+                self.added_tags[instance.text] = False
+            instance.md_bg_color = (0.2, 0.7, 0.2, 1)
+            self.update_common_tags(instance)
+        else:
+            instance.md_bg_color = (0.74, 0.74, 0.74, 1)
+            if self.added_tags[instance.text]:
+                self.ids.common_tags.remove_widget(instance)
+            self.added_tags.pop(instance.text)
+
+    def on_list_item_clicked(self, instance):
+        if instance.text not in self.added_tags:
+            # Add the item to the selected items list
+            if self.is_tag_unique(instance.text):
+                self.added_tags[instance.text] = True
+            else:
+                self.added_tags[instance.text] = False
+            self.update_common_tags(instance)
+
+    def is_tag_unique(self, tag):
+        return tag.lower() not in tags_list
+
+    def update_common_tags(self, instance):
+        # Display the selected items in the MDList
+        chip = MDChip(
+            text=instance.text,
+            md_bg_color=(0.2, 0.7, 0.2, 1),
+            on_release=self.on_tag_click,
+        )
+        self.ids.common_tags.add_widget(chip)
 
 
 class PopupImageSelection(Popup):
