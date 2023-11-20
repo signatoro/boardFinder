@@ -32,7 +32,25 @@ class HomeScreen(Screen):
             time= "1:30 pm",
             location= "Library, Boston MA"
         )
-        local_event_l: list = [local_event1]
+        local_event2 = LocalEventCard(title= "Cards and Coffee",
+            event_link= "link.url.here",
+            description= "The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
+            location_type= "In Person",
+            month= '3',
+            day= '15',
+            time= "3:45 pm",
+            location= "Library, Boston MA"
+        )
+        local_event3 = LocalEventCard(title= "Swords and Coffee",
+            event_link= "link.url.here",
+            description= "The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
+            location_type= "In Person",
+            month= '1',
+            day= '31',
+            time= "5:0 pm",
+            location= "Library, Boston MA"
+        )
+        local_event_l: list = [local_event1, local_event2, local_event3]
 
 
         # adds widgets 
