@@ -24,17 +24,26 @@
 
             MDFillRoundFlatIconButton:
                 size_hint: (1, 1)
-                font_size: self.width/10
-                text: 'Find a Group'
+                #font_size: self.width/10
+                font_size: 22
+                #text_size: self.size
+                text: 'Find a \nGroup'
+                halign: 'center'
             MDFillRoundFlatIconButton:
                 size_hint: (1, 1)
-                font_size: self.width/10
-                text: 'Learn a Game'
+                #font_size: self.width/10
+                font_size: 22
+                #text_size: self.size
+                text: 'Learn a \nGame'
+                halign: 'center'
                 on_release: app.change_screen("learn_game_screen")
             MDFillRoundFlatIconButton:
                 size_hint: (1, 1)
-                font_size: self.width/10
-                text: 'Create a Group'
+                #font_size: self.width/10
+                font_size: 22
+                #text_size: self.size
+                text: 'Create a \nGroup'
+                halign: 'center'
                 on_release: app.change_screen("create_group_screen")
 
         MDTabs:
