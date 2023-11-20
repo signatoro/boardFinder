@@ -1,0 +1,51 @@
+#:include kv/findGroupScreenPrefs/findGroupScreenPref1.kv
+#:include kv/findGroupScreenPrefs/findGroupScreenPref2.kv
+#:include kv/findGroupScreenPrefs/findGroupScreenPref3.kv
+
+<FindGroupScreen>:
+    name: "find_group_screen"
+    id: find_group_screen_parent
+
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: 10
+
+        MDTopAppBar:
+            title: "BoardGameTopBar"
+            pos_hint_y: None
+            left_action_items:
+                [["home", lambda x: app.change_screen("home_screen", direction='right'), "Home", "Home"]]
+
+        MDLabel:
+            text: 'Find a Group'
+            pos_hint: {"center_x": 0.5, "center_y": 0.9}
+            underline: "true"
+            halign: "center"
+            font_style: "H3"
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        MDBoxLayout:
+            # Set up screen manager and all screens
+            ScreenManager:
+                size_hint: 1, 1
+                pos_hint: {"center_x": 0.5, "top": 0.9}
+                id: find_group_screen_manager
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+
+            MDProgressBar:
+                id: progress_bar_find_group
+                min: 0
+                max: 1
+                value: root.display_progress_bar_value()
+                size_hint_x: 1
+                pos_hint: {"bottom": 1}
+
+            MDLabel:
+                id: progress_bar_value_label_find_group
+                text: root.display_progress_bar_label()
+                size_hint_x: 0.5
+

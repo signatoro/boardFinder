@@ -6,6 +6,7 @@ from kivymd.app import MDApp
 from src.createAccountScreen import CreateAccountScreen
 from src.homeScreen import HomeScreen
 from createGroup import CreateGroupScreen
+from src.findGroupScreen import FindGroupScreen
 from src.gameCard import GameCard
 from src.learnGameScreen import LearnGameScreen
 from src.boardGameScreen import BoardGameScreen

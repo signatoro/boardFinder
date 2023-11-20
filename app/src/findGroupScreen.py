@@ -9,7 +9,7 @@ games_list = 'sorry,monopoly,risk,catan,mancala,gameoflife,chess,gloomhaven,scra
 days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
 
-class CreateGroupScreen(Screen):
+class FindGroupScreen(Screen):
     # current_progress_bar_window_value = 0
     currPrefPage = 1
     screen_name = ""
@@ -17,50 +17,35 @@ class CreateGroupScreen(Screen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.screen_name = "create_group_pref1"
+        self.screen_name = "find_group_pref1"
         if not self.initialized:
-            self.child1 = CreateGroupScreenPref1(self)
-            self.child2 = CreateGroupScreenPref2(self)
-            self.child3 = CreateGroupScreenPref3(self)
-            self.child4 = CreateGroupScreenPref4(self)
-            self.child5 = CreateGroupScreenPref5(self)
-            self.child6 = CreateGroupScreenPref6(self)
+            self.child1 = FindGroupScreenPref1(self)
+            self.child2 = FindGroupScreenPref2(self)
+            self.child3 = FindGroupScreenPref3(self)
 
     def on_parent(self, widget, parent):
         if parent:
             # The parent is set, meaning the widget tree is constructed
             if not self.initialized:
-                self.ids.create_group_screen_manager.add_widget(self.child1)
-                self.ids.create_group_screen_manager.add_widget(self.child2)
-                self.ids.create_group_screen_manager.add_widget(self.child3)
-                self.ids.create_group_screen_manager.add_widget(self.child4)
-                self.ids.create_group_screen_manager.add_widget(self.child5)
-                self.ids.create_group_screen_manager.add_widget(self.child6)
+                self.ids.find_group_screen_manager.add_widget(self.child1)
+                self.ids.find_group_screen_manager.add_widget(self.child2)
+                self.ids.find_group_screen_manager.add_widget(self.child3)
                 self.initialized = True
 
     def load_next_pref_page(self, pref_page, direction="left"):
         # Get the screen manager from the kv file
-        screen_manager = self.ids.create_group_screen_manager
+        screen_manager = self.ids.find_group_screen_manager
         # If going left, change the transition. Else make left the default
         screen_name = ""
         if pref_page == 0:
             self.currPrefPage = 1
-            screen_name = "create_group_pref1"
+            screen_name = "find_group_pref1"
         if pref_page == 1:
             self.currPrefPage = 2
-            screen_name = "create_group_pref2"
+            screen_name = "find_group_pref2"
         elif pref_page == 2:
             self.currPrefPage = 3
-            screen_name = "create_group_pref3"
-        elif pref_page == 3:
-            self.currPrefPage = 4
-            screen_name = "create_group_pref4"
-        elif pref_page == 4:
-            self.currPrefPage = 5
-            screen_name = "create_group_pref5"
-        elif pref_page == 5:
-            self.currPrefPage = 6
-            screen_name = "create_group_pref6"
+            screen_name = "find_group_pref3"
 
         screen_manager.transition = SlideTransition(direction=direction)
         screen_manager.current = screen_name
@@ -68,15 +53,15 @@ class CreateGroupScreen(Screen):
         self.ids.progress_bar_value_label.text = self.display_progress_bar_label()
 
     def display_progress_bar_value(self):
-        return self.currPrefPage / 6
+        return self.currPrefPage / 3
 
     def display_progress_bar_label(self):
-        return str(self.currPrefPage) + " / 6"
+        return str(self.currPrefPage) + " / 3"
 
 
-class CreateGroupScreenPref1(Screen):
+class FindGroupScreenPref1(Screen):
     def __init__(self, parent, **kwargs):
-        super(CreateGroupScreenPref1, self).__init__(**kwargs)
+        super(FindGroupScreenPref1, self).__init__(**kwargs)
         self.class_parent = parent
 
     def generate_search_game_options(self, value):
@@ -102,9 +87,9 @@ class CreateGroupScreenPref1(Screen):
         return
 
 
-class CreateGroupScreenPref2(Screen):
+class FindGroupScreenPref2(Screen):
     def __init__(self, parent, **kwargs):
-        super(CreateGroupScreenPref2, self).__init__(**kwargs)
+        super(FindGroupScreenPref2, self).__init__(**kwargs)
         self.class_parent = parent
         self.imagePopup = PopupImageSelection(self)
 
@@ -112,15 +97,15 @@ class CreateGroupScreenPref2(Screen):
         self.imagePopup.open()
 
 
-class CreateGroupScreenPref3(Screen):
+class FindGroupScreenPref3(Screen):
     menu_items = []
 
     def __init__(self, parent, **kwargs):
-        super(CreateGroupScreenPref3, self).__init__(**kwargs)
+        super(FindGroupScreenPref3, self).__init__(**kwargs)
         self.class_parent = parent
         self.setup_dow_menu()
         self.menu = MDDropdownMenu(
-            caller=self.ids.dow_button,
+            #caller=self.ids.dow_button,
             items=self.menu_items,
             width_mult=4,
         )
@@ -161,24 +146,6 @@ class CreateGroupScreenPref3(Screen):
         elif btn_type == "end":
             time_dialog.bind(time=self.get_end_time)
         time_dialog.open()
-
-
-class CreateGroupScreenPref4(Screen):
-    def __init__(self, parent, **kwargs):
-        super(CreateGroupScreenPref4, self).__init__(**kwargs)
-        self.class_parent = parent
-
-
-class CreateGroupScreenPref5(Screen):
-    def __init__(self, parent, **kwargs):
-        super(CreateGroupScreenPref5, self).__init__(**kwargs)
-        self.class_parent = parent
-
-
-class CreateGroupScreenPref6(Screen):
-    def __init__(self, parent, **kwargs):
-        super(CreateGroupScreenPref6, self).__init__(**kwargs)
-        self.class_parent = parent
 
 
 class PopupImageSelection(Popup):
