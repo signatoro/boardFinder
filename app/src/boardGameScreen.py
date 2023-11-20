@@ -27,10 +27,10 @@ class BoardGameScreen(MDScreen):
     tags = ListProperty([])
     helpful_links = ListProperty([])
 
-    def load_depends(self, load_deps):
+    def load_depends(self, load_deps=None):
         print("Loading Deps")
         self.title: str = load_deps
-        self.image_path: str = 'images/HELLOTHERE.jpg'
+        self.image_path: str = '/Users/couchcomfy/Code/school/boardFinder/app/images/pikachu.jpg'
         self.general_description: str = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'
         self.main_description: str = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.'
         self.tutorial_video_link: str = 'videos/Videotemp1.mp4'
