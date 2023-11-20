@@ -1,6 +1,6 @@
 
 from kivymd.uix.card import MDCard
-from kivy.properties import StringProperty, ListProperty, NumericProperty
+from kivy.properties import StringProperty, NumericProperty, ObjectProperty
 
 
 MONTHS = {
@@ -42,11 +42,18 @@ class LocalEventCard(MDCard):
     time= StringProperty()
     location= StringProperty()
 
-    def __init__(self, *args, **kwargs):
+    parent_screen = ObjectProperty() 
+
+    def __init__(self, parent, *args, **kwargs):
+        self.parent_screen = parent
         super().__init__(*args, **kwargs)
 
     def load_depends(self, load_deps=None):
         pass
+
+    def redirection_website(self):
+        parent_widget = self.parent_screen
+        parent_widget.create_redirect_popup(self.event_link)
 
     def get_month(self, month_n: int):
         return MONTHS[month_n]
