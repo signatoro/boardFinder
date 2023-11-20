@@ -8,15 +8,20 @@
 
     MDBoxLayout:
         orientation: "vertical"
-        spacing: 10
+        #spacing: 10
 
         MDTopAppBar:
+            size_hint_x: 1
+            size_hint_y: 0.1
             title: "BoardGameTopBar"
             pos_hint_y: None
             left_action_items:
                 [["home", lambda x: app.change_screen("home_screen", direction='right'), "Home", "Home"]]
 
         MDLabel:
+            id: main_label
+            size_hint_x: 1
+            size_hint_y: 0.05
             text: 'Find a Group'
             pos_hint: {"center_x": 0.5, "center_y": 0.9}
             underline: "true"
@@ -27,25 +32,9 @@
 
         MDBoxLayout:
             # Set up screen manager and all screens
+            size_hint_x: 1
+            size_hint_y: 0.85
             ScreenManager:
                 size_hint: 1, 1
-                pos_hint: {"center_x": 0.5, "top": 0.9}
+                #pos_hint: {"center_x": 0.5, "top": 0.9}
                 id: find_group_screen_manager
-
-        MDBoxLayout:
-            orientation: "horizontal"
-            size_hint_y: None
-
-            MDProgressBar:
-                id: progress_bar_find_group
-                min: 0
-                max: 1
-                value: root.display_progress_bar_value()
-                size_hint_x: 1
-                pos_hint: {"bottom": 1}
-
-            MDLabel:
-                id: progress_bar_value_label_find_group
-                text: root.display_progress_bar_label()
-                size_hint_x: 0.5
-

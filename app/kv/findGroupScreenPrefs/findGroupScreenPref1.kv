@@ -3,9 +3,187 @@
 
     MDBoxLayout:
         orientation: "vertical"
+        spacing: 10
+        padding: 10
 
-        MDFillRoundFlatIconButton:
-            text: "Next Pref"
-            pos_hint: {"right": 1, "y": 0.5}
-            icon: "arrow-right"
-            on_release: root.class_parent.load_next_pref_page(1)
+        AnchorLayout:
+            size_hint_x: 1
+            size_hint_y: .05
+            anchor_x: 'center'
+            anchor_y: 'center'
+            MDLabel:
+                halign: 'center'
+                text: 'Please select all genres you are interested in!'
+
+        MDBoxLayout:
+            size_hint_x: 1
+            size_hint_y: .05
+            orientation: 'horizontal'
+            padding: 0
+            AnchorLayout:
+                anchor_x: 'center'
+                anchor_y: 'center'
+                MDFillRoundFlatIconButton:
+                    text: "Genre Meanings"
+                    pos_hint: {"center_x": 0.5}#, "y": 0.5
+                    #size_hint_x: 0.7
+                    #size_hint_y: 0.7
+                    icon: "help"
+                    on_release: root.class_parent.load_next_pref_page(1)
+
+        MDGridLayout:
+            spacing: 10
+            padding: 10
+            cols: 3
+            rows: 3
+            #orientation: "horizontal"
+            size_hint_x: 1
+            size_hint_y: .7
+            #pos_hint: {'x': .01, 'y': 0.2}
+            #spacing: 8
+            #padding: [20, 0, 0, 10]  # Add padding to the bottom
+
+            MDChip:
+                id: genre_ttrpg
+                text: "TTRPG"
+                label: 'Pill Shape'
+                font_size: "8sp"  # Set the desired font size
+                icon: 'pill'
+                type: 'outline'
+                size_hint_x: 0.7
+                size_hint_y: 0.7
+                text_color: [0.2, 0.2, 0.2, 1]
+                icon_check_color: [0, 0, 0, 1]
+                on_release: root.class_parent.selected_genre(self)
+
+            MDChip:
+                id: genre_strategy
+                text: "Strategy"
+                label: 'Pill Shape'
+                font_size: "8sp"  # Set the desired font size
+                icon: 'pill'
+                type: 'outline'
+                size_hint_x: 0.7
+                size_hint_y: 0.7
+                halign: 'center'
+                text_color: [0.2, 0.2, 0.2, 1]
+                icon_check_color: [0, 0, 0, 1]
+                on_release: root.class_parent.selected_genre(self)
+
+            MDChip:
+                id: genre_euro
+                text: "Euro Games"
+                label: 'Pill Shape'
+                font_size: "8sp"  # Set the desired font size
+                icon: 'pill'
+                type: 'outline'
+                size_hint_x: 0.7
+                size_hint_y: 0.7
+                halign: 'center'
+                text_color: [0.2, 0.2, 0.2, 1]
+                icon_check_color: [0, 0, 0, 1]
+                on_release: root.class_parent.selected_genre(self)
+
+            MDChip:
+                id: genre_competitive
+                text: "Competitive"
+                label: 'Pill Shape'
+                font_size: "8sp"  # Set the desired font size
+                icon: 'pill'
+                type: 'outline'
+                size_hint_x: 0.7
+                size_hint_y: 0.7
+                text_color: [0.2, 0.2, 0.2, 1]
+                icon_check_color: [0, 0, 0, 1]
+                on_release: root.class_parent.selected_genre(self)
+
+            MDChip:
+                id: genre_social_deduction
+                text: "Social\nDeduction"
+                label: 'Pill Shape'
+                font_size: "8sp"  # Set the desired font size
+                icon: 'pill'
+                type: 'outline'
+                size_hint_x: 0.7
+                size_hint_y: 0.7
+                halign: 'center'
+                text_color: [0.2, 0.2, 0.2, 1]
+                icon_check_color: [0, 0, 0, 1]
+                on_release: root.class_parent.selected_genre(self)
+
+            MDChip:
+                id: genre_family
+                text: "Family\nGames"
+                label: 'Pill Shape'
+                font_size: "8sp"  # Set the desired font size
+                icon: 'pill'
+                type: 'outline'
+                size_hint_x: 0.7
+                size_hint_y: 0.7
+                text_color: [0.2, 0.2, 0.2, 1]
+                icon_check_color: [0, 0, 0, 1]
+                on_release: root.class_parent.selected_genre(self)
+
+            MDChip:
+                id: genre_card_games
+                text: "Card Games"
+                label: 'Pill Shape'
+                font_size: "8sp"  # Set the desired font size
+                icon: 'pill'
+                type: 'outline'
+                size_hint_x: 0.7
+                size_hint_y: 0.7
+                text_color: [0.2, 0.2, 0.2, 1]
+                icon_check_color: [0, 0, 0, 1]
+                on_release: root.class_parent.selected_genre(self)
+
+            MDChip:
+                id: genre_tcg
+                text: "TCG"
+                label: 'Pill Shape'
+                font_size: "8sp"  # Set the desired font size
+                icon: 'pill'
+                type: 'outline'
+                size_hint_x: 0.7
+                size_hint_y: 0.7
+                text_color: [0.2, 0.2, 0.2, 1]
+                icon_check_color: [0, 0, 0, 1]
+                on_release: root.class_parent.selected_genre(self)
+
+            MDChip:
+                id: genre_war
+                text: "War Games"
+                label: 'Pill Shape'
+                font_size: "8sp"  # Set the desired font size
+                icon: 'pill'
+                type: 'outline'
+                size_hint_x: 0.7
+                size_hint_y: 0.7
+                text_color: [0.2, 0.2, 0.2, 1]
+                icon_check_color: [0, 0, 0, 1]
+                on_release: root.class_parent.selected_genre(self)
+
+        MDBoxLayout:
+            size_hint_x: 1
+            size_hint_y: .15
+            orientation: 'horizontal'
+            padding: 0
+
+            AnchorLayout:
+                anchor_x: 'left'
+                anchor_y: 'bottom'
+                MDFillRoundFlatIconButton:
+                    text: "Skip All Preferences"
+                    #pos_hint: {"right": 1, "y": 0.5}
+                    icon: "exclamation-thick"
+                    on_release: root.class_parent.load_next_pref_page(3)
+
+            AnchorLayout:
+                anchor_x: 'right'
+                anchor_y: 'bottom'
+                MDFillRoundFlatIconButton:
+                    text: "Next Preference"
+                    pos_hint: {'x': 0.9} # , "y": 0.5
+                    halign: 'right'
+                    icon: "arrow-right"
+                    on_release: root.class_parent.load_next_pref_page(1)
