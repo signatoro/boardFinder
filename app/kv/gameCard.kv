@@ -21,21 +21,22 @@
             orientation: "horizontal"
             spacing: 10
 
-
             # Left section with a photo
             MDBoxLayout:
                 orientation: "vertical"
                 size_hint_x: 0.25  # 1/4 of the total width
-
+                padding: [15, 15, 15, 15]
+                radius: 15
+        
                 AsyncImage:
-                    source: "HELLOTHERE.jpg"  # Replace with your photo path
-                    size_hint: 1, 0.5  # Adjust the size of the photo as needed
+                    source: root.image_path  # Replace with your photo path
+                    size_hint: 1, 1  # Adjust the size of the photo as needed
 
             # Right section with text
             MDBoxLayout:
                 orientation: "vertical"
                 spacing: dp(10)
-
+                size_hint_x: .75
 
                 # Game Title
                 MDLabel:
