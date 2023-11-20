@@ -1,27 +1,17 @@
 from kivy.lang import Builder
-from kivy.uix.screenmanager import Screen, NoTransition, SlideTransition
+from kivy.uix.screenmanager import NoTransition, SlideTransition
 from kivy.core.window import Window
 from kivymd.app import MDApp
-from createAccountScreen import CreateAccountScreen
-from createGroup import CreateGroupScreen
-import kivy.utils
-import createAccountScreen
 
+from src.createAccountScreen import CreateAccountScreen
+from src.homeScreen import HomeScreen
+from createGroup import CreateGroupScreen
 from src.gameCard import GameCard
 from src.learnGameScreen import LearnGameScreen
 from src.boardGameScreen import BoardGameScreen
 
+
 import time
-
-
-class HomeScreen(Screen):
-    pass
-
-
-# Set minimum window size for desktop and mobile
-# Window.minimum_width = fixed_size[0]
-# Window.minimum_height = fixed_size[1]
-# Window.size = fixed_size
 
 
 # The main application
