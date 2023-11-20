@@ -1,59 +1,110 @@
 <HomeScreen>:
-    BoxLayout:
+    name: "home_screen"
+    id: home_screen
+
+    MDBoxLayout:
+        spacing: 10
         orientation: 'vertical'
         cols: 1
 
-        # Anchor Layout widget at top of window
-        AnchorLayout:
-            anchor_x: 'center'
-            anchor_y: 'top'
-            size_hint: (1, .2)
-
-            Button:
-                text:'Profile'
-                on_release: app.change_screen("create_account_screen")
+        MDTopAppBar:
+            title: "BoardGameTopBar"
+            pos_hint_y: None
+            #left_action_items:
+            #    [["home", lambda x: app.change_screen("home_screen", direction='right'), "Home", "?!?"]]
+            right_action_items:
+                [["account", lambda x: app.change_screen("create_account_screen", direction='left'), "Sign In", "???"]]
 
         # BoxLayout widget for central buttons
-        BoxLayout:
+        MDBoxLayout:
+            spacing: 10
+            #padding: 10
             orientation: 'horizontal'
-            size_hint: (1, 0.6)
+            size_hint: (1, 0.3)
 
-            Button:
-                text: 'Find a Group'
-            Button:
-                text: 'Learn a Game'
+            MDFillRoundFlatIconButton:
+                size_hint: (1, 1)
+                #font_size: self.width/10
+                font_size: 22
+                #text_size: self.size
+                text: 'Find a \nGroup'
+                halign: 'center'
+            MDFillRoundFlatIconButton:
+                size_hint: (1, 1)
+                #font_size: self.width/10
+                font_size: 22
+                #text_size: self.size
+                text: 'Learn a \nGame'
+                halign: 'center'
                 on_release: app.change_screen("learn_game_screen")
-            Button:
-                text: 'Create a Group'
+            MDFillRoundFlatIconButton:
+                size_hint: (1, 1)
+                #font_size: self.width/10
+                font_size: 22
+                #text_size: self.size
+                text: 'Create a \nGroup'
+                halign: 'center'
                 on_release: app.change_screen("create_group_screen")
 
-        # TabbedPanel widget for local events and my groups
-        TabbedPanel:
-            size_hint: (1, 0.8)
-            do_default_tab: False
+        MDTabs:
+            lock_swiping: True
+            anim_duration: 0
+            #anim_threshold: 0
+            #scroll_timeout: 0
 
-            TabbedPanelItem:
-                text: 'Local Events'
+            Tab:
+                title: "Local Events"
+                #lock_swiping: True
+                #anim_duration: 0
+                #anim_threshold: 0
+                #scroll_timeout: 0
+                MDCarousel:
+                    #min_move: 0.0001
+                    #anim_cancel_duration: 0.0001
+                    #scroll_distance: 0.0001
+                    MDCard:
+                        max_swipe_x: 0
+                        size_hint: (1, 1)
+                        md_bg_color: "darkgrey"
+                        MDLabel:
+                            text: 'Local Event 1'
+                            adaptive_size: True
+                            pos_hint: {"x": 0.5, "y": 0.5}
+                            color: (0, 0, 0, 1)
+                            bold: True
+                    MDCard:
+                        max_swipe_x: 0
+                        size_hint: (1, 1)
+                        md_bg_color: "darkgrey"
+                        MDLabel:
+                            text: 'Local Event 2'
+                            adaptive_size: True
+                            pos_hint: {"x": 0.5, "y": 0.5}
+                            color: (0, 0, 0, 1)
+                            bold: True
+                    MDCard:
+                        max_swipe_x: 0
+                        size_hint: (1, 1)
+                        md_bg_color: "darkgrey"
+                        MDLabel:
+                            text: 'Local Event 3'
+                            adaptive_size: True
+                            pos_hint: {"x": 0.5, "y": 0.5}
+                            color: (0, 0, 0, 1)
+                            bold: True
+                    MDCard:
+                        max_swipe_x: 0
+                        size_hint: (1, 1)
+                        md_bg_color: "darkgrey"
+                        MDLabel:
+                            text: 'Local Event 4'
+                            adaptive_size: True
+                            pos_hint: {"x": 0.5, "y": 0.5}
+                            color: (0, 0, 0, 1)
+                            bold: True
 
-                Carousel:
-                    Button:
-                        text: 'Local Event 1'
-                    Button:
-                        text: 'Local Event 2'
-                    Button:
-                        text: 'Local Event 3'
-                    Button:
-                        text: 'Local Event 4'
-            TabbedPanelItem:
-                text: 'My Groups'
-
-                Carousel:
-                    Button:
-                        text: 'Group 1'
-                    Button:
-                        text: 'Group 2'
-                    Button:
-                        text: 'Group 3'
-                    Button:
-                        text: 'Group 4'
-
+            Tab:
+                title: "My Groups"
+                MDFillRoundFlatIconButton:
+                    size_hint: (1, 1)
+                    text: 'Group 1'
