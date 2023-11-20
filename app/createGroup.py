@@ -213,9 +213,9 @@ class CreateGroupScreenPref6(Screen):
         for tag in tags_list:
             chip = MDChip(
                 text=tag,
-                md_bg_color=(0.74, 0.74, 0.74, 1),
                 on_release=self.on_tag_click
             )
+            chip.md_bg_color = (0.74, 0.74, 0.74, 1)
             self.ids.common_tags.add_widget(chip)
 
     def search_tags(self, text):
@@ -287,9 +287,9 @@ class CreateGroupScreenPref6(Screen):
         # Display the selected items in the MDList
         chip = MDChip(
             text=instance.text,
-            md_bg_color=(0.2, 0.7, 0.2, 1),
             on_release=self.on_tag_click,
         )
+        chip.md_bg_color = (0.2, 0.7, 0.2, 1)
         self.ids.common_tags.add_widget(chip)
 
 
