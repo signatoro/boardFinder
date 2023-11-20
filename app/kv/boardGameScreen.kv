@@ -3,80 +3,217 @@
 <BoardGameScreen>:
     name: 'board_game_screen'
 
-    MDBoxLayout:
-        orientation: "vertical"
-        spacing: 5
-
-        MDTopAppBar:
-            title: "BoardGameTopBar"
-            left_action_items:
-                [["home", lambda x: app.change_screen("home_screen", direction='right'), "Home", "Home"]]
-
-        # Title and Backbutton
+    MDScrollView:
         MDBoxLayout:
-            orientation: "horizontal"
-            spacing: 50
-            pos_hint:{'top': 1}
-            size_hint_y: None
-            set_height: 100
-            padding: [0,0,50,0]
-            
-            # Title
-            MDLabel:
-                text: f"{root.title}"
-                pos_hint: {"center_x":0, "center_y": 0.01}
-                underline: "true"
-                font_style: "H3"
+            orientation: "vertical"
+            spacing: 5
+
+            MDTopAppBar:
+                title: "BoardGameTopBar"
+                left_action_items:
+                    [["home", lambda x: app.change_screen("home_screen", direction='right'), "Home", "Home"]]
+
+            # Title and Backbutton
+            MDBoxLayout:
+                orientation: "horizontal"
+                spacing: 50
+                pos_hint:{'top': 1}
                 size_hint_y: None
-                height: self.texture_size[1] + 5  # Set the height based on text size
+                set_height: 100
+                padding: [0,0,50,0]
+                
+                # Title
+                MDLabel:
+                    text: f"{root.title}"
+                    # pos_hint: {"center_x":0, "center_y": 0.01}
+                    underline: "true"
+                    font_style: "H3"
+                    size_hint_y: None
+                    height: self.texture_size[1] + 5  # Set the height based on text size
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.primary_color
+
+                MDFillRoundFlatIconButton:
+                    text: "Back"
+                    size_hint: (.2, .7)
+                    # pos_hint: {"center_x":0, "center_y": 0.01}
+                    # Adjust the size as needed
+                    # theme_text_color: "Custom"
+                    text_color: [1,1,1,1]  # Set text color to the primary color
+                    
+                    on_release: app.change_screen('learn_game_screen', direction="right")
+
+            #Video 
+            MDBoxLayout:
+                orientation: "horizontal"
+                spacing: 10
+                padding: [50,50,0,50]
+                radius: 25
+                size_hint: (.8, .8)
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                md_bg_color: app.theme_cls.primary_color
+
+                VideoPlayer:
+                    id: video_player
+                    source: f"{root.tutorial_video_link}"  # Replace with the path to your video file
+                    allow_stretch: True
+
+                    state: "pause"  # You can set it to 'stop', 'pause', or 'play'
+                    options: {"eos": "loop"}  # 'eos': 'loop' will make the video loop
+                    # size_hint: (1, 1)  # Adjust the size as needed
+            # General Description
+            MDLabel:
+                text: f"{root.general_description}"
+                font_style: "H6"
+                padding: [50,50, 0,50]
                 theme_text_color: "Custom"
                 text_color: app.theme_cls.primary_color
+                size_hint_y: None
+                height: self.texture_size[1] # Set the height based on text size
+            
+            # Big Description
+            MDLabel:
+                text: f"{root.main_description}"
+                font_style: "H6"
+                padding: [50,0,10,50]
+                theme_text_color: "Custom"
+                text_color: app.theme_cls.primary_color
+                size_hint_y: None
+                height: self.texture_size[1]  # Set the height based on text size
+            
+            #Links and Tags
+            MDBoxLayout:
+                orientation: "horizontal"
+                spacing: 10
+                padding: [15, 0, 10, 15]
 
-            MDFillRoundFlatIconButton:
-                text: "Back"
-                size_hint: (.2, .7)
-                pos_hint: {"center_x":0, "center_y": 0.01}
-                # Adjust the size as needed
-                # theme_text_color: "Custom"
-                text_color: [1,1,1,1]  # Set text color to the primary color
-                
-                on_release: app.change_screen('learn_game_screen', direction="right")
+                # # Links
+                MDBoxLayout:
+                    orientation: "vertical"
+                    padding: [20, 0, 20, 50]
 
-        #Video and General Description
-        MDBoxLayout:
-            orientation: "horizontal"
-            spacing: 10
-            padding: [50,50,0,50]
+                    size_hint_x: .5
+                    id: tag_table
 
-            VideoPlayer:
-                id: video_player
-                source: f"{root.tutorial_video_link}"  # Replace with the path to your video file
-                allow_stretch: True
+                    radius: 25
+                    md_bg_color: app.theme_cls.primary_color
 
-                state: "pause"  # You can set it to 'stop', 'pause', or 'play'
-                options: {"eos": "loop"}  # 'eos': 'loop' will make the video loop
-                # size_hint: (1, 1)  # Adjust the size as needed
+                    # Headers
+                    MDLabel:
+                        radius: 25
+                    
+                        text: "Sites"
+                        font_style: "H4"
+                        pos_hint: {"center_x":.5, "center_y": 1}
+                        theme_text_color: "Custom"
+                        text_color: 1, 1, 1, 1  # White text color
+                        md_bg_color: app.theme_cls.primary_color  # Use the primary color as the outline color
+                        size_hint_y: None
+                        height: self.texture_size[1]  # Adjust the size based on text size
+                    
+                    MDStackLayout:
+                        orientation: 'tb-lr'
+                        # md_bg_color: [.9, .9, .9, .5]
+                        spacing: dp(10)
+                        padding: [0, 10, 0, 0]
+                        
+                        MDChip:
+                            text: 'Link.url.1.com'
+                            label: 'Tag1'
+                            icon: 'tag'
+                            size_hint:(1, .3)
+                            theme_text_color: "Custom"
+                            text_color: app.theme_cls.primary_color
 
-        MDLabel:
-            text: f"{root.general_description}"
-            font_style: "H6"
-            padding: [50,50, 0,50]
-            theme_text_color: "Custom"
-            text_color: app.theme_cls.primary_color
-            size_hint_y: None
-            height: self.texture_size[1] # Set the height based on text size
-        
-        # Big Description
-        MDLabel:
-            text: f"{root.main_description}"
-            font_style: "H6"
-            padding: [50,0,10,50]
-            theme_text_color: "Custom"
-            text_color: app.theme_cls.primary_color
-            size_hint_y: None
-            height: self.texture_size[1]  # Set the height based on text size
-        
-        #Links and Tags
-        MDBoxLayout:
-            orientation: "horizontal"
-            spacing: 10
+                        MDChip:
+                            text: 'Link.url.1.com'
+                            label: 'Tag2'
+                            icon: 'tag'
+                            size_hint:(1, .3)
+                            theme_text_color: "Custom"
+                            text_color: app.theme_cls.primary_color
+
+                        MDChip:
+                            text: 'Link.url.1.com'
+                            label: 'Tag3'
+                            icon: 'tag'
+                            size_hint:(1, .3)
+                            theme_text_color: "Custom"
+                            text_color: app.theme_cls.primary_color
+                            
+                    
+
+                # Tags
+                MDBoxLayout:
+                    orientation: "vertical"
+                    padding: [20, 0, 20, 50]
+
+                    size_hint_x: .5
+                    id: tag_table
+
+                    radius: 25
+
+                    # Headers
+                    MDLabel:
+                        radius: 25
+                    
+                        text: "  Tags"
+                        font_style: "H4"
+                        pos_hint: {"center_x":.5, "center_y": 1}
+                        theme_text_color: "Custom"
+                        text_color: 1, 1, 1, 1  # White text color
+                        md_bg_color: app.theme_cls.primary_color  # Use the primary color as the outline color
+                        size_hint_y: None
+                        height: self.texture_size[1]  # Adjust the size based on text size
+                    
+                    # Tags section
+                    MDStackLayout:
+                        orientation: 'lr-tb'
+                        md_bg_color: [.9, .9, .9, .5]
+                        spacing: dp(8)
+                        padding: [15, 10, 0, 0]
+
+                        # Add as many MDChip widgets as needed for your tags
+                        MDChip:
+                            text: 'Tag6afadsfad'
+                            label: 'Tag1'
+                            icon: 'tag'
+                            theme_text_color: "Custom"
+                            text_color: app.theme_cls.primary_color
+
+                        MDChip:
+                            text: 'Tag6'
+                            label: 'Tag2'
+                            icon: 'tag'
+                            theme_text_color: "Custom"
+                            text_color: app.theme_cls.primary_color
+
+                        MDChip:
+                            text: 'Tag6dfd'
+                            label: 'Tag3'
+                            icon: 'tag'
+                            theme_text_color: "Custom"
+                            text_color: app.theme_cls.primary_color
+
+                        MDChip:
+                            text: 'Tag6'
+                            label: 'Tag4'
+                            icon: 'tag'
+                            theme_text_color: "Custom"
+                            text_color: app.theme_cls.primary_color
+                        MDChip:
+                            text: 'Tag6adfadf'
+                            label: 'Tag5'
+                            icon: 'tag'
+
+                        MDChip:
+                            text: 'Tag6'
+                            label: 'Tag6'
+                            icon: 'tag'
+                            theme_text_color: "Custom"
+                            text_color: app.theme_cls.primary_color
+                        
+
+
+
+
