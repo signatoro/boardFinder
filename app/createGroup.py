@@ -51,43 +51,18 @@ class CreateGroupScreen(Screen):
         # Get the screen manager from the kv file
         screen_manager = self.ids.create_group_screen_manager
         # If going left, change the transition. Else make left the default
-        screen_name = ""
-        if pref_page == 0:
-            self.currPrefPage = 1
-            screen_name = "create_group_pref1"
-        if pref_page == 1:
-            self.currPrefPage = 2
-            screen_name = "create_group_pref2"
-        elif pref_page == 2:
-            self.currPrefPage = 3
-            screen_name = "create_group_pref3"
-        elif pref_page == 3:
-            self.currPrefPage = 4
-            screen_name = "create_group_pref4"
-        elif pref_page == 4:
-            self.currPrefPage = 5
-            screen_name = "create_group_pref5"
-        elif pref_page == 5:
-            self.currPrefPage = 6
-            screen_name = "create_group_pref6"
+        if direction == "right":
+            self.currPrefPage -= 1
+        else:
+            self.currPrefPage += 1
+        screen_name = f"create_group_pref{self.currPrefPage}"
 
         screen_manager.transition = SlideTransition(direction=direction)
         screen_manager.current = screen_name
         self.ids.progress_bar.value = self.display_progress_bar_value()
 
     def display_progress_bar_value(self):
-        if self.currPrefPage == 1:
-            return 1 / 6
-        elif self.currPrefPage == 2:
-            return 2 / 6
-        elif self.currPrefPage == 3:
-            return 3 / 6
-        elif self.currPrefPage == 4:
-            return 4 / 6
-        elif self.currPrefPage == 5:
-            return 5 / 6
-        elif self.currPrefPage == 6:
-            return 6 / 6
+        return self.currPrefPage / 6
 
 
 class CreateGroupScreenPref1(Screen):
@@ -265,7 +240,7 @@ class CreateGroupScreenPref6(Screen):
         for result in search_results:
             list_item = OneLineListItem(text=result)
             if unique_tag:
-                list_item.text_color = (1, 0, 0, 1)
+                list_item.text_color = (1, 0, 1, 1)
             list_item.bind(on_release=self.on_list_item_clicked)
             self.ids.tag_results.add_widget(list_item)
 
@@ -277,24 +252,36 @@ class CreateGroupScreenPref6(Screen):
             else:
                 self.added_tags[instance.text] = False
             instance.md_bg_color = (0.2, 0.7, 0.2, 1)
-            self.update_common_tags(instance)
+            if self.added_tags[instance.text]:
+                self.update_common_tags(instance)
         else:
             instance.md_bg_color = (0.74, 0.74, 0.74, 1)
             if self.added_tags[instance.text]:
                 self.ids.common_tags.remove_widget(instance)
-            self.added_tags.pop(instance.text)
+            del self.added_tags[instance.text]
 
     def on_list_item_clicked(self, instance):
+        self.ids.tag_results.clear_widgets()
+        self.ids.search_tags.text = ""
         if instance.text not in self.added_tags:
             # Add the item to the selected items list
             if self.is_tag_unique(instance.text):
                 self.added_tags[instance.text] = True
+                self.update_common_tags(instance)
             else:
                 self.added_tags[instance.text] = False
-            self.update_common_tags(instance)
+                for chip in self.ids.common_tags.children:
+                    if chip.text == instance.text:
+                        chip.md_bg_color = (0.2, 0.7, 0.2, 1)
+        else:
+            for chip in self.ids.common_tags.children:
+                if chip.text == instance.text:
+                    chip.md_bg_color = (0.74, 0.74, 0.74, 1)
+            del self.added_tags[instance.text]
+
 
     def is_tag_unique(self, tag):
-        return tag.lower() not in tags_list
+        return tag not in tags_list
 
     def update_common_tags(self, instance):
         # Display the selected items in the MDList
