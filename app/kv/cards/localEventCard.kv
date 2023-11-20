@@ -3,11 +3,11 @@
 <LocalEventCard>:
 
     MDBoxLayout:
-        radius: 25
+        # radius: 25
         orientation: 'horizontal'
-        # md_bg_color: "black"
+        md_bg_color: [.8,.9,.9,1]
 
-        padding: [10,0,10,25]
+        padding: [25,25,25,25]
 
         # Left Side
         MDBoxLayout:
@@ -15,10 +15,10 @@
             size_hint_y: 1
             md_bg_color: app.theme_cls.primary_color
             orientation: 'vertical'
-            padding: [5,50,5,50]
-            spacing: 100
+            # padding: [5,50,5,50]
+            spacing: 25
 
-            radius: 25
+            # radius: 25
 
             # Calender
             MDBoxLayout:
@@ -28,7 +28,7 @@
                 pos_hint: {"center_x":.5, "center_y": .8}
 
                 size_hint_x: .5
-                size_hint_y: .2
+                size_hint_y: .1
                 # id: tag_table
 
                 # Headers
@@ -40,18 +40,23 @@
                     # text_align:'center'
                     # valign: "top"
                     # padding: [100, 0, 50, 0]
+                    text_size: self.size
                     theme_text_color: "Custom"
                     text_color: 1, 1, 1, 1  # White text color
                     md_bg_color: [1, 0, 0, 1]  # Use the primary color as the outline color
-                    size_hint_y: None
-                    height: self.texture_size[1]  # Adjust the size based on text size
+                    size_hint: (1, .3)
+                    # height: self.texture_size[1]  # Adjust the size based on text size
+                    
                     
                 
                 MDLabel:
                     text: f"{root.day}"
                     halign: "center"
+                    valign: "center"
                     font_style: "H4"
                     # padding: [100, 0, 50, 0]
+                    size_hint: (1, .7)
+                    text_size: self.size
                     md_bg_color: [1, 1, 1, 1]  # Use the primary color as the outline color
                 
 
@@ -104,8 +109,9 @@
             orientation: "vertical"
             size_hint_x: 0.65
             size_hint_y: 1
+            radius: 15
 
-            md_bg_color: [.8,.9,.9,1]
+            md_bg_color: [.7,.8,.8,1]
 
             padding: [20, 20, 20, 20]
 
@@ -121,20 +127,24 @@
 
             # General Descriptions
             MDLabel:
-                size_hint_y: .5
+                # size_hint_y: 1
                 text: f"asd;lfkjads l;fjasdl fasdl;kjf a;dslkjf ;laskdjf a;sldkjf ;alskdj ;alkdjf ;alsdkjf ;lasdkjf ;alskdfj ;alkjf ;alksjf ;alksjf a;lskdf j"
                 theme_text_color: "Custom"
                 font_style: "H4"
+                valign: 'top'
+                text_size: self.size
                 text_color: app.theme_cls.primary_color
-                pos_hint: {"center_x":0.5, "center_y": 0.8}
-                padding: [10,0,10,50]
+                # pos_hint: {"center_x":0.5, "center_y": 0.8}
+                padding: [15,20,15,10]
 
             
             # Learn More
             MDFillRoundFlatIconButton:
                 text: "Learn more"
-                font_style: "H3"
+                text_size: self.size
+                font_style: "Body1"
                 size_hint: (.7, .1)
+                text_size: self.size
                 pos_hint: {"center_x":0.5, "center_y": 0.5}
                 # Adjust the size as needed
                 # theme_text_color: "Custom"
