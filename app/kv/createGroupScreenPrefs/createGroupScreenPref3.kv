@@ -1,23 +1,22 @@
 <CreateGroupScreenPref3>
     name: "create_group_pref3"
 
-    MDBoxLayout:
-        orientation: "vertical"
-        padding: 20
-        spacing: 10
-
-        MDLabel:
-            text: 'Meeting Information'
-            halign: "center"
-            pos_hint: {"center_x":.5, "center_y": 0.8}
-            underline: "true"
-            font_style: "H4"
-            size_hint_y: None
-            height: self.texture_size[1]
-            spacing: 5
+    MDScrollView:
+        scroll_type: ["content", "bars"]
+        size_hint: (1, 1)
 
         MDBoxLayout:
             orientation: "vertical"
+            spacing: 10
+
+            MDLabel:
+                text: 'Meeting Information'
+                halign: "center"
+                pos_hint: {"center_x":.5, "center_y": 0.8}
+                underline: "true"
+                font_style: "H4"
+                size_hint_y: None
+                height: self.texture_size[1]
 
             MDLabel:
                 id: dow_label
@@ -27,7 +26,6 @@
                 font_style: "H6"
                 size_hint_y: None
                 height: self.texture_size[1]
-                spacing: 5
 
             MDFillRoundFlatIconButton:
                 id: dow_button
@@ -36,19 +34,17 @@
                 pos_hint: {"left": 1, "center_y": .5}
                 on_release: root.menu.open()
 
-        MDBoxLayout:
-            orientation: "horizontal"
+            MDBoxLayout:
+                orientation: "horizontal"
+                padding: [0, 0, 10, 0]
 
+                MDLabel:
+                    # size_hint: .8, None
+                    text: "Recurring"
 
-            MDLabel:
-                size_hint: .8, None
-                text: "Recurring"
+                MDCheckbox:
+                    # size_hint: .2, None
 
-            MDCheckbox:
-                size_hint: .2, None
-
-        MDBoxLayout:
-            orientation: "vertical"
 
             MDLabel:
                 id: start_time_label
@@ -58,7 +54,6 @@
                 font_style: "H6"
                 size_hint_y: None
                 height: self.texture_size[1]
-                spacing: 5
 
             MDRoundFlatButton:
                 id: start_time_button
@@ -84,37 +79,43 @@
                 pos_hint: {"left": 1, "center_y": .5}
                 on_release: root.open_time_button("end")
 
+            MDLabel:
+                text: 'Location'
+                pos_hint: {"center_x": 0.5, "center_y": 0.4}
+                underline: "true"
+                font_style: "H6"
+                size_hint_y: None
+                height: self.texture_size[1]
+                spacing: 5
 
-        MDLabel:
-            text: 'Location'
-            pos_hint: {"center_x": 0.5, "center_y": 0.4}
-            underline: "true"
-            font_style: "H6"
-            size_hint_y: None
-            height: self.texture_size[1]
-            spacing: 5
+            MDTextField:
+                hint_text: "Ex: Boston Public Library"
+                mode: "fill"
+                multiline: True
+                required: True
+                helper_text: "Enter General Description"
+                size_hint_y: None
+                height: self.minimum_height
+                padding: [10, 10]
 
-        MDTextField:
-            hint_text: "Ex: Boston Public Library"
-            mode: "fill"
-            multiline: True
-            required: True
-            helper_text: "Enter General Description"
+            MDBoxLayout:
+                orientation: "horizontal"
+                size_hint_x: 1
+                spacing: 175
 
-        MDBoxLayout:
-            orientation: "horizontal"
+                MDFillRoundFlatIconButton:
+                    text: "Prev Pref"
+                    # width: self.width + dp(20)  # Adjust the width as needed
+                    pos_hint: {'center_x': 0.2}
+                    icon: "arrow-left"
+                    on_release: root.class_parent.load_next_pref_page(1, "right")
 
-            MDFillRoundFlatIconButton:
-                text: "Prev Pref"
-                pos_hint: {"left": 1, "y": 0.5}
-                icon: "arrow-left"
-                on_release: root.class_parent.load_next_pref_page(1, "right")
-
-            MDFillRoundFlatIconButton:
-                text: "Next Pref"
-                pos_hint: {"right": 1, "y": 0.5}
-                icon: "arrow-right"
-                on_release: root.class_parent.load_next_pref_page(3)
+                MDFillRoundFlatIconButton:
+                    text: "Next Pref"
+                    # width: self.width + dp(20)  # Adjust the width as needed
+                    pos_hint: {'center_x': 0.8}
+                    icon: "arrow-right"
+                    on_release: root.class_parent.load_next_pref_page(3)
 
 
 

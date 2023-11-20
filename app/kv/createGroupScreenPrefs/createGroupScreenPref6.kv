@@ -30,23 +30,36 @@
             font_size: 22
             active_line: False
             multiline: False
+            on_text: root.search_tags(self.text)
 
         MDScrollView:
             MDList:
+                size_hint: 0.2, 0.2
                 id: tag_results
+
+        MDScrollView:
+            MDGridLayout:
+                cols: 2
+                id: common_tags
+                md_bg_color: (0.76, 0.74, 0.78, 1)
+                size_hint: 0.8, 0.8
 
         MDBoxLayout:
             orientation: "horizontal"
+            size_hint_x: 1
+            spacing: 175
 
             MDFillRoundFlatIconButton:
                 text: "Prev Pref"
-                pos_hint: {"left": 1, "y": 0.5}
+                # width: self.width + dp(20)  # Adjust the width as needed
+                pos_hint: {'center_x': 0.2}
                 icon: "arrow-left"
                 on_release: root.class_parent.load_next_pref_page(4, "right")
 
             MDFillRoundFlatIconButton:
                 text: "Next Pref"
-                pos_hint: {"right": 1, "y": 0.5}
+                # width: self.width + dp(20)  # Adjust the width as needed
+                pos_hint: {'center_x': 0.8}
                 icon: "arrow-right"
                 on_release: root.class_parent.load_next_pref_page(6)
 
