@@ -1,11 +1,15 @@
-from kivy.uix.screenmanager import Screen
+from enum import Enum, auto
+
+
+from kivy.app import App
+from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.uix.button import Button
-from kivy.uix.popup import Popup
 from kivy.uix.textinput import TextInput
+from kivy.uix.screenmanager import Screen
+
 
 # from helpers import slide_transition_to_screen
-from enum import Enum, auto
 
 
 # Enum that represents the state of an input
@@ -201,5 +205,4 @@ class CreateAccountScreen(Screen):
         self.ids.create_account_button.opacity = 0
 
     def create_account_attempt(self):
-        from app.main import MyApp
-        MyApp.get_running_app().change_screen("home_screen", direction="left")
+        App.get_running_app().change_screen("home_screen", direction="left")
