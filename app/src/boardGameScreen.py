@@ -27,7 +27,7 @@ class BoardGameScreen(MDScreen):
     tags = ListProperty([])
     helpful_links = ListProperty([])
 
-    def load_depends(self, load_deps):
+    def load_depends(self, load_deps=None):
         print("Loading Deps")
         self.title: str = load_deps
         self.image_path: str = '/Users/couchcomfy/Code/school/boardFinder/app/images/pikachu.jpg'

@@ -11,3 +11,19 @@ class Tab(MDFloatLayout, MDTabsBase):
 class HomeScreen(Screen):
     def __init__(self, **kwargs):
         super(HomeScreen, self).__init__(**kwargs)
+
+    def load_depends(self, load_deps=None):
+        #TODO: Call endpoint get list of Local events
+        local_event_l: list = {}
+        pass
+
+
+    def refresh_local_events(self):
+        print("Refreshing local Events")
+        pass
+
+    def refresh_groups(self):
+        print("Refreshing Groups")
+        pass
+
+

@@ -15,6 +15,10 @@ class LearnGameScreen(MDScreen):
 
         print("Hello 1, I am Learning the screen")
         return super().on_pre_enter(*args)
+
+    def load_depends(self, load_deps=None):
+        #TODO call the endpoint to get data
+        pass
     
 
 
