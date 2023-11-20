@@ -23,6 +23,7 @@ class LearnGameScreen(MDScreen):
 
 
     def add_game_card(self):
+        self.ids.game_results.clear_widgets()
         print("Hello 2, I am Learning the screen")
         game_card = GameCard(title="Rishav Sucks")
         game_card.pre_load()

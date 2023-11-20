@@ -9,12 +9,13 @@
 
         padding: [10,0,10,25]
 
+        # Left Side
         MDBoxLayout:
             size_hint_x: 0.35
             size_hint_y: 1
             md_bg_color: app.theme_cls.primary_color
             orientation: 'vertical'
-            padding: [25,50,25,50]
+            padding: [5,50,5,50]
             spacing: 100
 
             radius: 25
@@ -22,7 +23,7 @@
             # Calender
             MDBoxLayout:
                 orientation: "vertical"
-                padding: [20, 50, 20, 50]
+                padding: [10, 50, 10, 50]
 
                 pos_hint: {"center_x":.5, "center_y": .8}
 
@@ -113,7 +114,7 @@
                 text: f"{root.title}"
                 size_hint_y: None
                 height: self.texture_size[1] + 5
-                font_style: "H2"
+                font_style: "H3"
                 underline: True
                 theme_text_color: "Custom"
                 text_color: app.theme_cls.primary_color
