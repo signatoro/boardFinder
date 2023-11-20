@@ -1,4 +1,5 @@
 #:include kv/cards/localEventCard.kv
+#:import TopBar src.topBar.TopBar
 
 <HomeScreen>:
     name: "home_screen"
@@ -9,13 +10,8 @@
         orientation: 'vertical'
         cols: 1
 
-        MDTopAppBar:
-            title: "BoardGameTopBar"
-            pos_hint_y: None
-            #left_action_items:
-            #    [["home", lambda x: app.change_screen("home_screen", direction='right'), "Home", "?!?"]]
-            right_action_items:
-                [["account", lambda x: app.change_screen("create_account_screen", direction='left'), "Sign In", "???"]]
+        TopBar:
+            # pos_hint_y: None
 
         # BoxLayout widget for central buttons
         MDBoxLayout:

@@ -9,6 +9,7 @@ from createGroup import CreateGroupScreen
 from src.gameCard import GameCard
 from src.learnGameScreen import LearnGameScreen
 from src.boardGameScreen import BoardGameScreen
+from src.topBar import TopBar
 
 
 import time

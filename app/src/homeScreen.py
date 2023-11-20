@@ -5,6 +5,7 @@ from kivymd.uix.tab import MDTabsBase
 from kivy.uix.screenmanager import Screen
 from kivymd.uix.floatlayout import MDFloatLayout
 
+from src.topBar import TopBar
 from src.localEventCard import LocalEventCard
 
 

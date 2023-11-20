@@ -1,0 +1,6 @@
+<TopBar>:
+    title: root.title
+    left_action_items:
+        [[root.homeButtonIcon, lambda x: app.change_screen("home_screen", direction='right'), root.homeButtonDesc, root.questionMark]]
+    right_action_items:
+        [[root.profileButtonIcon, lambda x: app.change_screen("create_account_screen", direction='left'), root.profileButtonDesc, root.questionMark]]
