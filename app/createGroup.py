@@ -1,10 +1,16 @@
 from kivy.app import App
+from kivy.metrics import dp
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen, SlideTransition
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.button import MDRaisedButton
+from kivymd.uix.label import MDLabel
+from kivymd.uix.list import OneLineListItem
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.pickers import MDTimePicker
 
-games_list = 'sorry,monopoly,risk,catan,mancala,gameoflife,chess,gloomhaven,scrabble,jenga,codenames'.split(
+games_list = ('sorry,monopoly,risk,catan,mancala,gameoflife,chess,gloomhaven,scrabble,jenga,codenames,carcassonne,'
+              'campaign').split(
     ',')
 days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
@@ -65,7 +71,6 @@ class CreateGroupScreen(Screen):
         screen_manager.transition = SlideTransition(direction=direction)
         screen_manager.current = screen_name
         self.ids.progress_bar.value = self.display_progress_bar_value()
-        self.ids.progress_bar_value_label.text = self.display_progress_bar_label()
 
     def display_progress_bar_value(self):
         if self.currPrefPage == 1:
@@ -81,50 +86,72 @@ class CreateGroupScreen(Screen):
         elif self.currPrefPage == 6:
             return 6 / 6
 
-    def display_progress_bar_label(self):
-        if self.currPrefPage == 1:
-            return "1 / 6"
-        elif self.currPrefPage == 2:
-            return "2 / 6"
-        elif self.currPrefPage == 3:
-            return "3 / 6"
-        elif self.currPrefPage == 4:
-            return "4 / 6"
-        elif self.currPrefPage == 5:
-            return "5 / 6"
-        elif self.currPrefPage == 6:
-            return "6 / 6"
-
 
 class CreateGroupScreenPref1(Screen):
+    selected_games = []
+
     def __init__(self, parent, **kwargs):
         super(CreateGroupScreenPref1, self).__init__(**kwargs)
         self.class_parent = parent
 
-    def generate_search_game_options(self, value):
-        # filtered_option_list = list(set(option_list + value[:value.rfind(' ')].split(' ')))
-        # val = value[value.rfind(' ') + 1:]
-        # if not val:
-        #     return
-        # try:
-        #     option_data = []
-        #     for i in range(len(option_list)):
-        #         word = [word for word in option_list if word.startswith(val)][0][len(val):]
-        #         if not word:
-        #             return
-        #         if self.text + word in option_list:
-        #             if self.text + word not in app.option_data:
-        #                 popped_suggest = option_list.pop(option_list.index(str(self.text + word)))
-        #                 app.option_data.append(popped_suggest)
-        #         app.update_data(app.option_data)
-        #
-        #     except IndexError:
-        #
-        #         pass
-        return
+    def generate_search_game_options(self, text):
+        # if there is an empty field, clear widgets
+        if text == "":
+            self.ids.game_results.clear_widgets()
+            return
+
+        # Clear previous search results
+        self.ids.game_results.clear_widgets()
+
+        # Filter data based on the search text
+        search_results = [item for item in games_list if item.lower().startswith(text.lower())]
+
+        # Display the filtered results
+        for result in search_results:
+            list_item = OneLineListItem(text=result)
+            list_item.bind(on_touch_down=self.on_item_touch)
+            self.ids.game_results.add_widget(list_item)
+
+    def on_item_touch(self, instance, touch):
+        if instance.collide_point(*touch.pos):
+            # Handle the click event on the search result item
+            print(f"Clicked on: {instance.text}")
+            # Check if the item is not already in the selected items list
+            if instance.text not in self.selected_games:
+                # Add the item to the selected items list
+                self.selected_games.append(instance.text)
+                # Update the selected items MDList
+                self.update_selected_games()
+
+    def update_selected_games(self):
+        # Clear the selected items MDList
+        self.ids.selected_games.clear_widgets()
+
+        # Display the selected items in the MDList
+        for item in self.selected_games:
+            list_item = OneLineListItem(text=item, on_release=self.show_delete_popup)
+            self.ids.selected_games.add_widget(list_item)
+
+    def on_search_focus(self, value):
+        # Clear the search results when the text field loses focus
+        if not value:
+            self.ids.game_results.clear_widgets()
+            self.ids.search_board_game.text = ""
+
+    def show_delete_popup(self, instance):
+        # Display a popup asking for confirmation to delete the item
+        item_text = instance.text
+        delete_popup = DeleteItemPopup(item_text, self.delete_item)
+        delete_popup.open()
+
+    def delete_item(self, item_text):
+        self.selected_games.remove(item_text)
+        self.update_selected_games()
 
 
 class CreateGroupScreenPref2(Screen):
+    image_source = ""
+
     def __init__(self, parent, **kwargs):
         super(CreateGroupScreenPref2, self).__init__(**kwargs)
         self.class_parent = parent
@@ -149,10 +176,10 @@ class CreateGroupScreenPref3(Screen):
 
     def setup_dow_menu(self):
         for day in days:
-            item =  {
-                    "text": f"{day}",
-                    "viewclass": "MDDropDownItem",
-                    "on_release": lambda x=f"{day}": self.menu_callback(x),
+            item = {
+                "text": f"{day}",
+                "viewclass": "MDDropDownItem",
+                "on_release": lambda x=f"{day}": self.menu_callback(x),
             }
             self.menu_items.append(item)
 
@@ -207,7 +234,35 @@ class PopupImageSelection(Popup):
     def __init__(self, parent, **kwargs):
         super(PopupImageSelection, self).__init__(**kwargs)
         self.group_screen = parent
+        self.title = f"Select Group Image"
 
     def select_image(self, image_source):
+        self.group_screen.image_source = image_source
         self.group_screen.ids.group_image.source = image_source
+        self.dismiss()
+
+
+class DeleteItemPopup(Popup):
+    def __init__(self, item_text, delete_callback, **kwargs):
+        super(DeleteItemPopup, self).__init__(**kwargs)
+        self.item_text = item_text
+        self.delete_callback = delete_callback
+        self.title = f"Delete Game From Added List"
+        self.size_hint_y = 0.5
+        self.content = MDBoxLayout(orientation="vertical", spacing=dp(10), padding=dp(10))
+        popup_label = MDLabel(
+            text=f"Are you sure you want to delete '{item_text}'?",
+            theme_text_color="Custom", text_color=(1, 1, 1, 1)
+        )
+        self.content.add_widget(popup_label)
+        self.buttons_layout = MDBoxLayout(orientation="horizontal", spacing=dp(10))
+        self.buttons_layout.add_widget(MDRaisedButton(text="Yes", on_release=self.on_yes))
+        self.buttons_layout.add_widget(MDRaisedButton(text="No", on_release=self.on_no))
+        self.content.add_widget(self.buttons_layout)
+
+    def on_yes(self, instance):
+        self.dismiss()
+        self.delete_callback(self.item_text)
+
+    def on_no(self, instance):
         self.dismiss()

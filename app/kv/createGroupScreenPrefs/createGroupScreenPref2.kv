@@ -1,90 +1,88 @@
 <CreateGroupScreenPref2>
     name: "create_group_pref2"
 
-    MDBoxLayout:
-        orientation: "vertical"
-
-        MDLabel:
-            text: 'Public Information'
-            halign: "center"
-            pos_hint: {"center_x":.5, "center_y": 0.8}
-            underline: "true"
-            font_style: "H4"
-            size_hint_y: None
-            height: self.texture_size[1]
-            spacing: 5
-
-        MDLabel:
-            text: 'Upload Group Image'
-            pos_hint: {"center_x": 0.5, "center_y": 0.6}
-            underline: "true"
-            font_style: "H6"
-            size_hint_y: None
-            height: self.texture_size[1]
-            spacing: 5
-
-        FitImage:
-            size_hint_y: None
-            height: "200dp"
-            orientation: 'vertical'
-            source: ""
-            id: group_image
-
-        MDRectangleFlatButton:
-            text: "Choose Image"
-            on_release: root.open_image_popup()
-
+    MDScrollView:
         MDBoxLayout:
             orientation: "vertical"
-            spacing: 15
+            padding: [25, 0, 25, 0]
+
+            MDLabel:
+                text: 'Public Information'
+                halign: "center"
+                pos_hint: {"center_x":.5, "top": 1}
+                underline: "true"
+                font_style: "H4"
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            MDLabel:
+                text: 'Upload Group Image'
+                underline: "true"
+                font_style: "H6"
+                height: self.texture_size[1]
+
+            MDBoxLayout:
+                orientation: "vertical"
+
+                FitImage:
+                    md_bg_color: (0.76, 0.74, 0.78, 1)
+                    adaptive_height: True
+                    keep_ratio: True
+                    source: ""
+                    id: group_image
+                    size_hint: 1, 1
+                    pos_hint: {"left": 1}
+
+                MDRectangleFlatButton:
+                    text: "Choose Image"
+                    on_release: root.open_image_popup()
 
             MDLabel:
                 text: 'Group Name'
-                pos_hint: {"center_x": 0.5, "center_y": 0.5}
                 underline: "true"
                 font_style: "H6"
-                size_hint_y: None
-                height: self.texture_size[1]
-                spacing: 5
+                # height: self.texture_size[1] - 10
 
             MDTextField:
                 hint_text: "Susie's Gamers"
-                mode: "fill"
+                mode: "rectangle"
                 multiline: False
                 required: True
                 helper_text: "Enter Group Name"
 
             MDLabel:
                 text: 'General Description'
-                pos_hint: {"center_x": 0.5, "center_y": 0.4}
                 underline: "true"
                 font_style: "H6"
-                size_hint_y: None
-                height: self.texture_size[1]
-                spacing: 5
+                # height: self.texture_size[1]
 
             MDTextField:
-                hint_text: "Enter general description about boardgame and your group! Draw people in!"
-                mode: "fill"
+                hint_text: "Enter general description about your group! Draw people in!"
+                mode: "rectangle"
                 multiline: True
                 required: True
+                # size_hint_y: dp(100)
                 max_input_size: 500
                 helper_text: "Enter General Description"
 
-        MDBoxLayout:
-            orientation: "horizontal"
+            MDBoxLayout:
+                orientation: "horizontal"
+                size_hint_x: 1
+                spacing: 175
 
-            MDFillRoundFlatIconButton:
-                text: "Prev Pref"
-                pos_hint: {"left": 1, "y": 0.5}
-                icon: "arrow-left"
-                on_release: root.class_parent.load_next_pref_page(0, "right")
+                MDFillRoundFlatIconButton:
+                    text: "Prev Pref"
+                    # width: self.width + dp(20)  # Adjust the width as needed
+                    pos_hint: {'center_x': 0.2}
+                    icon: "arrow-left"
+                    on_release: root.class_parent.load_next_pref_page(0, "right")
 
-            MDFillRoundFlatIconButton:
-                text: "Next Pref"
-                pos_hint: {"right": 1, "y": 0.5}
-                icon: "arrow-right"
-                on_release: root.class_parent.load_next_pref_page(2)
+                MDFillRoundFlatIconButton:
+                    text: "Next Pref"
+                    # width: self.width + dp(20)  # Adjust the width as needed
+                    pos_hint: {'center_x': 0.8}
+                    icon: "arrow-right"
+                    on_release: root.class_parent.load_next_pref_page(2)
 
 
 <PopupImageSelection>:
@@ -98,18 +96,24 @@
         MDRectangleFlatButton:
             on_release: root.select_image('images/pikachu.jpg')
             FitImage:
+                size_hint: 1, 1
+                pos_hint: {"left": 1}
                 source: 'images/pikachu.jpg'
 
 
         MDRectangleFlatButton:
             on_release: root.select_image('images/piplup.jpg')
             FitImage:
+                size_hint: 1, 1
+                pos_hint: {"left": 1}
                 source: 'images/piplup.jpg'
 
 
         MDRectangleFlatButton:
             on_release: root.select_image('images/celebi.png')
             FitImage:
+                size_hint: 1, 1
+                pos_hint: {"left": 1}
                 source: 'images/celebi.png'
 
 
