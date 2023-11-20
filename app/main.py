@@ -2,6 +2,7 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen, NoTransition, SlideTransition
 from kivy.core.window import Window
 from kivymd.app import MDApp
+from kivy.clock import Clock
 from createAccountScreen import CreateAccountScreen
 from createGroup import CreateGroupScreen
 import kivy.utils
@@ -21,19 +22,21 @@ class HomeScreen(Screen):
 # The main application
 class MyApp(MDApp):
 
-    lastResize = 0
+    lastUserResize = 0
+    lastRatioResize = 0
     searched_games = []
     returned_games_to_display = []
 
     def build(self):
         Window.minimum_width = 400
         Window.minimum_height = 600
-        # self.lastResize = time.time()-2
-        self.forceWindowRatio()
+        self.lastRatioResize = time.time()-2
+        self.lastRatioResize = time.time()-2
+        #self.forceWindowRatio()
         self.title = 'BoardGame Group Finder'
         self.theme_cls.primary_palette = "Teal"
         # self.theme_cls.theme_style = "Dark"
-        # Window.bind(on_resize=self.forceWindowRatio)
+        Window.bind(on_resize=self.userResize)
         return Builder.load_file("main.kv")  # GUI
 
     def change_screen(self, screen_name, direction='left', mode="", load_deps=None):
@@ -56,13 +59,25 @@ class MyApp(MDApp):
 
         screen_manager.current = screen_name
 
+    def userResize(self, *args):
+        #print('a')
+        if self.lastUserResize + 0.3 < time.time():
+            #print('b')
+            Clock.schedule_once(self.forceWindowRatio, 0.1)
+            self.lastUserResize = time.time()
+        return True
+
     def forceWindowRatio(self, *args):
-        if self.lastResize + 0.1 > time.time():
+        #print('c')
+        if self.lastUserResize + 0.3 > time.time():
+            Clock.schedule_once(self.forceWindowRatio, 0.1)
             return
-        self.lastResize = time.time()
-        Window.size_hint = ((2/3), 1)
-        averageSize = (Window.size[0] + Window.size[1]) / 2
-        Window.size = (averageSize * 2 * 2 / 5, averageSize * 2 * 3 / 5)
+        if self.lastRatioResize + 0.3 < time.time():
+            #print('d')
+            self.lastRatioResize = time.time()
+            Window.size_hint = ((2/3), 1)
+            averageSize = (Window.size[0] + Window.size[1]) / 2
+            Window.size = (averageSize * 2 * 2 / 5, averageSize * 2 * 3 / 5)
         return True
 
 
