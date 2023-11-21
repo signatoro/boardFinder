@@ -2,12 +2,16 @@
     name: "create_group_pref3"
 
     MDScrollView:
-        scroll_type: ["content", "bars"]
         size_hint: (1, 1)
+        # height: dp(500)
+        do_scroll_y: True
+        bar_width: 10
 
         MDBoxLayout:
             orientation: "vertical"
             spacing: 10
+            size_hint_y: None
+            height: self.minimum_height
 
             MDLabel:
                 text: 'Meeting Information'
@@ -53,6 +57,7 @@
                 underline: "true"
                 font_style: "H6"
                 size_hint_y: None
+                mode: "rectangle"
                 height: self.texture_size[1]
 
             MDRoundFlatButton:
@@ -67,6 +72,7 @@
                 text: 'Choose End Time'
                 pos_hint: {"center_x": 0.5, "center_y": 0.6}
                 underline: "true"
+                mode: "rectangle"
                 font_style: "H6"
                 size_hint_y: None
                 height: self.texture_size[1]
@@ -84,38 +90,74 @@
                 pos_hint: {"center_x": 0.5, "center_y": 0.4}
                 underline: "true"
                 font_style: "H6"
+                mode: "rectangle"
                 size_hint_y: None
                 height: self.texture_size[1]
                 spacing: 5
 
             MDTextField:
                 hint_text: "Ex: Boston Public Library"
-                mode: "fill"
+                mode: "rectangle"
                 multiline: True
+                line_color_normal: "teal"
                 required: True
-                helper_text: "Enter General Description"
                 size_hint_y: None
-                height: self.minimum_height
-                padding: [10, 10]
+                padding: [10, 10, 10, 10]
+
+            MDLabel:
+                text: 'Max Players'
+                mode: "rectangle"
+                pos_hint: {"center_x": 0.5, "center_y": 0.4}
+                underline: "true"
+                font_style: "H6"
+                size_hint_y: None
+                height: self.texture_size[1]
+                spacing: 5
 
             MDBoxLayout:
-                orientation: "horizontal"
-                size_hint_x: 1
-                spacing: 175
+                orientation: 'horizontal'
+                size_hint_y: None
+                height: dp(40)
 
-                MDFillRoundFlatIconButton:
-                    text: "Prev Pref"
-                    # width: self.width + dp(20)  # Adjust the width as needed
-                    pos_hint: {'center_x': 0.2}
-                    icon: "arrow-left"
-                    on_release: root.class_parent.load_next_pref_page(1, "right")
+                MDSlider:
+                    id: max_players_slider
+                    min: 2
+                    max: 10
+                    value: 4
+                    hint: True
+                    hint_bg_color: "teal"
+                    hint_text_color: "white"
+                    size_hint_y: None
+                    height: dp(40)
+                    hint_radius: [6, 0, 6, 0]
+                    thumb_color_active: "teal"
+                    thumb_color_inactive: "teal"
 
-                MDFillRoundFlatIconButton:
-                    text: "Next Pref"
-                    # width: self.width + dp(20)  # Adjust the width as needed
-                    pos_hint: {'center_x': 0.8}
-                    icon: "arrow-right"
-                    on_release: root.class_parent.load_next_pref_page(3)
+                MDLabel:
+                    id: max_players_value_label
+                    text: root.set_mp_slider_value(max_players_slider.value)
+                    size_hint: None, None
+                    size: dp(50), dp(40)
+                    pos_hint: {'center_y': 0.5, 'left': 1}
+
+    MDBoxLayout:
+        orientation: "horizontal"
+        size_hint_x: 1
+        spacing: 175
+
+        MDFillRoundFlatIconButton:
+            text: "Prev Pref"
+            # width: self.width + dp(20)  # Adjust the width as needed
+            pos_hint: {'center_x': 0.2}
+            icon: "arrow-left"
+            on_release: root.class_parent.load_next_pref_page(1, "right")
+
+        MDFillRoundFlatIconButton:
+            text: "Next Pref"
+            # width: self.width + dp(20)  # Adjust the width as needed
+            pos_hint: {'center_x': 0.8}
+            icon: "arrow-right"
+            on_release: root.class_parent.load_next_pref_page(3)
 
 
 

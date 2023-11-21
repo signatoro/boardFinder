@@ -6,9 +6,10 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDRaisedButton
 from kivymd.uix.chip import MDChip
 from kivymd.uix.label import MDLabel
-from kivymd.uix.list import OneLineListItem
+from kivymd.uix.list import OneLineListItem, OneLineAvatarIconListItem, IconRightWidget
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.pickers import MDTimePicker
+import math
 
 games_list = ('sorry,monopoly,risk,catan,mancala,gameoflife,chess,gloomhaven,scrabble,jenga,codenames,carcassonne,'
               'campaign').split(',')
@@ -86,8 +87,11 @@ class CreateGroupScreenPref1(Screen):
 
         # Display the filtered results
         for result in search_results:
-            list_item = OneLineListItem(text=result)
+            list_item = OneLineAvatarIconListItem(text=result)
             list_item.bind(on_touch_down=self.on_item_touch)
+            icon = IconRightWidget(icon="plus")
+            list_item.add_widget(icon)
+            # list_item.bind(on_touch_down=self.on_item_touch)
             self.ids.game_results.add_widget(list_item)
 
     def on_item_touch(self, instance, touch):
@@ -105,7 +109,10 @@ class CreateGroupScreenPref1(Screen):
 
         # Display the selected items in the MDList
         for item in self.selected_games:
-            list_item = OneLineListItem(text=item, on_release=self.show_delete_popup)
+            list_item = OneLineAvatarIconListItem(text=item)
+            icon = IconRightWidget(icon="minus", on_release=self.show_delete_popup)
+            icon.list_item_ref = list_item
+            list_item.add_widget(icon)
             self.ids.selected_games.add_widget(list_item)
 
     def on_search_focus(self, value):
@@ -116,9 +123,10 @@ class CreateGroupScreenPref1(Screen):
 
     def show_delete_popup(self, instance):
         # Display a popup asking for confirmation to delete the item
-        item_text = instance.text
-        delete_popup = DeleteItemPopup(item_text, self.delete_item)
-        delete_popup.open()
+        item = getattr(instance, "list_item_ref", None)
+        if item:
+            delete_popup = DeleteItemPopup(item.text, self.delete_item)
+            delete_popup.open()
 
     def delete_item(self, item_text):
         self.selected_games.remove(item_text)
@@ -139,6 +147,7 @@ class CreateGroupScreenPref2(Screen):
 
 class CreateGroupScreenPref3(Screen):
     menu_items = []
+    max_players = 0
 
     def __init__(self, parent, **kwargs):
         super(CreateGroupScreenPref3, self).__init__(**kwargs)
@@ -149,6 +158,7 @@ class CreateGroupScreenPref3(Screen):
             items=self.menu_items,
             width_mult=4,
         )
+        self.max_players = 4
 
     def setup_dow_menu(self):
         for day in days:
@@ -186,6 +196,16 @@ class CreateGroupScreenPref3(Screen):
         elif btn_type == "end":
             time_dialog.bind(time=self.get_end_time)
         time_dialog.open()
+
+    def set_mp_slider_value(self, mp_slider_val):
+        new_mp = math.floor(mp_slider_val)
+        self.max_players = new_mp
+
+        if new_mp == 10:
+           return "10+"
+        else:
+            return str(new_mp)
+
 
 
 class CreateGroupScreenPref4(Screen):

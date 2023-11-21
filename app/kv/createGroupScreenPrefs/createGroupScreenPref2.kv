@@ -42,32 +42,40 @@
                 text: "Choose Image"
                 on_release: root.open_image_popup()
 
+
             MDLabel:
                 text: 'Group Name'
                 underline: "true"
                 font_style: "H6"
+                text_color: "teal"
 
             MDTextField:
-                hint_text: "Susie's Gamers"
+                hint_text: "Ex: Susie's Gamers"
                 mode: "rectangle"
                 multiline: False
+                hint_text_color: "teal"
+                line_color_normal: "teal"
                 required: True
 
             MDLabel:
                 text: 'General Description'
                 underline: "true"
                 font_style: "H6"
+                text_color: "teal"
 
             MDTextField:
-                hint_text: "Enter general description about your group! Draw people in!"
+                hint_text: "Enter general description about your group!"
                 mode: "rectangle"
                 multiline: True
                 required: True
                 max_input_size: 500
-                helper_text: "Enter General Description"
+                line_color_normal: "teal"
+                helper_text: "Enter General Description. Draw people in!"
+                helper_text_color: "teal"
                 helper_text_mode: "on_focus"
-                size_hint_y: None
-                height: dp(150)
+                height: self.minimum_height
+                padding: [0, 0, 0, 50]
+                # size_hint_y: dp(100)
 
     MDBoxLayout:
         orientation: "horizontal"
