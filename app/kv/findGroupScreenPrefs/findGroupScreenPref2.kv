@@ -1,0 +1,117 @@
+<FindGroupScreenPref2>
+    name: "find_group_pref2"
+
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: 10
+        padding: 10
+
+        AnchorLayout:
+            size_hint_x: 1
+            size_hint_y: .05
+            anchor_x: 'center'
+            anchor_y: 'center'
+            MDLabel:
+                halign: 'center'
+                text: 'Please select your preferred group size!'
+
+        MDBoxLayout:
+            spacing: 1
+            padding: 1
+            orientation: 'vertical'
+            size_hint_x: 1
+            size_hint_y: .7
+
+            MDLabel:
+                size_hint_x: 1
+                size_hint_y: 0.3
+                halign: 'center'
+                text: "Ideal player count"
+                text_color: [0.3, 0.3, 0.3, 1]
+
+            Slider:
+                id: player_slider
+                min: 2
+                max: 8
+                step: 1
+                value: 4
+                size_hint_x: 1
+                size_hint_y: 0.4
+                orientation: 'horizontal'
+                on_touch_move: (lambda x : print("move"))
+                on_touch_up: (lambda x : print("up"))
+                on_touch_down: (lambda x : print("down"))
+                on_value: root.class_parent.player_count_set(self.value)
+
+            MDLabel:
+                size_hint_x: 1
+                size_hint_y: 0.3
+                halign: 'center'
+                id: player_count_label
+                text: "4"
+                text_color: [0.3, 0.3, 0.3, 1]
+
+        MDBoxLayout:
+            spacing: 1
+            padding: 1
+            orientation: 'vertical'
+            size_hint_x: 1
+            size_hint_y: .7
+
+            MDLabel:
+                size_hint_x: 1
+                size_hint_y: 0.3
+                halign: 'center'
+                text: "Player count variation allowed"
+                text_color: [0.3, 0.3, 0.3, 1]
+
+            Slider:
+                id: variation_slider
+                min: 0
+                max: 5
+                step: 1
+                value: 1
+                size_hint_x: 1
+                size_hint_y: 0.4
+                orientation: 'horizontal'
+                on_touch_move: (lambda x : print("move"))
+                on_touch_up: (lambda x : print("up"))
+                on_touch_down: (lambda x : print("down"))
+                on_value: root.class_parent.player_variation_set(self.value)
+
+            MDLabel:
+                size_hint_x: 1
+                size_hint_y: 0.3
+                halign: 'center'
+                id: player_variation_label
+                text: "1"
+                text_color: [0.3, 0.3, 0.3, 1]
+
+        MDBoxLayout:
+            size_hint_x: 1
+            size_hint_y: .6
+
+        MDBoxLayout:
+            size_hint_x: 1
+            size_hint_y: .15
+            orientation: 'horizontal'
+            padding: 0
+
+            AnchorLayout:
+                anchor_x: 'left'
+                anchor_y: 'bottom'
+                MDFillRoundFlatIconButton:
+                    text: "Previous Preference"
+                    #pos_hint: {"right": 1, "y": 0.5}
+                    icon: "arrow-left"
+                    on_release: root.class_parent.load_next_pref_page(0)
+
+            AnchorLayout:
+                anchor_x: 'right'
+                anchor_y: 'bottom'
+                MDFillRoundFlatIconButton:
+                    text: "Next Preference"
+                    pos_hint: {'x': 0.9} # , "y": 0.5
+                    halign: 'right'
+                    icon: "arrow-right"
+                    on_release: root.class_parent.load_next_pref_page(2)
