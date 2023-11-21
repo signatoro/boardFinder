@@ -106,6 +106,9 @@ class FindGroupScreen(Screen):
     # def delayed_color_set(self, *args):
     #     self.button_to_set.md_bg_color = "black"
 
+    def preferences_done(self):
+        App.get_running_app().change_screen("home_screen")
+
 
 class FindGroupScreenPref1(Screen):
     def __init__(self, parent, **kwargs):
