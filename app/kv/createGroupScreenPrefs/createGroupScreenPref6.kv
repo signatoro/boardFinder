@@ -67,25 +67,28 @@
                         size_hint: (None, None)
                         size: (self.minimum_width, self.minimum_height)
 
-    BoxLayout:
+    MDBoxLayout:
         orientation: "horizontal"
-        size_hint: 1, None
-        height: self.minimum_height
-        spacing: 175
+        size_hint_x: 1
+        padding: 0
 
-        MDFillRoundFlatIconButton:
-            text: "Prev Pref"
-            # width: self.width + dp(20)  # Adjust the width as needed
-            pos_hint: {'center_x': 0.2}
-            icon: "arrow-left"
-            on_release: root.class_parent.load_next_pref_page(4, "right")
+        AnchorLayout:
+            anchor_x: 'left'
+            anchor_y: 'bottom'
 
-        MDFillRoundFlatIconButton:
-            text: "Next Pref"
-            # width: self.width + dp(20)  # Adjust the width as needed
-            pos_hint: {'center_x': 0.8}
-            icon: "arrow-right"
-            on_release: root.class_parent.load_next_pref_page(6)
+            MDFillRoundFlatIconButton:
+                text: "Prev Pref"
+                icon: "arrow-left"
+                on_release: root.class_parent.load_next_pref_page(4, "right")
+
+        AnchorLayout:
+            anchor_x: 'right'
+            anchor_y: 'bottom'
+
+            MDFillRoundFlatIconButton:
+                text: "Next Pref"
+                icon: "arrow-right"
+                on_release: root.class_parent.load_next_pref_page(6)
 
 
 

@@ -16,44 +16,51 @@
             MDLabel:
                 text: 'Meeting Information'
                 halign: "center"
-                pos_hint: {"center_x":.5, "center_y": 0.8}
+                pos_hint: {"center_x":.5, "top": 0.9}
                 underline: "true"
                 font_style: "H4"
                 size_hint_y: None
                 height: self.texture_size[1]
+                spacing: 5
 
             MDLabel:
                 id: dow_label
                 text: 'Choose Day Of Week'
-                pos_hint: {"center_x": 0.5, "center_y": 0.6}
+                #pos_hint: {"center_x": 0.5, "center_y": 0.9}
                 underline: "true"
                 font_style: "H6"
                 size_hint_y: None
                 height: self.texture_size[1]
+                spacing: 5
 
             MDFillRoundFlatIconButton:
                 id: dow_button
                 text: "Select Day"
                 icon: "arrow-down"
-                pos_hint: {"left": 1, "center_y": .5}
+                #pos_hint: {"left": 1, "center_y": 0.8}
+                #height: self.texture_size[1]
+                spacing: 5
                 on_release: root.menu.open()
 
             MDBoxLayout:
                 orientation: "horizontal"
                 padding: [0, 0, 10, 0]
+                # pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                spacing: 5
 
                 MDLabel:
                     # size_hint: .8, None
                     text: "Recurring"
 
                 MDCheckbox:
-                    # size_hint: .2, None
+                    size_hint: .2, None
 
 
             MDLabel:
                 id: start_time_label
                 text: 'Choose Start Time'
-                pos_hint: {"center_x": 0.5, "center_y": 0.6}
+                spacing: 5
+                # pos_hint: {"center_x": 0.5, "center_y": 0.6}
                 underline: "true"
                 font_style: "H6"
                 size_hint_y: None
@@ -64,13 +71,15 @@
                 id: start_time_button
                 text: "Select Start Time"
                 required: "true"
-                pos_hint: {"left": 1, "center_y": .5}
+                # pos_hint: {"left": 1, "center_y": .5}
                 on_release: root.open_time_button("start")
+                spacing: 5
 
             MDLabel:
                 id: end_time_label
                 text: 'Choose End Time'
-                pos_hint: {"center_x": 0.5, "center_y": 0.6}
+                # pos_hint: {"center_x": 0.5, "center_y": 0.4}
+                spacing: 5
                 underline: "true"
                 mode: "rectangle"
                 font_style: "H6"
@@ -82,12 +91,14 @@
                 id: end_time_button
                 text: "Select End Time"
                 required: "true"
-                pos_hint: {"left": 1, "center_y": .5}
+                #pos_hint: {"left": 1, "center_y": .3}
+                spacing: 5
                 on_release: root.open_time_button("end")
 
             MDLabel:
                 text: 'Location'
-                pos_hint: {"center_x": 0.5, "center_y": 0.4}
+                #pos_hint: {"center_x": 0.5, "center_y": 0.2}
+                spacing: 5
                 underline: "true"
                 font_style: "H6"
                 mode: "rectangle"
@@ -102,12 +113,13 @@
                 line_color_normal: "teal"
                 required: True
                 size_hint_y: None
+                spacing: 5
                 padding: [10, 10, 10, 10]
 
             MDLabel:
                 text: 'Max Players'
                 mode: "rectangle"
-                pos_hint: {"center_x": 0.5, "center_y": 0.4}
+                pos_hint: {"center_x": 0.5, "center_y": 0.1}
                 underline: "true"
                 font_style: "H6"
                 size_hint_y: None
@@ -138,26 +150,30 @@
                     text: root.set_mp_slider_value(max_players_slider.value)
                     size_hint: None, None
                     size: dp(50), dp(40)
-                    pos_hint: {'center_y': 0.5, 'left': 1}
+                    # pos_hint: {'center_y': 0.5, 'left': 1}
 
-    MDBoxLayout:
-        orientation: "horizontal"
-        size_hint_x: 1
-        spacing: 175
+            MDBoxLayout:
+                orientation: "horizontal"
+                size_hint_x: 1
+                padding: 0
 
-        MDFillRoundFlatIconButton:
-            text: "Prev Pref"
-            # width: self.width + dp(20)  # Adjust the width as needed
-            pos_hint: {'center_x': 0.2}
-            icon: "arrow-left"
-            on_release: root.class_parent.load_next_pref_page(1, "right")
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'bottom'
 
-        MDFillRoundFlatIconButton:
-            text: "Next Pref"
-            # width: self.width + dp(20)  # Adjust the width as needed
-            pos_hint: {'center_x': 0.8}
-            icon: "arrow-right"
-            on_release: root.class_parent.load_next_pref_page(3)
+                    MDFillRoundFlatIconButton:
+                        text: "Prev Pref"
+                        icon: "arrow-left"
+                        on_release: root.class_parent.load_next_pref_page(1, "right")
+
+                AnchorLayout:
+                    anchor_x: 'right'
+                    anchor_y: 'bottom'
+
+                    MDFillRoundFlatIconButton:
+                        text: "Next Pref"
+                        icon: "arrow-right"
+                        on_release: root.class_parent.load_next_pref_page(3)
 
 
 
