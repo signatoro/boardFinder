@@ -2,6 +2,7 @@ from kivy.app import App
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen, SlideTransition
 from kivymd.uix.menu import MDDropdownMenu
+from kivy.clock import Clock
 from kivymd.uix.pickers import MDTimePicker
 
 games_list = 'sorry,monopoly,risk,catan,mancala,gameoflife,chess,gloomhaven,scrabble,jenga,codenames'.split(
@@ -15,11 +16,13 @@ class FindGroupScreen(Screen):
     screen_name = ""
     initialized = False
     chosen_genres = []
+    free_times = []
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.screen_name = "find_group_pref1"
         self.chosen_genres = []
+        self.free_times = []
         if not self.initialized:
             self.child1 = FindGroupScreenPref1(self)
             self.child2 = FindGroupScreenPref2(self)
@@ -70,12 +73,13 @@ class FindGroupScreen(Screen):
         return str(self.currPrefPage) + " / 3"
 
     def selected_genre(self, genre_chip):
-        if genre_chip.active:
-            self.chosen_genres.remove(genre_chip.text)
+        if str(genre_chip.text) in self.chosen_genres:
+        # if genre_chip.active:
+            self.chosen_genres.remove(str(genre_chip.text))
             genre_chip.active = False
             print("active")
         else:
-            self.chosen_genres.append(genre_chip.text)
+            self.chosen_genres.append(str(genre_chip.text))
             genre_chip.active = True
             print("not active")
         print(self.chosen_genres)
@@ -89,6 +93,20 @@ class FindGroupScreen(Screen):
         self.child2.ids.player_variation_label.text = str(value)
         if value > 4:
             self.child2.ids.player_variation_label.text = "Any Amount"
+
+    def time_pressed(self, button, time):
+        if button.text == "Free!":
+            button.text = ""
+            self.free_times.remove(time)
+        else:
+            button.text = "Free!"
+            self.free_times.append(time)
+        print(self.free_times)
+    #     self.button_to_set = button
+    #     Clock.schedule_once(self.delayed_color_set, 0.1)
+    #
+    # def delayed_color_set(self, *args):
+    #     self.button_to_set.md_bg_color = "black"
 
 
 class FindGroupScreenPref1(Screen):
