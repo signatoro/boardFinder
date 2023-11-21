@@ -1,6 +1,9 @@
 from kivy.app import App
+from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen, SlideTransition
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.label import MDLabel
 from kivymd.uix.menu import MDDropdownMenu
 from kivy.clock import Clock
 from kivymd.uix.pickers import MDTimePicker
@@ -111,6 +114,10 @@ class FindGroupScreenPref1(Screen):
     def __init__(self, parent, **kwargs):
         super(FindGroupScreenPref1, self).__init__(**kwargs)
         self.class_parent = parent
+        self.myPopup = PopupInfo(self)
+
+    def open_popup(self):
+        self.myPopup.open()
 
     def generate_search_game_options(self, value):
         # filtered_option_list = list(set(option_list + value[:value.rfind(' ')].split(' ')))
@@ -139,10 +146,6 @@ class FindGroupScreenPref2(Screen):
     def __init__(self, parent, **kwargs):
         super(FindGroupScreenPref2, self).__init__(**kwargs)
         self.class_parent = parent
-        self.imagePopup = PopupImageSelection(self)
-
-    # def open_image_popup(self):
-    #     self.imagePopup.open()
 
 
 class FindGroupScreenPref3(Screen):
@@ -196,11 +199,17 @@ class FindGroupScreenPref3(Screen):
     #     time_dialog.open()
 
 
-class PopupImageSelection(Popup):
+class PopupInfo(Popup):
     def __init__(self, parent, **kwargs):
-        super(PopupImageSelection, self).__init__(**kwargs)
+        super(PopupInfo, self).__init__(**kwargs)
         self.group_screen = parent
+        info_text = "Genre Explanations:\n" +\
+                    "Genre A: \n" + \
+                    "Genre B: \n"
+        self.add_widget(
+            MDBoxLayout(
+                MDLabel(text=info_text, size_hint_x=1, size_hint_y=0.9),
+                Button(text="Ok", on_release=self.dismiss, size_hint_x=1, size_hint_y=0.1),
+                orientation='vertical')
+        )
 
-    def select_image(self, image_source):
-        self.group_screen.ids.group_image.source = image_source
-        self.dismiss()
