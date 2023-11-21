@@ -1,4 +1,5 @@
 #:include kv/cards/localEventCard.kv
+#:include kv/cards/groupCard.kv
 
 <HomeScreen>:
     name: "home_screen"
@@ -104,21 +105,22 @@
                 #scroll_timeout: 0
                 MDCarousel:
                     id: group_card_carou
+                    padding: [100, 100, 100, 100]
                     #min_move: 0.0001
                     #anim_cancel_duration: 0.0001
                     #scroll_distance: 0.0001
-                    MDCard:
-                        max_swipe_x: 0
-                        radius: 25
-                        size_hint: (1, 1)
-                        md_bg_color: "darkgrey"
+                    # MDCard:
+                    #     max_swipe_x: 0
+                    #     radius: 25
+                    #     size_hint: (1, 1)
+                    #     md_bg_color: "darkgrey"
 
-                        on_release: root.refresh_local_events()
+                    #     on_release: root.refresh_local_events()
                         
-                        MDLabel:
-                            text: 'Refresh My Groups'
-                            icon: "refresh"
-                            adaptive_size: True
-                            pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                            color: (0, 0, 0, 1)
-                            bold: True
+                    #     MDLabel:
+                    #         text: 'Refresh My Groups'
+                    #         icon: "refresh"
+                    #         adaptive_size: True
+                    #         pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                    #         color: (0, 0, 0, 1)
+                            # bold: True
