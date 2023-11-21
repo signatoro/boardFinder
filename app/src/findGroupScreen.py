@@ -77,12 +77,9 @@ class FindGroupScreen(Screen):
         # if genre_chip.active:
             self.chosen_genres.remove(str(genre_chip.text))
             genre_chip.active = False
-            print("active")
         else:
             self.chosen_genres.append(str(genre_chip.text))
             genre_chip.active = True
-            print("not active")
-        print(self.chosen_genres)
 
     def player_count_set(self, value):
         self.child2.ids.player_count_label.text = str(value)
@@ -90,9 +87,11 @@ class FindGroupScreen(Screen):
             self.child2.ids.player_count_label.text = "8+"
 
     def player_variation_set(self, value):
-        self.child2.ids.player_variation_label.text = str(value)
+        self.child2.ids.player_variation_label.text = str(int(value))
         if value > 4:
             self.child2.ids.player_variation_label.text = "Any Amount"
+        if value < 1:
+            self.child2.ids.player_variation_label.text = "Exact Number"
 
     def time_pressed(self, button, time):
         if button.text == "Free!":
@@ -101,7 +100,6 @@ class FindGroupScreen(Screen):
         else:
             button.text = "Free!"
             self.free_times.append(time)
-        print(self.free_times)
     #     self.button_to_set = button
     #     Clock.schedule_once(self.delayed_color_set, 0.1)
     #
