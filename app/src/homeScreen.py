@@ -102,7 +102,7 @@ class HomeScreen(Screen):
             day= '4',
             time= "1:30 pm",
             location= "Library, Boston MA",
-            image_path = 'images/pikachu.jpg',
+            image_path = 'images/celebi.png',
             session_length= "4 - 6 Hrs",
             participant = '1/4 Attending',
         )
