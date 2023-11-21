@@ -30,9 +30,13 @@
 
         MDScrollView:
             MDList:
+                id: list_item
                 padding: [25, 0, 25, 0]
                 height: self.minimum_height
-                md_bg_color: (0.76, 0.74, 0.78, 1)
+                md_bg_color: "darkgrey"
+                halign: "center"
+                # width: list_item.ids.label.width  # Adjust width to the content + padding
+                pos_hint: {"center_x": 0.5}
                 id: game_results
 
         MDLabel:
@@ -44,18 +48,20 @@
             height: self.texture_size[1]
 
         MDScrollView:
-            md_bg_color: (0.76, 0.74, 0.78, 1)
             MDList:
                 padding: [25, 0, 25, 0]
                 height: self.minimum_height
+                md_bg_color: "darkgrey"
                 id: selected_games
 
-        MDFillRoundFlatIconButton:
-            text: "Next Pref"
-            # width: self.width + dp(20)  # Adjust the width as needed
-            pos_hint: {'center_x': 0.8}
-            icon: "arrow-right"
-            on_release: root.class_parent.load_next_pref_page(1)
+        AnchorLayout:
+            anchor_x: 'right'
+            anchor_y: 'bottom'
+
+            MDFillRoundFlatIconButton:
+                text: "Next Pref"
+                icon: "arrow-right"
+                on_release: root.class_parent.load_next_pref_page(1)
 
 
 
