@@ -13,10 +13,10 @@
                 [["home", lambda x: app.change_screen("home_screen", direction='right'), "Home", "Home"]]
 
         MDLabel:
-            text: 'Create a Group'
+            text: 'Learn A Game'
             pos_hint: {"center_x":.5, "center_y": 0.9}
             underline: "true"
-            font_style: "H5"
+            font_style: "H4"
             size_hint_y: None
             height: self.texture_size[1] + 5  # Set the height based on text size
         
@@ -45,8 +45,3 @@
                 padding: 2
                 adaptive_height: True
                 id: game_results
-
-        MDFillRoundFlatIconButton:
-            text: "Next Pref"
-            # icon-right: "arrow-right"
-            pos_hint: {"x": 0.8, "y": 0.5}

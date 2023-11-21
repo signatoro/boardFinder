@@ -7,43 +7,55 @@
         MDLabel:
             text: 'Add your Board Game'
             halign: "center"
-            pos_hint: {"center_x":.5, "center_y": 0.8}
+            pos_hint: {"center_x":.5, "top": 1}
             underline: "true"
             font_style: "H4"
             size_hint_y: None
             height: self.texture_size[1]
-            spacing: 5
 
         # search board game text field
         MDTextField:
             id: search_board_game
-            # size_hint_y: 0.5
-            pos_hint:{ 'left':0 , 'top': 1}
+            pos_hint:{ 'center_x': 0.5 , 'top': 1}
+            size_hint_x: 0.5
             hint_text: 'Search Board Game'
             hint_text_color: 1,1,1,1
             icon_left: 'magnify'
-            mode: "fill"
-            # helper_text_mode: "persistent"
-            # helper_text: "Search Board Game"
-            line_color: [1,1,1,1]
-            color_normal: [1,1,1,1]
+            mode: "rectangle"
             font_size: 22
             active_line: False
             multiline: False
-            on_text: root.generate_search_game_options()
+            on_text: root.generate_search_game_options(self.text)
+            on_focus: root.on_search_focus(self.focus)
 
         MDScrollView:
             MDList:
+                padding: [25, 0, 25, 0]
+                height: self.minimum_height
+                md_bg_color: (0.76, 0.74, 0.78, 1)
                 id: game_results
 
-        MDBoxLayout:
-            orientation: "horizontal"
+        MDLabel:
+            text: 'Added Board Games'
+            halign: "center"
+            underline: "true"
+            font_style: "H5"
+            size_hint_y: None
+            height: self.texture_size[1]
 
-            MDFillRoundFlatIconButton:
-                text: "Next Pref"
-                pos_hint: {"right": 1, "y": 0.5}
-                icon: "arrow-right"
-                on_release: root.class_parent.load_next_pref_page(1)
+        MDScrollView:
+            md_bg_color: (0.76, 0.74, 0.78, 1)
+            MDList:
+                padding: [25, 0, 25, 0]
+                height: self.minimum_height
+                id: selected_games
+
+        MDFillRoundFlatIconButton:
+            text: "Next Pref"
+            # width: self.width + dp(20)  # Adjust the width as needed
+            pos_hint: {'center_x': 0.8}
+            icon: "arrow-right"
+            on_release: root.class_parent.load_next_pref_page(1)
 
 
 

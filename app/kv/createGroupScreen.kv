@@ -11,13 +11,14 @@
 
     MDBoxLayout:
         orientation: "vertical"
-        spacing: 10
 
         MDTopAppBar:
             title: "BoardGameTopBar"
             pos_hint_y: None
             left_action_items:
                 [["home", lambda x: app.change_screen("home_screen", direction='right'), "Home", "Home"]]
+
+
 
         MDLabel:
             text: 'Create a Group'
@@ -28,27 +29,21 @@
             size_hint_y: None
             height: self.texture_size[1]
 
-        MDBoxLayout:
-            # Set up screen manager and all screens
-            ScreenManager:
-                size_hint: 1, 1
-                pos_hint: {"center_x": 0.5, "top": 0.9}
-                id: create_group_screen_manager
+        MDScrollView:
+            MDBoxLayout:
+                orientation: "vertical"
+                # Set up screen manager and all screens
+                ScreenManager:
+                    # size_hint: 1, 1
+                    # pos_hint: {"center_x": 0.5, "top": 0.9}
+                    id: create_group_screen_manager
 
-        MDBoxLayout:
-            orientation: "horizontal"
-            size_hint_y: None
-
-            MDProgressBar:
-                id: progress_bar
-                min: 0
-                max: 1
-                value: root.display_progress_bar_value()
-                size_hint_x: 1
-                pos_hint: {"bottom": 1}
-
-            MDLabel:
-                id: progress_bar_value_label
-                text: root.display_progress_bar_label()
-                size_hint_x: 0.5
+                MDProgressBar:
+                    id: progress_bar
+                    min: 0
+                    max: 1
+                    value: root.display_progress_bar_value()
+                    size_hint_x: 1
+                    size_hint_y: None
+                    padding: [0, 100, 0, 0]
 
