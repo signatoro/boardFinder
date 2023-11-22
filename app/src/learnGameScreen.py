@@ -25,14 +25,14 @@ class LearnGameScreen(MDScreen):
     def add_game_card(self):
         self.ids.game_results.clear_widgets()
         print("Hello 2, I am Learning the screen")
-        game_card = GameCard(title="Rishav Sucks")
+        game_card = GameCard(title="Catan")
         game_card.pre_load()
         self.ids.game_results.add_widget(game_card)
 
-        game_card1 = GameCard(title="Matty Sucks")
+        game_card1 = GameCard(title="Risk")
         game_card1.pre_load()
         self.ids.game_results.add_widget(game_card1)
 
-        game_card2 = GameCard(title="Scott Sucks")
+        game_card2 = GameCard(title="Jenga")
         game_card2.pre_load()
         self.ids.game_results.add_widget(game_card2)

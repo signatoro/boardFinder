@@ -37,7 +37,7 @@ class LocalEventCard(MDCard):
     location_type= StringProperty()
 
     month= NumericProperty()
-    day= NumericProperty()
+    day=NumericProperty()
 
     time= StringProperty()
     location= StringProperty()
