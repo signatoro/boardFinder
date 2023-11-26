@@ -3,15 +3,17 @@
 
     MDScrollView:
         size_hint: (1, 1)
-        # height: dp(500)
         do_scroll_y: True
-        bar_width: 10
+        scroll_type: ['bars', 'content']
+        bar_width: dp(20)
 
         MDBoxLayout:
             orientation: "vertical"
             spacing: 10
             size_hint_y: None
-            height: self.minimum_height
+            adaptive_height: True
+            padding: [25, 10, 25, 10]
+            # height: self.minimum_height
 
             MDLabel:
                 text: 'Meeting Information'
@@ -42,19 +44,32 @@
                 spacing: 5
                 on_release: root.menu.open()
 
-            MDBoxLayout:
-                orientation: "horizontal"
-                padding: [0, 0, 10, 0]
-                # pos_hint: {"center_x": 0.5, "center_y": 0.7}
+            MDLabel:
+                id: recurring_label
+                text: 'Recurring Meeting?'
+                #pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                underline: "true"
+                font_style: "H6"
+                size_hint_y: None
+                height: self.texture_size[1]
                 spacing: 5
 
-                MDLabel:
-                    # size_hint: .8, None
+            MDBoxLayout:
+                orientation: 'horizontal'
+                adaptive_size: True
+                spacing: dp(10)
+
+                MyToggleButton:
+                    id: recurring_toggle_btn
+                    #md_bg_color: (1, 1, 1, 1)
                     text: "Recurring"
+                    group: "general_info"
 
-                MDCheckbox:
-                    size_hint: .2, None
-
+                MyToggleButton:
+                    id: non_recurring_toggle_btn
+                    #md_bg_color: "teal"
+                    text: "Non-Recurring"
+                    group: "general_info"
 
             MDLabel:
                 id: start_time_label
@@ -152,28 +167,34 @@
                     size: dp(50), dp(40)
                     # pos_hint: {'center_y': 0.5, 'left': 1}
 
-            MDBoxLayout:
-                orientation: "horizontal"
-                size_hint_x: 1
-                padding: 0
+    MDBoxLayout:
+        orientation: "horizontal"
+        size_hint_x: 1
+        padding: 0
 
-                AnchorLayout:
-                    anchor_x: 'left'
-                    anchor_y: 'bottom'
+        AnchorLayout:
+            anchor_x: 'left'
+            anchor_y: 'bottom'
+            padding: [dp(5), 0, 0, dp(10)]
 
-                    MDFillRoundFlatIconButton:
-                        text: "Prev Pref"
-                        icon: "arrow-left"
-                        on_release: root.class_parent.load_next_pref_page(1, "right")
+            MDFillRoundFlatIconButton:
+                text: "Prev Pref"
+                icon: "arrow-left"
+                on_release: root.class_parent.load_next_pref_page(1, "right")
 
-                AnchorLayout:
-                    anchor_x: 'right'
-                    anchor_y: 'bottom'
+        AnchorLayout:
+            anchor_x: 'right'
+            anchor_y: 'bottom'
+            padding: [0, 0, dp(5), dp(10)]
 
-                    MDFillRoundFlatIconButton:
-                        text: "Next Pref"
-                        icon: "arrow-right"
-                        on_release: root.class_parent.load_next_pref_page(3)
+            MDFillRoundFlatIconButton:
+                text: "Next Pref"
+                icon: "arrow-right"
+                on_release: root.class_parent.load_next_pref_page(3)
 
 
 
+<MyToggleButton>:
+    MDRectangleFlatButton:
+        text: root.text
+        on_release: root.on_toggle(root.text)

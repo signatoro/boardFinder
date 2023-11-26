@@ -3,6 +3,7 @@
 
     MDBoxLayout:
         orientation: "vertical"
+        padding: [25, 10, 25, 10]
 
         MDLabel:
             text: 'Host Information'
@@ -12,16 +13,17 @@
             font_style: "H4"
             size_hint_y: None
             height: self.texture_size[1]
-            spacing: 5
 
         MDLabel:
+            id: host_first_name
             text: 'First Name'
             pos_hint: {"center_x": 0.5, "center_y": 0.4}
             underline: "true"
             font_style: "H6"
             size_hint_y: None
             height: self.texture_size[1]
-            spacing: 5
+            spacing: dp(15)
+
 
         MDTextField:
             hint_text: "Ex: Bob"
@@ -31,6 +33,7 @@
             required: True
 
         MDLabel:
+            id: host_last_name
             text: 'Last Name'
             pos_hint: {"center_x": 0.5, "center_y": 0.4}
             underline: "true"
@@ -47,6 +50,7 @@
             required: True
 
         MDLabel:
+            id: host_email
             text: 'Email'
             pos_hint: {"center_x": 0.5, "center_y": 0.4}
             underline: "true"
@@ -63,6 +67,7 @@
             required: True
 
         MDLabel:
+            id: host_phone_num
             text: 'Phone Number'
             pos_hint: {"center_x": 0.5, "center_y": 0.4}
             underline: "true"
@@ -87,6 +92,7 @@
             AnchorLayout:
                 anchor_x: 'left'
                 anchor_y: 'bottom'
+                padding: [dp(5), 0, 0, dp(10)]
 
                 MDFillRoundFlatIconButton:
                     text: "Prev Pref"
@@ -96,6 +102,7 @@
             AnchorLayout:
                 anchor_x: 'right'
                 anchor_y: 'bottom'
+                padding: [0, 0, dp(5), dp(10)]
 
                 MDFillRoundFlatIconButton:
                     text: "Next Pref"
