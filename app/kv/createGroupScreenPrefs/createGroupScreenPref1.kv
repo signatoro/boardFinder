@@ -3,6 +3,7 @@
 
     MDBoxLayout:
         orientation: "vertical"
+        padding: [50, 0, 50, 0]
 
         MDLabel:
             text: 'Add your Board Game'
@@ -17,7 +18,7 @@
         MDTextField:
             id: search_board_game
             pos_hint:{ 'center_x': 0.5 , 'top': 1}
-            size_hint_x: 0.5
+            size_hint_x: 0.8
             hint_text: 'Search Board Game'
             hint_text_color: 1,1,1,1
             icon_left: 'magnify'
@@ -26,12 +27,12 @@
             active_line: False
             multiline: False
             on_text: root.generate_search_game_options(self.text)
-            on_focus: root.on_search_focus(self.focus)
+            padding: [0, 0, 70, 0]
+
 
         MDScrollView:
             MDList:
                 id: list_item
-                padding: [25, 0, 25, 0]
                 height: self.minimum_height
                 md_bg_color: "darkgrey"
                 halign: "center"
@@ -47,11 +48,12 @@
             size_hint_y: None
             height: self.texture_size[1]
 
+
         MDScrollView:
             MDList:
-                padding: [25, 0, 25, 0]
+                padding: dp(30)
                 height: self.minimum_height
-                md_bg_color: "darkgrey"
+                md_bg_color: "teal"
                 id: selected_games
 
         AnchorLayout:
