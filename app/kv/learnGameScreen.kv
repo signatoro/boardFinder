@@ -36,6 +36,14 @@
             font_size: .35 * self.height
             active_line: False
             multiline: False
+            on_text: root.search_games(self.text)
+
+        MDScrollView:
+            size_hint: 1, None
+            height: game_search_results.height
+
+            MDList:
+                id: game_search_results
 
         # List of Game Cards
         MDScrollView:

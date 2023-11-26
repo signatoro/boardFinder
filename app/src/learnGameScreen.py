@@ -1,3 +1,4 @@
+from kivymd.uix.list import OneLineListItem
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.button import MDFlatButton
 
@@ -7,6 +8,7 @@ from kivy.lang import Builder
 
 # Builder.load_file('/kv')
 class LearnGameScreen(MDScreen):
+    game_card_list = {}
 
     def on_pre_enter(self, *args):
 
@@ -36,3 +38,30 @@ class LearnGameScreen(MDScreen):
         game_card2 = GameCard(title="Scott Sucks")
         game_card2.pre_load()
         self.ids.game_results.add_widget(game_card2)
+
+        self.game_card_list["Rishav Sucks"] = game_card
+        self.game_card_list["Matty Sucks"] = game_card1
+        self.game_card_list["Scott Sucks"] = game_card2
+
+
+    def search_games(self, text):
+        # if there is an empty field, clear widgets
+        #if text == "":
+        #    self.ids.search_board_game.clear_widgets()
+        #    return
+
+        # Clear previous search results
+        self.ids.search_board_game.clear_widgets()
+        self.ids.game_results.clear_widgets()
+
+        # Filter data based on the search text
+        search_results = [item for item in self.game_card_list.keys() if item.lower().startswith(text.lower())]
+
+        # Display the filtered results
+        for result in search_results:
+            game_card = self.game_card_list[result]
+            game_card.pre_load()
+            self.ids.game_results.add_widget(game_card)
+
+
+

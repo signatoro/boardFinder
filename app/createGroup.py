@@ -72,12 +72,23 @@ class CreateGroupScreenPref1(Screen):
     def __init__(self, parent, **kwargs):
         super(CreateGroupScreenPref1, self).__init__(**kwargs)
         self.class_parent = parent
+        self.generate_all_games()
+
+    def generate_all_games(self):
+        for game in games_list:
+            list_item = OneLineAvatarIconListItem(text=game)
+            #list_item.bind(on_touch_down=self.on_item_touch)
+            icon = IconRightWidget(icon="plus", on_release=self.on_item_touch)
+            icon.list_item_ref = list_item
+            list_item.add_widget(icon)
+            # list_item.bind(on_touch_down=self.on_item_touch)
+            self.ids.game_results.add_widget(list_item)
 
     def generate_search_game_options(self, text):
         # if there is an empty field, clear widgets
-        if text == "":
-            self.ids.game_results.clear_widgets()
-            return
+        #if text == "":
+        #    self.ids.game_results.clear_widgets()
+        #    return
 
         # Clear previous search results
         self.ids.game_results.clear_widgets()
@@ -88,24 +99,33 @@ class CreateGroupScreenPref1(Screen):
         # Display the filtered results
         for result in search_results:
             list_item = OneLineAvatarIconListItem(text=result)
-            list_item.bind(on_touch_down=self.on_item_touch)
-            icon = IconRightWidget(icon="plus")
+            #list_item.bind(on_touch_down=self.on_item_touch)
+            icon = IconRightWidget(icon="plus", on_release=self.on_item_touch)
+            icon.list_item_ref = list_item
             list_item.add_widget(icon)
             # list_item.bind(on_touch_down=self.on_item_touch)
             self.ids.game_results.add_widget(list_item)
 
-    def on_item_touch(self, instance, touch):
-        if instance.collide_point(*touch.pos):
-            # Check if the item is not already in the selected items list
-            if instance.text not in self.selected_games:
-                # Add the item to the selected items list
-                self.selected_games.append(instance.text)
-                # Update the selected items MDList
-                self.update_selected_games()
+    def on_item_touch(self, instance):
+        #if instance.collide_point(*touch.pos):
+        # get reference to list item
+        game = getattr(instance, "list_item_ref", None)
+
+        # Check if the item is not already in the selected items list
+        if game.text not in self.selected_games:
+            # Add the item to the selected items list
+            self.selected_games.append(game.text)
+            # Update the selected items MDList
+            self.update_selected_games()
 
     def update_selected_games(self):
         # Clear the selected items MDList
         self.ids.selected_games.clear_widgets()
+
+        if len(self.selected_games) > 0:
+            self.ids.selected_games.padding = 0
+        else:
+            self.ids.selected_games.padding = dp(30)
 
         # Display the selected items in the MDList
         for item in self.selected_games:
@@ -115,11 +135,6 @@ class CreateGroupScreenPref1(Screen):
             list_item.add_widget(icon)
             self.ids.selected_games.add_widget(list_item)
 
-    def on_search_focus(self, value):
-        # Clear the search results when the text field loses focus
-        if not value:
-            self.ids.game_results.clear_widgets()
-            self.ids.search_board_game.text = ""
 
     def show_delete_popup(self, instance):
         # Display a popup asking for confirmation to delete the item
@@ -282,7 +297,7 @@ class CreateGroupScreenPref6(Screen):
 
     def on_list_item_clicked(self, instance):
         self.ids.tag_results.clear_widgets()
-        self.ids.search_tags.text = ""
+        #self.ids.search_tags.text = ""
         if instance.text not in self.added_tags:
             # Add the item to the selected items list
             if self.is_tag_unique(instance.text):
