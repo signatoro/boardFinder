@@ -186,16 +186,16 @@ class GenrePopup(Popup):
         self.size_hint_x = 0.85
         self.size_hint_y = 0.9
 
-        info_text = "Genre Definitions: \n\n" + \
-                    "TTRPG: Table Top Role-Playing Games like Dungeons and Dragons where players act as characters in a story. \n\n" + \
-                    "Strategy: A broad genre that includes any games where players must strategize and plan their actions to achieve victory. \n\n" + \
-                    "Euro Games: Typically strategy-focused games designed around player choice over randomness, with passive competition over aggressive conflict. \n\n" + \
-                    "Competitive: All encompassing category for games with competition between players as a main factor. \n\n" + \
-                    "Social Deduction: Games with social interactions between players where deceiving your opponents is key to victory. \n\n" + \
-                    "Family Games: Any family-friendly board games for adults and kids. \n\n" + \
-                    "Card Games: Typically simple games that revolve around playing with a deck of cards, including both the common deck or something more like Uno. \n\n" + \
-                    "TCG: Trading Card Games are games like Magic the Gathering and Yu-Gi-Oh, where players collect cards and create decks to play with. \n\n" + \
-                    "War Games: Usually complex games where players control armies of units in a battle to take victory over the other army. \n\n"
+        info_text = "[b]Genre Definitions:[/b] \n\n" + \
+                    "[b]TTRPG:[/b] Table Top Role-Playing Games like Dungeons and Dragons where players act as characters in a story. \n\n" + \
+                    "[b]Strategy:[/b] A broad genre that includes any games where players must strategize and plan their actions to achieve victory. \n\n" + \
+                    "[b]Euro Games:[/b] Typically strategy-focused games designed around player choice over randomness, with passive competition over aggressive conflict. \n\n" + \
+                    "[b]Competitive:[/b] All encompassing category for games with competition between players as a main factor. \n\n" + \
+                    "[b]Social Deduction:[/b] Games with social interactions between players where deceiving your opponents is key to victory. \n\n" + \
+                    "[b]Family Games:[/b] Any family-friendly board games for adults and kids. \n\n" + \
+                    "[b]Card Games:[/b] Typically simple games that revolve around playing with a deck of cards, including both the common deck or something more like Uno. \n\n" + \
+                    "[b]TCG:[/b] Trading Card Games are games like Magic the Gathering and Yu-Gi-Oh, where players collect cards and create decks to play with. \n\n" + \
+                    "[b]War Games:[/b] Usually complex games where players control armies of units in a battle to take victory over the other army. \n\n"
         self.add_widget(
             MDBoxLayout(
                 MDLabel(

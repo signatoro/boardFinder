@@ -20,31 +20,34 @@
 
         # BoxLayout widget for central buttons
         MDBoxLayout:
-            spacing: 10
-            #padding: 10
+            spacing: 15
+            padding: 15
             orientation: 'horizontal'
             size_hint: (1, 0.3)
 
-            MDFillRoundFlatIconButton:
+            MDRectangleFlatButton:
+                ripple_scale: 2
                 size_hint: (1, 1)
-                #font_size: self.width/10
-                font_size: 22
+                font_size: self.width/6
+                #font_size: 22
                 #text_size: self.size
                 text: 'Find a \nGroup'
                 halign: 'center'
                 on_release: app.change_screen("find_group_screen")
-            MDFillRoundFlatIconButton:
+            MDRectangleFlatButton:
+                ripple_scale: 2
                 size_hint: (1, 1)
-                #font_size: self.width/10
-                font_size: 22
+                font_size: self.width/6
+                #font_size: 22
                 #text_size: self.size
                 text: 'Learn a \nGame'
                 halign: 'center'
                 on_release: app.change_screen("learn_game_screen")
-            MDFillRoundFlatIconButton:
+            MDRectangleFlatButton:
+                ripple_scale: 2
                 size_hint: (1, 1)
-                #font_size: self.width/10
-                font_size: 22
+                font_size: self.width/6
+                #font_size: 22
                 #text_size: self.size
                 text: 'Create a \nGroup'
                 halign: 'center'
