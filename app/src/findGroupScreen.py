@@ -1,9 +1,10 @@
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
-from kivy.uix.screenmanager import Screen, SlideTransition
+from kivy.uix.screenmanager import Screen, SlideTransition, NoTransition
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDFillRoundFlatIconButton
+from kivymd.uix.chip import MDChip
 from kivymd.uix.label import MDLabel
 from kivymd.uix.menu import MDDropdownMenu
 from kivy.clock import Clock
@@ -19,6 +20,9 @@ class FindGroupScreen(Screen):
     currPrefPage = 1
     screen_name = ""
     initialized = False
+
+    player_count_preference = 4
+    player_count_variation = 1
     chosen_genres = []
     free_times = []
 
@@ -41,6 +45,23 @@ class FindGroupScreen(Screen):
                 self.ids.find_group_screen_manager.add_widget(self.child3)
                 self.ids.main_label.text = "Genres"
                 self.initialized = True
+
+    def screen_entered(self):
+        self.currPrefPage = 1
+        self.ids.main_label.text = "Genres"
+        screen_name = "find_group_pref1"
+        screen_manager = self.ids.find_group_screen_manager
+        screen_manager.transition = NoTransition()
+        screen_manager.current = screen_name
+
+        self.player_count_preference = 4
+        self.player_count_variation = 1
+        self.chosen_genres = []
+        self.free_times = []
+
+        self.child1.reset_screen()
+        self.child2.reset_screen()
+        self.child3.reset_screen()
 
     def load_next_pref_page(self, pref_page):
         # Get the screen manager from the kv file
@@ -86,11 +107,13 @@ class FindGroupScreen(Screen):
             genre_chip.active = True
 
     def player_count_set(self, value):
+        self.player_count_preference = value
         self.child2.ids.player_count_label.text = str(value)
         if value > 7:
             self.child2.ids.player_count_label.text = "8+"
 
     def player_variation_set(self, value):
+        self.player_count_variation = value
         self.child2.ids.player_variation_label.text = str(int(value))
         if value > 4:
             self.child2.ids.player_variation_label.text = "Any Amount"
@@ -110,6 +133,9 @@ class FindGroupScreen(Screen):
     # def delayed_color_set(self, *args):
     #     self.button_to_set.md_bg_color = "black"
 
+    def preferences_done(self):
+        App.get_running_app().change_screen("home_screen")
+
 
 class FindGroupScreenPref1(Screen):
     def __init__(self, parent, **kwargs):
@@ -120,23 +146,35 @@ class FindGroupScreenPref1(Screen):
     def open_genre_popup(self):
         self.genrePopup.open()
 
+    def reset_screen(self):
+        for child in self.ids.genres_grid.children:
+            if isinstance(child, MDChip):
+                child.active = False
+
 
 class FindGroupScreenPref2(Screen):
     def __init__(self, parent, **kwargs):
         super(FindGroupScreenPref2, self).__init__(**kwargs)
         self.class_parent = parent
 
+    def reset_screen(self):
+        self.ids.player_count_label.text = '4'
+        self.ids.player_variation_label.text = '1'
+        self.ids.player_slider.value = 4
+        self.ids.variation_slider.value = 1
+
 
 class FindGroupScreenPref3(Screen):
-    menu_items = []
 
     def __init__(self, parent, **kwargs):
         super(FindGroupScreenPref3, self).__init__(**kwargs)
         self.class_parent = parent
-        self.menu = MDDropdownMenu(
-            items=self.menu_items,
-            width_mult=4,
-        )
+
+    def reset_screen(self):
+        for child in self.ids.times_available_grid.children:
+            if isinstance(child, Button):
+                if child.text == 'Free!':
+                    child.text = ''
 
 
 class GenrePopup(Popup):
