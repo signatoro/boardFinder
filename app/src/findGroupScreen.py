@@ -1,6 +1,10 @@
 from kivy.app import App
+from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen, SlideTransition
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.button import MDFillRoundFlatIconButton
+from kivymd.uix.label import MDLabel
 from kivymd.uix.menu import MDDropdownMenu
 from kivy.clock import Clock
 from kivymd.uix.pickers import MDTimePicker
@@ -111,38 +115,16 @@ class FindGroupScreenPref1(Screen):
     def __init__(self, parent, **kwargs):
         super(FindGroupScreenPref1, self).__init__(**kwargs)
         self.class_parent = parent
+        self.genrePopup = GenrePopup(self)
 
-    def generate_search_game_options(self, value):
-        # filtered_option_list = list(set(option_list + value[:value.rfind(' ')].split(' ')))
-        # val = value[value.rfind(' ') + 1:]
-        # if not val:
-        #     return
-        # try:
-        #     option_data = []
-        #     for i in range(len(option_list)):
-        #         word = [word for word in option_list if word.startswith(val)][0][len(val):]
-        #         if not word:
-        #             return
-        #         if self.text + word in option_list:
-        #             if self.text + word not in app.option_data:
-        #                 popped_suggest = option_list.pop(option_list.index(str(self.text + word)))
-        #                 app.option_data.append(popped_suggest)
-        #         app.update_data(app.option_data)
-        #
-        #     except IndexError:
-        #
-        #         pass
-        return
+    def open_genre_popup(self):
+        self.genrePopup.open()
 
 
 class FindGroupScreenPref2(Screen):
     def __init__(self, parent, **kwargs):
         super(FindGroupScreenPref2, self).__init__(**kwargs)
         self.class_parent = parent
-        self.imagePopup = PopupImageSelection(self)
-
-    # def open_image_popup(self):
-    #     self.imagePopup.open()
 
 
 class FindGroupScreenPref3(Screen):
@@ -151,55 +133,48 @@ class FindGroupScreenPref3(Screen):
     def __init__(self, parent, **kwargs):
         super(FindGroupScreenPref3, self).__init__(**kwargs)
         self.class_parent = parent
-        # self.setup_dow_menu()
         self.menu = MDDropdownMenu(
-            #caller=self.ids.dow_button,
             items=self.menu_items,
             width_mult=4,
         )
 
-    # def setup_dow_menu(self):
-    #     for day in days:
-    #         item =  {
-    #                 "text": f"{day}",
-    #                 "viewclass": "MDDropDownItem",
-    #                 "on_release": lambda x=f"{day}": self.menu_callback(x),
-    #         }
-    #         self.menu_items.append(item)
-    #
-    # def menu_callback(self, text_item):
-    #     self.ids.dow_button.text = text_item
-    #     self.menu.dismiss()
-    #
-    # def show_days_dropdown(self):
-    #
-    #     self.ids.dow_drop_down_selection.set_item(days)
-    #     self.ids.dow_drop_down_selection.bind(on_release=self.on_dropdown_select)
-    #
-    # def on_dropdown_select(self, instance_drop):
-    #     selected_day = instance_drop.get_item()
-    #     if selected_day:
-    #         self.ids.dow_drop_down_selection.text = selected_day
-    #
-    # def get_start_time(self, instance, time):
-    #     self.ids.start_time_button.text = str(time)
-    #
-    # def get_end_time(self, instance, time):
-    #     self.ids.end_time_button.text = str(time)
-    #
-    # def open_time_button(self, btn_type):
-    #     time_dialog = MDTimePicker()
-    #     if btn_type == "start":
-    #         time_dialog.bind(time=self.get_start_time)
-    #     elif btn_type == "end":
-    #         time_dialog.bind(time=self.get_end_time)
-    #     time_dialog.open()
 
-
-class PopupImageSelection(Popup):
+class GenrePopup(Popup):
     def __init__(self, parent, **kwargs):
-        super(PopupImageSelection, self).__init__(**kwargs)
+        super(GenrePopup, self).__init__(**kwargs)
         self.group_screen = parent
+        self.title = 'Genre Explanations'
+        self.size_hint_x = 0.85
+        self.size_hint_y = 0.9
+
+        info_text = "Genre Definitions: \n\n" + \
+                    "TTRPG: Table Top Role-Playing Games like Dungeons and Dragons where players act as characters in a story. \n\n" + \
+                    "Strategy: A broad genre that includes any games where players must strategize and plan their actions to achieve victory. \n\n" + \
+                    "Euro Games: Typically strategy-focused games designed around player choice over randomness, with passive competition over aggressive conflict. \n\n" + \
+                    "Competitive: All encompassing category for games with competition between players as a main factor. \n\n" + \
+                    "Social Deduction: Games with social interactions between players where deceiving your opponents is key to victory. \n\n" + \
+                    "Family Games: Any family-friendly board games for adults and kids. \n\n" + \
+                    "Card Games: Typically simple games that revolve around playing with a deck of cards, including both the common deck or something more like Uno. \n\n" + \
+                    "TCG: Trading Card Games are games like Magic the Gathering and Yu-Gi-Oh, where players collect cards and create decks to play with. \n\n" + \
+                    "War Games: Usually complex games where players control armies of units in a battle to take victory over the other army. \n\n"
+        self.add_widget(
+            MDBoxLayout(
+                MDLabel(
+                    valign='center',
+                    halign='center',
+                    markup=True,
+                    text='[color=ffffff]'+info_text,
+                    size_hint_x=1,
+                    size_hint_y=1
+                ),
+                Button(
+                    text="Ok",
+                    on_release=self.dismiss,
+                    size_hint_x=1, size_hint_y=0.1
+                ),
+                orientation='vertical',
+            )
+        )
 
     def select_image(self, image_source):
         self.group_screen.ids.group_image.source = image_source
