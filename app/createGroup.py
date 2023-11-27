@@ -2,9 +2,11 @@ from kivy.app import App
 from kivy.metrics import dp
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen, SlideTransition
+from kivymd.uix.behaviors.toggle_behavior import MDToggleButton
 from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.button import MDRaisedButton
+from kivymd.uix.button import MDRaisedButton, MDRectangleFlatButton
 from kivymd.uix.chip import MDChip
+from kivymd.uix.dropdownitem import MDDropDownItem
 from kivymd.uix.label import MDLabel
 from kivymd.uix.list import OneLineListItem, OneLineAvatarIconListItem, IconRightWidget
 from kivymd.uix.menu import MDDropdownMenu
@@ -77,7 +79,7 @@ class CreateGroupScreenPref1(Screen):
     def generate_all_games(self):
         for game in games_list:
             list_item = OneLineAvatarIconListItem(text=game)
-            #list_item.bind(on_touch_down=self.on_item_touch)
+            # list_item.bind(on_touch_down=self.on_item_touch)
             icon = IconRightWidget(icon="plus", on_release=self.on_item_touch)
             icon.list_item_ref = list_item
             list_item.add_widget(icon)
@@ -86,7 +88,7 @@ class CreateGroupScreenPref1(Screen):
 
     def generate_search_game_options(self, text):
         # if there is an empty field, clear widgets
-        #if text == "":
+        # if text == "":
         #    self.ids.game_results.clear_widgets()
         #    return
 
@@ -99,7 +101,7 @@ class CreateGroupScreenPref1(Screen):
         # Display the filtered results
         for result in search_results:
             list_item = OneLineAvatarIconListItem(text=result)
-            #list_item.bind(on_touch_down=self.on_item_touch)
+            # list_item.bind(on_touch_down=self.on_item_touch)
             icon = IconRightWidget(icon="plus", on_release=self.on_item_touch)
             icon.list_item_ref = list_item
             list_item.add_widget(icon)
@@ -107,7 +109,7 @@ class CreateGroupScreenPref1(Screen):
             self.ids.game_results.add_widget(list_item)
 
     def on_item_touch(self, instance):
-        #if instance.collide_point(*touch.pos):
+        # if instance.collide_point(*touch.pos):
         # get reference to list item
         game = getattr(instance, "list_item_ref", None)
 
@@ -134,7 +136,6 @@ class CreateGroupScreenPref1(Screen):
             icon.list_item_ref = list_item
             list_item.add_widget(icon)
             self.ids.selected_games.add_widget(list_item)
-
 
     def show_delete_popup(self, instance):
         # Display a popup asking for confirmation to delete the item
@@ -163,6 +164,7 @@ class CreateGroupScreenPref2(Screen):
 class CreateGroupScreenPref3(Screen):
     menu_items = []
     max_players = 0
+    recurring_meeting = False
 
     def __init__(self, parent, **kwargs):
         super(CreateGroupScreenPref3, self).__init__(**kwargs)
@@ -174,12 +176,14 @@ class CreateGroupScreenPref3(Screen):
             width_mult=4,
         )
         self.max_players = 4
+        self.ids.recurring_toggle_btn.set_parent(self)
+        self.ids.non_recurring_toggle_btn.set_parent(self)
 
     def setup_dow_menu(self):
         for day in days:
             item = {
+                "viewclass": "OneLineListItem",
                 "text": f"{day}",
-                "viewclass": "MDDropDownItem",
                 "on_release": lambda x=f"{day}": self.menu_callback(x),
             }
             self.menu_items.append(item)
@@ -217,10 +221,12 @@ class CreateGroupScreenPref3(Screen):
         self.max_players = new_mp
 
         if new_mp == 10:
-           return "10+"
+            return "10+"
         else:
             return str(new_mp)
 
+    def toggle_recurring_meeting(self, state):
+        self.recurring_meeting = state
 
 
 class CreateGroupScreenPref4(Screen):
@@ -230,9 +236,21 @@ class CreateGroupScreenPref4(Screen):
 
 
 class CreateGroupScreenPref5(Screen):
+    field_helper_text = ""
+
     def __init__(self, parent, **kwargs):
         super(CreateGroupScreenPref5, self).__init__(**kwargs)
         self.class_parent = parent
+        self.field_helper_text = ("Enter additional information: -rules to follow, -what to expect, -what to bring, "
+                                  "-will food be served?")
+        self.ids.additional_info_text_field.text = ("Enter additional information: -rules to follow, -what to expect, "
+                                                    "-what to bring, -will food be served?")
+
+    def clear_text(self, is_focused):
+        if is_focused:
+            self.ids.additional_info_text_field.text = ""
+        elif not is_focused and len(self.ids.additional_info_text_field.text) == 0:
+            self.ids.additional_info_text_field.text = self.field_helper_text
 
 
 class CreateGroupScreenPref6(Screen):
@@ -286,7 +304,7 @@ class CreateGroupScreenPref6(Screen):
                 self.added_tags[instance.text] = True
             else:
                 self.added_tags[instance.text] = False
-            instance.md_bg_color = (0.2, 0.7, 0.2, 1)
+            instance.md_bg_color = "teal"
             if self.added_tags[instance.text]:
                 self.update_common_tags(instance)
         else:
@@ -297,7 +315,7 @@ class CreateGroupScreenPref6(Screen):
 
     def on_list_item_clicked(self, instance):
         self.ids.tag_results.clear_widgets()
-        #self.ids.search_tags.text = ""
+        # self.ids.search_tags.text = ""
         if instance.text not in self.added_tags:
             # Add the item to the selected items list
             if self.is_tag_unique(instance.text):
@@ -307,13 +325,12 @@ class CreateGroupScreenPref6(Screen):
                 self.added_tags[instance.text] = False
                 for chip in self.ids.common_tags.children:
                     if chip.text == instance.text:
-                        chip.md_bg_color = (0.2, 0.7, 0.2, 1)
+                        chip.md_bg_color = "teal"
         else:
             for chip in self.ids.common_tags.children:
                 if chip.text == instance.text:
                     chip.md_bg_color = (0.74, 0.74, 0.74, 1)
             del self.added_tags[instance.text]
-
 
     def is_tag_unique(self, tag):
         return tag not in tags_list
@@ -324,7 +341,7 @@ class CreateGroupScreenPref6(Screen):
             text=instance.text,
             on_release=self.on_tag_click,
         )
-        chip.md_bg_color = (0.2, 0.7, 0.2, 1)
+        chip.md_bg_color = "teal"
         self.ids.common_tags.add_widget(chip)
 
 
@@ -364,3 +381,19 @@ class DeleteItemPopup(Popup):
 
     def on_no(self, instance):
         self.dismiss()
+
+
+class MyToggleButton(MDRectangleFlatButton, MDToggleButton):
+    def __init__(self, **kwargs):
+        super(MyToggleButton, self).__init__(**kwargs)
+        self.parent_instance = None
+        self.background_down = "teal"
+
+    def set_parent(self, pref_parent):
+        self.parent_instance = pref_parent
+
+    def on_toggle(self, text):
+        if text == "Recurring":
+            self.parent_instance.toggle_recurring_meeting(True)
+        else:
+            self.parent_instance.toggle_recurring_meeting(False)

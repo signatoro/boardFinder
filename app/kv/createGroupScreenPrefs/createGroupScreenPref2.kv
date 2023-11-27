@@ -3,16 +3,17 @@
 
     ScrollView:
         size_hint: (1, 1)
-        # height: dp(500)
         do_scroll_y: True
-        bar_width: 10
+        scroll_type: ['bars', 'content']
+        bar_width: dp(20)
 
         MDBoxLayout:
             orientation: "vertical"
             padding: [25, 10, 25, 10]
             spacing: dp(20)
             size_hint_y: None
-            height: self.minimum_height
+            adaptive_height: True
+            # height: self.minimum_height
 
             MDLabel:
                 text: 'Public Information'
@@ -64,6 +65,7 @@
                 text_color: "teal"
 
             MDTextField:
+                id: general_description_text_field
                 hint_text: "Enter general description about your group!"
                 mode: "rectangle"
                 multiline: True
@@ -74,73 +76,85 @@
                 helper_text_color: "teal"
                 helper_text_mode: "on_focus"
                 height: self.minimum_height
-                padding: [0, 0, 0, 50]
-                # size_hint_y: dp(100)
 
-            MDBoxLayout:
-                orientation: "horizontal"
-                size_hint_x: 1
-                padding: 0
+    MDBoxLayout:
+        orientation: "horizontal"
+        size_hint_x: 1
+        padding: 0
 
-                AnchorLayout:
-                    anchor_x: 'left'
-                    anchor_y: 'bottom'
+        AnchorLayout:
+            anchor_x: 'left'
+            anchor_y: 'bottom'
+            padding: [dp(5), 0, 0, dp(10)]
 
-                    MDFillRoundFlatIconButton:
-                        text: "Prev Pref"
-                        icon: "arrow-left"
-                        on_release: root.class_parent.load_next_pref_page(0, "right")
+            MDFillRoundFlatIconButton:
+                text: "Prev Pref"
+                icon: "arrow-left"
+                on_release: root.class_parent.load_next_pref_page(0, "right")
 
-                AnchorLayout:
-                    anchor_x: 'right'
-                    anchor_y: 'bottom'
+        AnchorLayout:
+            anchor_x: 'right'
+            anchor_y: 'bottom'
+            padding: [0, 0, dp(5), dp(10)]
 
-                    MDFillRoundFlatIconButton:
-                        text: "Next Pref"
-                        icon: "arrow-right"
-                        on_release: root.class_parent.load_next_pref_page(2)
+            MDFillRoundFlatIconButton:
+                text: "Next Pref"
+                icon: "arrow-right"
+                on_release: root.class_parent.load_next_pref_page(2)
 
 
 <PopupImageSelection>:
     auto_dismiss: False
     size_hint: (0.8, 0.8)
 
-    GridLayout:
-        cols: 3
-        padding: 10
-        spacing: 10
+    BoxLayout:
+        orientation: "vertical"
 
-        MDRectangleFlatButton:
-            size_hint: None, None
-            size: dp(50), dp(50)
-            on_release: root.select_image('images/pikachu.jpg')
+        GridLayout:
+            cols: 3
+            padding: 10
+            spacing: 10
 
-            FitImage:
+            MDRectangleFlatButton:
                 size_hint: None, None
                 size: dp(50), dp(50)
-                pos_hint: {"left": 1}
-                source: 'images/pikachu.jpg'
+                on_release: root.select_image('images/pikachu.jpg')
 
-        MDRectangleFlatButton:
-            size_hint: None, None
-            size: dp(50), dp(50)
-            on_release: root.select_image('images/piplup.jpg')
+                FitImage:
+                    size_hint: None, None
+                    size: dp(50), dp(50)
+                    pos_hint: {"left": 1}
+                    source: 'images/pikachu.jpg'
 
-            FitImage:
+            MDRectangleFlatButton:
                 size_hint: None, None
                 size: dp(50), dp(50)
-                pos_hint: {"left": 1}
-                source: 'images/piplup.jpg'
+                on_release: root.select_image('images/piplup.jpg')
 
-        MDRectangleFlatButton:
-            size_hint: None, None
-            size: dp(50), dp(50)
-            on_release: root.select_image('images/celebi.png')
+                FitImage:
+                    size_hint: None, None
+                    size: dp(50), dp(50)
+                    pos_hint: {"left": 1}
+                    source: 'images/piplup.jpg'
 
-            FitImage:
+            MDRectangleFlatButton:
                 size_hint: None, None
                 size: dp(50), dp(50)
-                pos_hint: {"left": 1}
-                source: 'images/celebi.png'
+                on_release: root.select_image('images/celebi.png')
 
-        # Add more images as needed
+                FitImage:
+                    size_hint: None, None
+                    size: dp(50), dp(50)
+                    pos_hint: {"left": 1}
+                    source: 'images/celebi.png'
+
+            # Add more images as needed
+
+
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'bottom'
+
+            MDRaisedButton:
+                text: "Cancel"
+                on_release: root.dismiss()

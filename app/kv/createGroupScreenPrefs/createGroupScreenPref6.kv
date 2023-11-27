@@ -5,12 +5,15 @@
         size_hint: (1, 1)
         # height: dp(500)
         do_scroll_y: True
-        bar_width: 10
+        bar_width: dp(20)
 
         MDBoxLayout:
             orientation: "vertical"
+            spacing: 10
             size_hint_y: None
-            height: self.minimum_height
+            adaptive_height: True
+            padding: [25, 10, 25, 10]
+            # height: self.minimum_height
 
             MDLabel:
                 text: 'Add Tags'
@@ -24,20 +27,18 @@
 
             # search tags text field
             MDTextField:
-                id: search_tags
-                # size_hint_y: 0.5
-                pos_hint: {'left': 0, 'top': 0.9}
+                id: search_board_game
+                pos_hint:{ 'center_x': 0.5 , 'top': 1}
                 size_hint_x: 0.8
                 hint_text: 'Search Tag or Add Custom Tag'
                 hint_text_color: 1,1,1,1
                 icon_left: 'magnify'
                 mode: "rectangle"
-                line_color: [1,1,1,1]
-                color_normal: [1,1,1,1]
                 font_size: 22
                 active_line: False
                 multiline: False
                 on_text: root.search_tags(self.text)
+                padding: [0, 0, dp(35), 0]
 
             MDBoxLayout:
                 orientation: "vertical"
@@ -45,28 +46,28 @@
                 height: self.minimum_height
 
                 MDScrollView:
+                    do_scroll_y: True
+                    bar_width: 10
                     size_hint: 1, None
                     height: tag_results.height
-                    padding: dp(10)
 
                     MDList:
                         id: tag_results
 
+
                 MDScrollView:
                     size_hint: 1, None
-                    height: common_tags.height
-                    padding: dp(10)
-                    # size_hint: (1, 1)
-                    # height: dp(500)
                     do_scroll_y: True
                     bar_width: 10
+                    height: common_tags.height
 
                     MDGridLayout:
-                        cols: 2
                         id: common_tags
+                        cols: 2
+                        adaptive_height: True
+                        padding: [dp(25), dp(25), dp(25), dp(25)]
+                        spacing: dp(4)
                         md_bg_color: (0.76, 0.74, 0.78, 1)
-                        size_hint: (None, None)
-                        size: (self.minimum_width, self.minimum_height)
 
     MDBoxLayout:
         orientation: "horizontal"
@@ -76,6 +77,7 @@
         AnchorLayout:
             anchor_x: 'left'
             anchor_y: 'bottom'
+            padding: [dp(5), 0, 0, dp(10)]
 
             MDFillRoundFlatIconButton:
                 text: "Prev Pref"
@@ -85,6 +87,7 @@
         AnchorLayout:
             anchor_x: 'right'
             anchor_y: 'bottom'
+            padding: [0, 0, dp(5), dp(10)]
 
             MDFillRoundFlatIconButton:
                 text: "Next Pref"

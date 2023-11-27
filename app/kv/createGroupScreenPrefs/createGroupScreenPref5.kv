@@ -3,6 +3,7 @@
 
     MDBoxLayout:
         orientation: "vertical"
+        padding: [25, 10, 25, 10]
 
         MDLabel:
             text: 'General Meeting Description'
@@ -15,14 +16,18 @@
             spacing: 5
 
         MDTextField:
-            hint_text: "Enter additional information: -rules to follow, -what to expect, -what to bring, -will food be served?"
-            mode: "fill"
+            id: additional_info_text_field
+            hint_text: "Enter additional information: "
+            text: ""
+            on_focus: root.clear_text(self.focus)
+            mode: "rectangle"
             multiline: True
+            line_color_normal: "teal"
             required: True
             text_size: self.width
             max_input_size: 1000
             height: self.minimum_height
-            size_hint_y: dp(30)
+            size_hint_y: dp(15)
 
         MDBoxLayout:
             orientation: "horizontal"
@@ -32,6 +37,7 @@
             AnchorLayout:
                 anchor_x: 'left'
                 anchor_y: 'bottom'
+                padding: [dp(5), 0, 0, dp(10)]
 
                 MDFillRoundFlatIconButton:
                     text: "Prev Pref"
@@ -41,6 +47,7 @@
             AnchorLayout:
                 anchor_x: 'right'
                 anchor_y: 'bottom'
+                padding: [0, 0, dp(5), dp(10)]
 
                 MDFillRoundFlatIconButton:
                     text: "Next Pref"
