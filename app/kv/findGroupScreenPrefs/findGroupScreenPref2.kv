@@ -15,6 +15,9 @@
                 halign: 'center'
                 text: 'Please select your preferred group size!'
 
+        MDLabel:
+            size_hint_y: .1
+
         MDBoxLayout:
             spacing: 1
             padding: 1
@@ -26,10 +29,21 @@
                 size_hint_x: 1
                 size_hint_y: 0.3
                 halign: 'center'
-                text: "Ideal player count"
+                text: "Ideal player count:"
                 text_color: [0.3, 0.3, 0.3, 1]
 
-            Slider:
+            MDLabel:
+                id: player_count_label
+                size_hint_x: 1
+                size_hint_y: 0.3
+                halign: 'center'
+                text: "4"
+                text_color: [0.3, 0.3, 0.3, 1]
+
+            MDSlider:
+                hint: False
+                show_off: False
+                color: "teal"
                 id: player_slider
                 min: 2
                 max: 8
@@ -43,13 +57,48 @@
                 on_touch_down: (lambda x : print("down"))
                 on_value: root.class_parent.player_count_set(self.value)
 
-            MDLabel:
-                id: player_count_label
+            MDBoxLayout:
+                orientation: 'horizontal'
                 size_hint_x: 1
-                size_hint_y: 0.3
-                halign: 'center'
-                text: "4"
-                text_color: [0.3, 0.3, 0.3, 1]
+                size_hint_y: 0.1
+                MDLabel:
+                    size_hint_x: 0.142857143
+                    halign: 'center'
+                    text: "2"
+                    text_color: [0.8, 0.8, 0.8, 1]
+                MDLabel:
+                    size_hint_x: 0.142857143
+                    halign: 'center'
+                    text: "3"
+                    text_color: [0.8, 0.8, 0.8, 1]
+                MDLabel:
+                    size_hint_x: 0.142857143
+                    halign: 'center'
+                    text: "4"
+                    text_color: [0.8, 0.8, 0.8, 1]
+                MDLabel:
+                    size_hint_x: 0.142857143
+                    halign: 'center'
+                    text: "5"
+                    text_color: [0.8, 0.8, 0.8, 1]
+                MDLabel:
+                    size_hint_x: 0.142857143
+                    halign: 'center'
+                    text: "6"
+                    text_color: [0.8, 0.8, 0.8, 1]
+                MDLabel:
+                    size_hint_x: 0.142857143
+                    halign: 'center'
+                    text: "7"
+                    text_color: [0.8, 0.8, 0.8, 1]
+                MDLabel:
+                    size_hint_x: 0.142857143
+                    halign: 'center'
+                    text: "8+"
+                    text_color: [0.8, 0.8, 0.8, 1]
+
+        MDLabel:
+            size_hint_y: .1
 
         MDBoxLayout:
             spacing: 1
@@ -62,10 +111,21 @@
                 size_hint_x: 1
                 size_hint_y: 0.3
                 halign: 'center'
-                text: "Player count variation allowed"
+                text: "Player count variation allowed:"
                 text_color: [0.3, 0.3, 0.3, 1]
 
-            Slider:
+            MDLabel:
+                id: player_variation_label
+                size_hint_x: 1
+                size_hint_y: 0.3
+                halign: 'center'
+                text: "1"
+                text_color: [0.3, 0.3, 0.3, 1]
+
+            MDSlider:
+                hint: False
+                show_off: False
+                color: "teal"
                 id: variation_slider
                 min: 0
                 max: 5
@@ -79,13 +139,50 @@
                 on_touch_down: (lambda x : print("down"))
                 on_value: root.class_parent.player_variation_set(self.value)
 
-            MDLabel:
-                id: player_variation_label
+            MDBoxLayout:
+                orientation: 'horizontal'
                 size_hint_x: 1
-                size_hint_y: 0.3
-                halign: 'center'
-                text: "1"
-                text_color: [0.3, 0.3, 0.3, 1]
+                size_hint_y: 0.1
+                MDLabel:
+                    size_hint_x: 0.2
+                    halign: 'center'
+                    text: "0"
+                    text_color: [0.8, 0.8, 0.8, 1]
+                MDLabel:
+                    text: ""
+                MDLabel:
+                    size_hint_x: 0.2
+                    halign: 'center'
+                    text: "1"
+                    text_color: [0.8, 0.8, 0.8, 1]
+                MDLabel:
+                    text: ""
+                MDLabel:
+                    size_hint_x: 0.2
+                    halign: 'center'
+                    text: "2"
+                    text_color: [0.8, 0.8, 0.8, 1]
+                MDLabel:
+                    text: ""
+                MDLabel:
+                    size_hint_x: 0.2
+                    halign: 'center'
+                    text: "3"
+                    text_color: [0.8, 0.8, 0.8, 1]
+                MDLabel:
+                    text: ""
+                MDLabel:
+                    size_hint_x: 0.2
+                    halign: 'center'
+                    text: "4"
+                    text_color: [0.8, 0.8, 0.8, 1]
+                MDLabel:
+                    text: ""
+                MDLabel:
+                    size_hint_x: 0.2
+                    halign: 'center'
+                    text: "+"
+                    text_color: [0.8, 0.8, 0.8, 1]
 
         MDBoxLayout:
             size_hint_x: 1

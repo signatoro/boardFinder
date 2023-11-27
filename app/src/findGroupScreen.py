@@ -6,6 +6,7 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDFillRoundFlatIconButton
 from kivymd.uix.chip import MDChip
 from kivymd.uix.label import MDLabel
+from kivymd.uix.slider import MDSlider
 from kivymd.uix.menu import MDDropdownMenu
 from kivy.clock import Clock
 from kivymd.uix.pickers import MDTimePicker
