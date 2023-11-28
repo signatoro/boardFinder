@@ -5,7 +5,7 @@ from kivymd.app import MDApp
 
 from src.createAccountScreen import CreateAccountScreen
 from src.homeScreen import HomeScreen
-from createGroup import CreateGroupScreen
+from src.createGroup import CreateGroupScreen
 from src.findGroupScreen import FindGroupScreen
 from src.gameCard import GameCard
 from src.learnGameScreen import LearnGameScreen
@@ -33,7 +33,7 @@ class MyApp(MDApp):
         self.theme_cls.primary_palette = "Teal"
         # self.theme_cls.theme_style = "Dark"
         # Window.bind(on_resize=self.forceWindowRatio)
-        return Builder.load_file("main.kv")  # GUI
+        return Builder.load_file("kv/main.kv")  # GUI
 
     def change_screen(self, screen_name, direction='left', mode="", load_deps=None):
         # Get the screen manager from the kv file

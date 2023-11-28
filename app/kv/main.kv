@@ -1,0 +1,44 @@
+#:import utils kivy.utils
+#:import Window kivy.core.window.Window
+
+#:include kv/homeScreen.kv
+#:include kv/createAccountScreen.kv
+#:include kv/createGroupScreen.kv
+#:include kv/findGroupScreen.kv
+#:include kv/learnGameScreen.kv
+#:include kv/boardGameScreen.kv
+
+MDScreen:
+    MDBoxLayout:
+        orientation: "vertical"
+        cols: 1
+        size_hint: (1, 1)  # Disable automatic size_hint
+        #width: 400#Window.size[0]  # ((Window.size[0] + Window.size[1]) / 2) * 2 * 2 / 5
+        #height: 600#Window.size[1]  # ((Window.size[0] + Window.size[1]) / 2) * 2 * 3 / 5
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+        FloatLayout:
+            # Set up screen manager and all screens
+            ScreenManager:
+                size_hint: 1, 1
+                pos_hint: {"top": 1, "left": 1}
+                id: screen_manager
+                HomeScreen:
+                    name: "home_screen"
+                    id: home_screen
+                FindGroupScreen:
+                    name: "find_group_screen"
+                    id: find_group_screen
+                CreateGroupScreen:
+                    name: "create_group_screen"
+                    id: create_group_screen
+                CreateAccountScreen:
+                    name: "create_account_screen"
+                    id: create_account_screen
+                LearnGameScreen:
+                    name: "learn_game_screen"
+                    id: learn_game_screen
+                BoardGameScreen:
+                    name: "board_game_screen"
+                    id:  board_game_screen
+                    
