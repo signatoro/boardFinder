@@ -5,7 +5,8 @@
         size_hint: (1, 1)
         # height: dp(500)
         do_scroll_y: True
-        bar_width: dp(20)
+        do_scroll_x: True
+        #bar_width: dp(20)
 
         MDBoxLayout:
             orientation: "vertical"
@@ -27,7 +28,7 @@
 
             # search tags text field
             MDTextField:
-                id: search_board_game
+                id: search_tags_field
                 pos_hint:{ 'center_x': 0.5 , 'top': 1}
                 size_hint_x: 0.8
                 hint_text: 'Search Tag or Add Custom Tag'
@@ -47,13 +48,13 @@
 
                 MDScrollView:
                     do_scroll_y: True
+                    do_scroll_x: False
                     bar_width: 10
                     size_hint: 1, None
                     height: tag_results.height
 
                     MDList:
                         id: tag_results
-
 
                 MDScrollView:
                     size_hint: 1, None
@@ -69,30 +70,30 @@
                         spacing: dp(4)
                         md_bg_color: (0.76, 0.74, 0.78, 1)
 
-    MDBoxLayout:
-        orientation: "horizontal"
-        size_hint_x: 1
-        padding: 0
+            MDBoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                padding: 0
 
-        AnchorLayout:
-            anchor_x: 'left'
-            anchor_y: 'bottom'
-            padding: [dp(5), 0, 0, dp(10)]
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'bottom'
+                    padding: [dp(5), 0, 0, dp(10)]
 
-            MDFillRoundFlatIconButton:
-                text: "Prev Pref"
-                icon: "arrow-left"
-                on_release: root.class_parent.load_next_pref_page(4, "right")
+                    MDFillRoundFlatIconButton:
+                        text: "Prev Pref"
+                        icon: "arrow-left"
+                        on_release: root.class_parent.load_next_pref_page(4, "right")
 
-        AnchorLayout:
-            anchor_x: 'right'
-            anchor_y: 'bottom'
-            padding: [0, 0, dp(5), dp(10)]
+                AnchorLayout:
+                    anchor_x: 'right'
+                    anchor_y: 'bottom'
+                    padding: [0, 0, dp(5), dp(10)]
 
-            MDFillRoundFlatIconButton:
-                text: "Next Pref"
-                icon: "arrow-right"
-                on_release: root.class_parent.load_next_pref_page(6)
+                    MDFillRoundFlatIconButton:
+                        text: "Next Pref"
+                        icon: "arrow-right"
+                        on_release: root.class_parent.load_next_pref_page(6)
 
 
 

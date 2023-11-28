@@ -13,7 +13,7 @@
             font_style: "H4"
             size_hint_y: None
             height: self.texture_size[1]
-            spacing: 5
+            padding: [0, 0, 0, dp(10)]
 
         MDTextField:
             id: additional_info_text_field
@@ -26,12 +26,15 @@
             required: True
             text_size: self.width
             max_input_size: 1000
+            on_text: root.update_and_limit_word_count(self.text)
+            helper_text: f'{root.curr_word_count}/1000'
+            helper_text_mode: "persistent"
             height: self.minimum_height
             size_hint_y: dp(15)
 
         MDBoxLayout:
             orientation: "horizontal"
-            size_hint_x: 1
+            size_hint_y: None
             padding: 0
 
             AnchorLayout:

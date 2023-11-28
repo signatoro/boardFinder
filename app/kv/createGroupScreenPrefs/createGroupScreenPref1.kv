@@ -27,16 +27,17 @@
             active_line: False
             multiline: False
             on_text: root.generate_search_game_options(self.text)
-            padding: [0, 0, 70, 0]
-
 
         MDScrollView:
+            size_hint: (1, 1)
+            do_scroll_y: True
+            do_scroll_x: False
+
             MDList:
-                id: list_item
-                height: self.minimum_height
+                adaptive_height: True
+                size_hint_y: None
                 md_bg_color: "darkgrey"
                 halign: "center"
-                # width: list_item.ids.label.width  # Adjust width to the content + padding
                 pos_hint: {"center_x": 0.5}
                 id: game_results
 
@@ -50,9 +51,15 @@
 
 
         MDScrollView:
+            size_hint: (1, 1)
+            do_scroll_y: True
+            do_scroll_x: False
+
             MDList:
+                adaptive_height: True
+                size_hint_y: None
                 padding: dp(30)
-                height: self.minimum_height
+                #height: self.minimum_height
                 md_bg_color: "teal"
                 id: selected_games
 
