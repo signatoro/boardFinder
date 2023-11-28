@@ -16,46 +16,57 @@
             md_bg_color: app.theme_cls.primary_color
             orientation: 'vertical'
             # padding: [5,50,5,50]
-            spacing: 25
+            # spacing: 25
 
             # radius: 25
 
             # Calender
             MDBoxLayout:
                 orientation: "vertical"
-                padding: [10, 50, 10, 50]
+                padding: [0, 15, 0, 10]
 
-                pos_hint: {"center_x":.5, "center_y": .8}
+                pos_hint: {"center_x":.5, "center_y": .5}
+                # md_bg_color: [1, .5, .5, 1]  # Use the primary color as the outline color
 
-                size_hint_x: .5
-                size_hint_y: .1
+                size_hint_x: .75
+                size_hint_y: .7
                 # id: tag_table
 
                 # Headers
                 MDLabel:
                     
                     text: f"{root.get_month(root.month)}"
-                    font_style: "H4"
+                    # font_style: "H4"
                     halign: "center"
                     # text_align:'center'
                     # valign: "top"
                     # padding: [100, 0, 50, 0]
-                    text_size: self.size
+                    font_size: self.width/8
+                    size_hint_y: .3  # This allows you to set a fixed height
+                    height: max(self.texture_size[1], 10)  # Adjust the minimum height here
+                    # height: self.height/3
+                    # width: self.width/2
                     theme_text_color: "Custom"
                     text_color: 1, 1, 1, 1  # White text color
+                    text_size: self.size
                     md_bg_color: [1, 0, 0, 1]  # Use the primary color as the outline color
-                    size_hint: (1, .3)
+                    # size_hint_x: .25
+                    # size_hint: (1, .3)
                     # height: self.texture_size[1]  # Adjust the size based on text size
                     
                     
                 
                 MDLabel:
-                    text: f"{root.day}"
+                    text: f"{int(root.day)}"
                     halign: "center"
                     valign: "center"
-                    font_style: "H4"
+                    # font_style: "H4"
+                    font_size: self.width/7
+                    size_hint_y: .8  # This allows you to set a fixed height
+                    height: max(self.texture_size[1], 110)  # Adjust the minimum height here
+                    # size_hint_x: .25
                     # padding: [100, 0, 50, 0]
-                    size_hint: (1, .7)
+                    # size_hint: (1, 1)
                     text_size: self.size
                     md_bg_color: [1, 1, 1, 1]  # Use the primary color as the outline color
                 
@@ -64,43 +75,52 @@
             MDLabel:
                 text: f"{root.time}"
                 halign: "center"
-                font_style: "H4"
+                # font_style: "H4"
+                font_size: self.width/10
                 theme_text_color: "Custom"
                 text_color: [1,1,1,1]
                 # md_bg_color: [0.9,0.9,0.9,1]
-                size_hint_y: None
+                size_hint_y: .2
                 size_hint_x: 1
-                height: self.texture_size[1] + 5
+                # size_hint_y: None  # This allows you to set a fixed height
+                # height: max(self.texture_size[1], 50)  # Adjust the minimum height here
+                # height: self.texture_size[1] + 5
                 # pos_hint: {"center_x": .8, "center_y": .5} 
 
-            # Location Type    
-            MDLabel:
-                text: f"{root.location_type}"
-                halign: "center"
-                font_style: "H4"
-                theme_text_color: "Custom"
-                text_color: app.theme_cls.primary_color
-                md_bg_color: [1,1,1,1]
-                size_hint_y: None
-                # padding: [20, 0, 0, 0]
-                size_hint_x: .5
-                height: self.texture_size[1] + 5
+            MDBoxLayout:
+                size_hint_x: .75
+                size_hint_y: .5
                 pos_hint: {"center_x": .5, "center_y": .5} 
-                radius: 25
+                # md_bg_color: [0.9,0.9,0.2,1]
+
+                # Location Type    
+                MDLabel:
+                    text: f"{root.location_type}"
+                    halign: "center"
+                    valign: "center"
+                    size_hint: (.5, .4)
+                    # font_style: "H4"
+                    font_size: self.width/8
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.primary_color
+                    md_bg_color: [1,1,1,1]
+                    # size_hint_y: None
+                    # padding: [20, 0, 0, 0]
+                    # size_hint_x: .5
+                    text_size: self.size
+                    # size_hint_y: None  # This allows you to set a fixed height
+                    # height: max(self.texture_size[1], 50)  # Adjust the minimum height here
+                    # pos_hint: {"center_x": .5, "center_y": .5} 
+                    # radius: 25
 
             # Location
             MDLabel:
                 text: f"{root.location}"
                 halign: "center"
-                size_hint_y: .2
-                font_style: "H4"
+                font_size: self.width/8
                 theme_text_color: "Custom"
                 text_color: [1,1,1,1]
-                # padding: [20, 0, 0, 0]
-                # size_hint_y: None
-                # size_hint_x: 1
-                # height: self.texture_size[1] + 5
-                # pos_hint: {"center_x": 0.5, "center_y": 1} 
+
 
 
 
@@ -120,21 +140,22 @@
                 text: f"{root.title}"
                 size_hint_y: None
                 height: self.texture_size[1] + 5
-                font_style: "H3"
+                font_size: self.width/10
                 underline: True
                 theme_text_color: "Custom"
                 text_color: app.theme_cls.primary_color
 
             # General Descriptions
             MDLabel:
-                # size_hint_y: 1
+                size_hint_y: 1
                 text: f"asd;lfkjads l;fjasdl fasdl;kjf a;dslkjf ;laskdjf a;sldkjf ;alskdj ;alkdjf ;alsdkjf ;lasdkjf ;alskdfj ;alkjf ;alksjf ;alksjf a;lskdf j"
                 theme_text_color: "Custom"
-                font_style: "H4"
+                # font_style: "H4"
                 valign: 'top'
+                font_size: self.width/15
                 text_size: self.size
                 text_color: app.theme_cls.primary_color
-                # pos_hint: {"center_x":0.5, "center_y": 0.8}
+                pos_hint: {"center_x":0.5, "center_y": 0.8}
                 padding: [15,20,15,10]
 
             

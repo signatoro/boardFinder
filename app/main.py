@@ -13,7 +13,9 @@ from src.boardGameScreen import BoardGameScreen
 
 
 import time
+from kivy.clock import Clock
 
+Clock.max_iteration = 60
 
 # The main application
 class MyApp(MDApp):
