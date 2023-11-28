@@ -1,59 +1,99 @@
 <CreateGroupScreenPref5>
     name: "create_group_pref5"
 
-    MDBoxLayout:
-        orientation: "vertical"
-        padding: [25, 10, 25, 10]
-
-        MDLabel:
-            text: 'General Meeting Description'
-            halign: "center"
-            pos_hint: {"center_x":.5, "center_y": 0.8}
-            underline: "true"
-            font_style: "H4"
-            size_hint_y: None
-            height: self.texture_size[1]
-            spacing: 5
-
-        MDTextField:
-            id: additional_info_text_field
-            hint_text: "Enter additional information: "
-            text: ""
-            on_focus: root.clear_text(self.focus)
-            mode: "rectangle"
-            multiline: True
-            line_color_normal: "teal"
-            required: True
-            text_size: self.width
-            max_input_size: 1000
-            height: self.minimum_height
-            size_hint_y: dp(15)
+    ScrollView:
+        size_hint: (1, 1)
+        # height: dp(500)
+        do_scroll_y: True
+        do_scroll_x: True
+        #bar_width: dp(20)
 
         MDBoxLayout:
-            orientation: "horizontal"
-            size_hint_x: 1
-            padding: 0
+            orientation: "vertical"
+            spacing: 10
+            size_hint_y: None
+            adaptive_height: True
+            padding: [25, 10, 25, 10]
+            # height: self.minimum_height
 
-            AnchorLayout:
-                anchor_x: 'left'
-                anchor_y: 'bottom'
-                padding: [dp(5), 0, 0, dp(10)]
+            MDLabel:
+                text: 'Add Tags'
+                halign: "center"
+                pos_hint: {"center_x": .5, "center_y": 0.9}
+                underline: "true"
+                font_style: "H4"
+                size_hint_y: None
+                height: self.texture_size[1]
+                spacing: 5
 
-                MDFillRoundFlatIconButton:
-                    text: "Prev Pref"
-                    icon: "arrow-left"
-                    on_release: root.class_parent.load_next_pref_page(3, "right")
+            # search tags text field
+            MDTextField:
+                id: search_tags_field
+                pos_hint:{ 'center_x': 0.5 , 'top': 1}
+                size_hint_x: 0.8
+                hint_text: 'Search Tag or Add Custom Tag'
+                hint_text_color: 1,1,1,1
+                icon_left: 'magnify'
+                mode: "rectangle"
+                font_size: 22
+                active_line: False
+                multiline: False
+                on_text: root.search_tags(self.text)
+                padding: [0, 0, dp(35), 0]
 
-            AnchorLayout:
-                anchor_x: 'right'
-                anchor_y: 'bottom'
-                padding: [0, 0, dp(5), dp(10)]
+            MDBoxLayout:
+                orientation: "vertical"
+                size_hint: 1, None
+                height: self.minimum_height
 
-                MDFillRoundFlatIconButton:
-                    text: "Next Pref"
-                    icon: "arrow-right"
-                    on_release: root.class_parent.load_next_pref_page(5)
+                MDScrollView:
+                    do_scroll_y: True
+                    do_scroll_x: False
+                    bar_width: 10
+                    size_hint: 1, None
+                    height: tag_results.height
 
+                    MDList:
+                        id: tag_results
+
+                MDScrollView:
+                    size_hint: 1, None
+                    do_scroll_y: True
+                    bar_width: 10
+                    height: common_tags.height
+
+                    MDGridLayout:
+                        id: common_tags
+                        cols: 2
+                        adaptive_height: True
+                        padding: [dp(25), dp(25), dp(25), dp(25)]
+                        spacing: dp(4)
+                        md_bg_color: (0.76, 0.74, 0.78, 1)
+
+            MDBoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                padding: 0
+
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'bottom'
+                    padding: [dp(5), 0, 0, dp(10)]
+
+                    MDFillRoundFlatIconButton:
+                        text: "Prev Pref"
+                        icon: "arrow-left"
+                        on_release: root.class_parent.load_next_pref_page(3, "right")
+
+                AnchorLayout:
+                    anchor_x: 'right'
+                    anchor_y: 'bottom'
+                    padding: [0, 0, dp(5), dp(10)]
+
+                    MDFillRoundFlatIconButton:
+                        text: "Next Pref"
+                        icon: "arrow-right"
+                        on_release: root.class_parent.load_next_pref_page(5)
 
 
 

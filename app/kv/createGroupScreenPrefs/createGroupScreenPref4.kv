@@ -1,113 +1,119 @@
 <CreateGroupScreenPref4>
     name: "create_group_pref4"
 
-    MDBoxLayout:
-        orientation: "vertical"
-        padding: [25, 10, 25, 10]
-
-        MDLabel:
-            text: 'Host Information'
-            halign: "center"
-            pos_hint: {"center_x":.5, "center_y": 0.8}
-            underline: "true"
-            font_style: "H4"
-            size_hint_y: None
-            height: self.texture_size[1]
-
-        MDLabel:
-            id: host_first_name
-            text: 'First Name'
-            pos_hint: {"center_x": 0.5, "center_y": 0.4}
-            underline: "true"
-            font_style: "H6"
-            size_hint_y: None
-            height: self.texture_size[1]
-            spacing: dp(15)
-
-
-        MDTextField:
-            hint_text: "Ex: Bob"
-            mode: "rectangle"
-            line_color_normal: "teal"
-            multiline: True
-            required: True
-
-        MDLabel:
-            id: host_last_name
-            text: 'Last Name'
-            pos_hint: {"center_x": 0.5, "center_y": 0.4}
-            underline: "true"
-            font_style: "H6"
-            size_hint_y: None
-            height: self.texture_size[1]
-            spacing: 5
-
-        MDTextField:
-            hint_text: "Ex: Smith"
-            mode: "rectangle"
-            line_color_normal: "teal"
-            multiline: True
-            required: True
-
-        MDLabel:
-            id: host_email
-            text: 'Email'
-            pos_hint: {"center_x": 0.5, "center_y": 0.4}
-            underline: "true"
-            font_style: "H6"
-            size_hint_y: None
-            height: self.texture_size[1]
-            spacing: 5
-
-        MDTextField:
-            hint_text: "Ex: bobsmith@gmail.com"
-            mode: "rectangle"
-            multiline: True
-            line_color_normal: "teal"
-            required: True
-
-        MDLabel:
-            id: host_phone_num
-            text: 'Phone Number'
-            pos_hint: {"center_x": 0.5, "center_y": 0.4}
-            underline: "true"
-            font_style: "H6"
-            size_hint_y: None
-            height: self.texture_size[1]
-            spacing: 5
-
-        MDTextField:
-            hint_text: "Ex: XXX-XXX-XXXX"
-            mode: "rectangle"
-            line_color_normal: "teal"
-            multiline: True
-            required: True
-            max_input_size: 12
+    MDScrollView:
+        size_hint: (1, 1)
+        do_scroll_y: True
+        do_scroll_x: False
 
         MDBoxLayout:
-            orientation: "horizontal"
-            size_hint_x: 1
-            padding: 0
+            orientation: "vertical"
+            size_hint_y: None
+            adaptive_height: True
+            padding: [25, 10, 25, 10]
 
-            AnchorLayout:
-                anchor_x: 'left'
-                anchor_y: 'bottom'
-                padding: [dp(5), 0, 0, dp(10)]
+            MDLabel:
+                text: 'Host Information'
+                halign: "center"
+                pos_hint: {"center_x": 0.5, "top": 1}
+                underline: "true"
+                font_style: "H4"
+                size_hint_y: None
+                height: self.texture_size[1]
 
-                MDFillRoundFlatIconButton:
-                    text: "Prev Pref"
-                    icon: "arrow-left"
-                    on_release: root.class_parent.load_next_pref_page(2, "right")
+            MDLabel:
+                id: host_first_name
+                text: 'First Name'
+                underline: "true"
+                font_style: "H6"
+                size_hint_y: None
+                height: self.texture_size[1]
+                padding: [0, dp(20), 0, 0]
 
-            AnchorLayout:
-                anchor_x: 'right'
-                anchor_y: 'bottom'
-                padding: [0, 0, dp(5), dp(10)]
+            MDTextField:
+                hint_text: "Ex: Bob"
+                mode: "rectangle"
+                line_color_normal: "teal"
+                multiline: True
+                size_hint_y: None
+                required: True
 
-                MDFillRoundFlatIconButton:
-                    text: "Next Pref"
-                    icon: "arrow-right"
-                    on_release: root.class_parent.load_next_pref_page(4)
+            MDLabel:
+                id: host_last_name
+                text: 'Last Name'
+                underline: "true"
+                font_style: "H6"
+                size_hint_y: None
+                height: self.texture_size[1]
+                padding: [0, dp(20), 0, 0]
+
+            MDTextField:
+                hint_text: "Ex: Smith"
+                mode: "rectangle"
+                line_color_normal: "teal"
+                multiline: True
+                size_hint_y: None
+                required: True
+
+            MDLabel:
+                id: host_email
+                text: 'Email'
+                underline: "true"
+                font_style: "H6"
+                size_hint_y: None
+                height: self.texture_size[1]
+                padding: [0, dp(20), 0, 0]
+
+            MDTextField:
+                hint_text: "Ex: bobsmith@gmail.com"
+                mode: "rectangle"
+                multiline: True
+                size_hint_y: None
+                line_color_normal: "teal"
+                required: True
+
+            MDLabel:
+                id: host_phone_num
+                text: 'Phone Number'
+                underline: "true"
+                font_style: "H6"
+                size_hint_y: None
+                height: self.texture_size[1]
+                padding: [0, dp(20), 0, 0]
+
+            MDTextField:
+                hint_text: "Ex: XXX-XXX-XXXX"
+                mode: "rectangle"
+                line_color_normal: "teal"
+                multiline: True
+                required: True
+                size_hint_y: None
+                max_input_size: 12
+
+            MDBoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                padding: 0
+
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'bottom'
+                    padding: [dp(5), 0, 0, dp(10)]
+
+                    MDFillRoundFlatIconButton:
+                        text: "Prev Pref"
+                        icon: "arrow-left"
+                        on_release: root.class_parent.load_next_pref_page(2, "right")
+
+                AnchorLayout:
+                    anchor_x: 'right'
+                    anchor_y: 'bottom'
+                    padding: [0, 0, dp(5), dp(10)]
+
+                    MDFillRoundFlatIconButton:
+                        text: "Next Pref"
+                        icon: "arrow-right"
+                        on_release: root.class_parent.load_next_pref_page(4)
 
 
 

@@ -22,25 +22,37 @@
 
             AsyncImage:
                 source: root.image_path  
-                size_hint: 1, .5
+                size_hint: 1, .75
             
-            MDLabel:
-                text: f"{root.user_status}"
-                halign: "center"
-                font_style: "H4"
-                theme_text_color: "Custom"
-                text_color: app.theme_cls.primary_color
-                md_bg_color: [1,1,1,1]
-                # padding: [20, 0, 0, 0]
-                size_hint_x: .5
-                size_hint_y: None
-                height: self.texture_size[1] + 5
+            # Status
+            MDBoxLayout:
+                size_hint_x: .75
                 pos_hint: {"center_x": .5, "center_y": .5} 
-                radius: 25
 
+                # Location Type    
+                MDLabel:
+                    text: f"{root.user_status}"
+                    halign: "center"
+                    valign: "center"
+                    size_hint: (.5, .4)
+                    # font_style: "H4"
+                    font_size: self.width/8
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.primary_color
+                    md_bg_color: [1,1,1,1]
+                    # size_hint_y: None
+                    # padding: [20, 0, 0, 0]
+                    # size_hint_x: .5
+                    text_size: self.size
+                    # size_hint_y: None  # This allows you to set a fixed height
+                    # height: max(self.texture_size[1], 50)  # Adjust the minimum height here
+                    # pos_hint: {"center_x": .5, "center_y": .5} 
+                    # radius: 25
+
+            # Day and Time
             MDLabel:
                 text: f"{root.get_day_of_week(root.day)}, {root.time}"
-                font_style: "H4"
+                font_size: self.width/10
                 # text_size: self.size
                 halign: "center"
                 theme_text_color: "Custom"
@@ -48,10 +60,10 @@
                 size_hint_y: .2
                 # height: self.texture_size[1] + 5
                 
-
+            # Sessions Length
             MDLabel:
                 text: f"{root.session_length}"
-                font_style: "H4"
+                font_size: self.width/10
                 # text_size: self.size
                 halign: "center"
                 theme_text_color: "Custom"
@@ -60,9 +72,10 @@
                 # height: self.texture_size[1] + 5
 
 
+            # Number of Participants
             MDLabel:
                 text: f"{root.participant}"
-                font_style: "H4"
+                font_size: self.width/10
                 # text_size: self.size
                 halign: "center"
                 theme_text_color: "Custom"
@@ -85,21 +98,22 @@
                 text: f"{root.title}"
                 size_hint_y: None
                 height: self.texture_size[1] + 5
-                font_style: "H3"
+                font_size: self.width/10
                 underline: True
                 theme_text_color: "Custom"
                 text_color: app.theme_cls.primary_color
 
             # General Descriptions
             MDLabel:
-                # size_hint_y: 1
+                size_hint_y: 1
                 text: f"asd;lfkjads l;fjasdl fasdl;kjf a;dslkjf ;laskdjf a;sldkjf ;alskdj ;alkdjf ;alsdkjf ;lasdkjf ;alskdfj ;alkjf ;alksjf ;alksjf a;lskdf j"
                 theme_text_color: "Custom"
-                font_style: "H4"
-                valign: 'top'
+                font_size: self.width/15
                 text_size: self.size
                 text_color: app.theme_cls.primary_color
-                # pos_hint: {"center_x":0.5, "center_y": 0.8}
+                valign: 'top'
+                text_color: app.theme_cls.primary_color
+                pos_hint: {"center_x":0.5, "center_y": 0.8}
                 padding: [15,20,15,10]
 
             MDBoxLayout:
