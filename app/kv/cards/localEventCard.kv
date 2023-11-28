@@ -25,10 +25,11 @@
                 orientation: "vertical"
                 # padding: [10, 50, 10, 50]
 
-                pos_hint: {"center_x":.5, "center_y": .8}
+                pos_hint: {"center_x":.5, "center_y": .5}
+                md_bg_color: [1, .5, .5, 1]  # Use the primary color as the outline color
 
                 size_hint_x: .75
-                size_hint_y: 1
+                size_hint_y: .8
                 # id: tag_table
 
                 # Headers
@@ -79,7 +80,7 @@
                 theme_text_color: "Custom"
                 text_color: [1,1,1,1]
                 # md_bg_color: [0.9,0.9,0.9,1]
-                # size_hint_y: None
+                size_hint_y: .2
                 size_hint_x: 1
                 # size_hint_y: None  # This allows you to set a fixed height
                 # height: max(self.texture_size[1], 50)  # Adjust the minimum height here
@@ -88,7 +89,9 @@
 
             MDBoxLayout:
                 size_hint_x: .75
+                size_hint_y: .5
                 pos_hint: {"center_x": .5, "center_y": .5} 
+                # md_bg_color: [0.9,0.9,0.2,1]
 
                 # Location Type    
                 MDLabel:
