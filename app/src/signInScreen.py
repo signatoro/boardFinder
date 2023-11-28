@@ -31,6 +31,8 @@ class SignInScreen(Screen):
         self.ids.username_message_label.color = [.5, .5, .5, 1]
         self.ids.password_message_label.text = "Please enter your password."
         self.ids.password_message_label.color = [.5, .5, .5, 1]
+        self.ids.password_message_label.opacity = 0
+        self.ids.password_message_label.disabled = True
         self.ids.password_prompt_label.opacity = 0
         self.ids.password_text_field.disabled = True
         self.ids.password_text_field.opacity = 0
@@ -125,6 +127,7 @@ class SignInScreen(Screen):
             self.ids.password_message_label.color = [0.8, 0.4, 0.4, 1]
             self.password_input_state = InputState.invalid
         else:
+            App.get_running_app().set_signed_in(True)
             App.get_running_app().change_screen("home_screen", direction="left")
 
     def create_account_button_pressed(self):

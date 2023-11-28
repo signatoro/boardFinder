@@ -6,9 +6,11 @@ from kivymd.app import MDApp
 from src.createAccountScreen import CreateAccountScreen
 from src.signInScreen import SignInScreen
 from src.homeScreen import HomeScreen
+from src.profileScreen import ProfileScreen
 from createGroup import CreateGroupScreen
 from src.findGroupScreen import FindGroupScreen
 from src.gameCard import GameCard
+from src.topBar import TopBar
 from src.learnGameScreen import LearnGameScreen
 from src.boardGameScreen import BoardGameScreen
 
@@ -18,22 +20,30 @@ from kivy.clock import Clock
 
 Clock.max_iteration = 60
 
+
 # The main application
 class MyApp(MDApp):
 
     lastResize = 0
     searched_games = []
     returned_games_to_display = []
+    top_bars = []
+
+    signed_in = False
+    username = None
 
     def build(self):
+        self.signed_in = False
+        self.username = None
+
         Window.minimum_width = 400
         Window.minimum_height = 600
         # self.lastResize = time.time()-2
-        self.forceWindowRatio()
+        self.force_window_ratio()
         self.title = 'BoardGame Group Finder'
         self.theme_cls.primary_palette = "Teal"
         # self.theme_cls.theme_style = "Dark"
-        # Window.bind(on_resize=self.forceWindowRatio)
+        # Window.bind(on_resize=self.force_window_ratio)
         return Builder.load_file("main.kv")  # GUI
 
     def change_screen(self, screen_name, direction='left', mode="", load_deps=None):
@@ -58,7 +68,10 @@ class MyApp(MDApp):
 
         screen_manager.current = screen_name
 
-    def forceWindowRatio(self, *args):
+        for bar in self.top_bars:
+            bar.update_actions()
+
+    def force_window_ratio(self, *args):
         if self.lastResize + 0.1 > time.time():
             return
         self.lastResize = time.time()
@@ -67,6 +80,19 @@ class MyApp(MDApp):
         Window.size = (averageSize * 2 * 2 / 5, averageSize * 2 * 3 / 5)
         return True
 
+    def get_screen_name(self):
+        if self.root is None or self.root.ids['screen_manager'] is None:
+            return ""
+        return self.root.ids['screen_manager'].current
+
+    def get_signed_in(self):
+        return self.signed_in
+
+    def set_signed_in(self, signed_in):
+        self.signed_in = signed_in
+
+    def add_top_bar(self, bar):
+        self.top_bars.append(bar)
 
 if __name__ == "__main__":
     MyApp().run()

@@ -11,13 +11,8 @@
         orientation: "vertical"
         #spacing: 10
 
-        MDTopAppBar:
-            size_hint_x: 1
-            size_hint_y: 0.08
-            title: "BoardGameTopBar"
-            pos_hint_y: None
-            left_action_items:
-                [["home", lambda x: app.change_screen("home_screen", direction='right'), "Home", "Home"]]
+        TopBar:
+            id: topBar
 
         MDLabel:
             id: main_label

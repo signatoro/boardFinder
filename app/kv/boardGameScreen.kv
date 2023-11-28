@@ -13,10 +13,8 @@
             orientation: "vertical"
             spacing: 5
 
-            MDTopAppBar:
-                title: "BoardGameTopBar"
-                left_action_items:
-                    [["home", lambda x: app.change_screen("home_screen", direction='right'), "Home", "Home"]]
+            TopBar:
+                id: topBar
 
             # Title and Backbutton
             MDBoxLayout:
