@@ -4,6 +4,11 @@
     name: 'board_game_screen'
 
     MDScrollView:
+        size_hint: (1, 1)
+        do_scroll_y: True
+        scroll_type: ['bars', 'content']
+        bar_width: dp(20)
+
         MDBoxLayout:
             orientation: "vertical"
             spacing: 5
@@ -116,33 +121,8 @@
                         # md_bg_color: [.9, .9, .9, .5]
                         spacing: dp(10)
                         padding: [0, 10, 0, 0]
+                        height: self.height
                         id: url_stack
-                        
-                        # MDChip:
-                        #     text: 'Link.url.1.com'
-                        #     label: 'Tag1'
-                        #     icon: 'tag'
-                        #     size_hint:(1, .3)
-                        #     theme_text_color: "Custom"
-                        #     text_color: app.theme_cls.primary_color
-
-                        # MDChip:
-                        #     text: 'Link.url.1.com'
-                        #     label: 'Tag2'
-                        #     icon: 'tag'
-                        #     size_hint:(1, .3)
-                        #     theme_text_color: "Custom"
-                        #     text_color: app.theme_cls.primary_color
-
-                        # MDChip:
-                        #     text: 'Link.url.1.com'
-                        #     label: 'Tag3'
-                        #     icon: 'tag'
-                        #     size_hint:(1, .3)
-                        #     theme_text_color: "Custom"
-                        #     text_color: app.theme_cls.primary_color
-                            
-                    
 
                 # Tags
                 MDBoxLayout:
