@@ -3,12 +3,14 @@ from datetime import time
 from kivy.metrics import dp
 from kivy.clock import Clock
 from kivy.uix.popup import Popup
+from kivymd.uix.label import MDLabel
 from kivymd.uix.tab import MDTabsBase
 from kivy.uix.screenmanager import Screen
-from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDRaisedButton
-from kivymd.uix.label import MDLabel
+from kivymd.uix.floatlayout import MDFloatLayout
+from kivy.properties import StringProperty
+
 
 
 from src.localEventCard import LocalEventCard
@@ -21,16 +23,31 @@ class Tab(MDFloatLayout, MDTabsBase):
 
 class HomeScreen(Screen):
 
+    carol_index = StringProperty()
+
     local_event_l: list = []
     def __init__(self, **kwargs):
+        
         # self.local_event_l: list = []
         super(HomeScreen, self).__init__(**kwargs)
+        
 
     def on_enter(self, *args):
+        
         Clock.schedule_once(self.load_depends)
         return super().on_enter(*args)
+    
+    def on_carousel_slide(self, *args):
+        current_index = args[0].index + 1
+        total_index = len(args)-1
+        self.carol_index = f"{current_index}/{total_index}"
+        
+
 
     def load_depends(self, load_deps=None):
+        self.ids.local_event_carou.bind(on_slide_complete=self.on_carousel_slide)
+        self.ids.group_card_carou.bind(on_slide_complete=self.on_carousel_slide)
+        self.carol_index = "1/3"
         self.load_local_events()
         self.load_group_cards()
 

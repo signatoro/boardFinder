@@ -62,6 +62,7 @@
             MDTabs:
                 lock_swiping: True
                 anim_duration: 0
+                id: home_tabs
                 #anim_threshold: 0
                 #scroll_timeout: 0
 
@@ -91,5 +92,10 @@
                 
             MDLabel:
                 size_hint_y: .05
-                text: "Test Test"
-                        
+                text: f"<   {root.carol_index}   >"
+                theme_text_color: "Custom"
+                text_color: [1,1,1,1]  # White text color
+                text_size: self.size
+                halign: "center"
+                valign: "center"
+
