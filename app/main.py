@@ -4,6 +4,7 @@ from kivy.core.window import Window
 from kivymd.app import MDApp
 
 from src.createAccountScreen import CreateAccountScreen
+from src.signInScreen import SignInScreen
 from src.homeScreen import HomeScreen
 from createGroup import CreateGroupScreen
 from src.findGroupScreen import FindGroupScreen

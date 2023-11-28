@@ -16,7 +16,8 @@
             #left_action_items:
             #    [["home", lambda x: app.change_screen("home_screen", direction='right'), "Home", "?!?"]]
             right_action_items:
-                [["account", lambda x: app.change_screen("create_account_screen", direction='left'), "Sign In", "???"]]
+                [["account", lambda x: app.change_screen("create_account_screen", direction='left'), "Create Account", "???"],
+                ["account", lambda x: app.change_screen("sign_in_screen", direction='left'), "Sign In", "???"]]
 
         # BoxLayout widget for central buttons
         MDBoxLayout:
