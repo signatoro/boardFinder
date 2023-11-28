@@ -251,47 +251,10 @@ class CreateGroupScreenPref4(Screen):
 
 
 class CreateGroupScreenPref5(Screen):
-    field_default_text = ""
-    additional_description_text = ""
-    curr_word_count = 0
-    max_word_count = 1000
-
-    def __init__(self, parent, **kwargs):
-        super(CreateGroupScreenPref5, self).__init__(**kwargs)
-        self.class_parent = parent
-        self.field_default_text = ("Enter additional information: -rules to follow, -what to expect, -what to bring, "
-                                  "-will food be served?")
-        self.ids.additional_info_text_field.text = ("Enter additional information: -rules to follow, -what to expect, "
-                                                    "-what to bring, -will food be served?")
-        self.ids.additional_info_text_field.helper_text = f'0/{self.max_word_count}'
-
-    def clear_text(self, is_focused):
-        if is_focused and self.ids.additional_info_text_field.text == self.field_default_text:
-            self.ids.additional_info_text_field.text = ""
-        elif not is_focused and len(self.ids.additional_info_text_field.text) == 0:
-            self.ids.additional_info_text_field.text = self.field_default_text
-            self.ids.additional_info_text_field.helper_text = f'0/{self.max_word_count}'
-        elif not is_focused and self.ids.additional_info_text_field.text == self.field_default_text:
-            self.curr_word_count = 0
-            self.ids.additional_info_text_field.helper_text = f'0/{self.max_word_count}'
-
-    def update_and_limit_word_count(self, text):
-        self.additional_description_text = text.split()
-        self.curr_word_count = len(text.split())
-        if self.curr_word_count >= self.max_word_count:
-            self.additional_description_text = ' '.join(self.additional_description_text[:self.max_word_count])
-            self.ids.additional_info_text_field.text = self.additional_description_text
-            self.curr_word_count = self.max_word_count
-            self.ids.additional_info_text_field.helper_text = f'Max Word Count Reached: {self.curr_word_count}/{self.max_word_count}'
-        else:
-            self.ids.additional_info_text_field.helper_text = f'{self.curr_word_count}/{self.max_word_count}'
-
-
-class CreateGroupScreenPref6(Screen):
     added_tags = {}
 
     def __init__(self, parent, **kwargs):
-        super(CreateGroupScreenPref6, self).__init__(**kwargs)
+        super(CreateGroupScreenPref5, self).__init__(**kwargs)
         self.class_parent = parent
         self.display_database_tags()
 
@@ -377,6 +340,43 @@ class CreateGroupScreenPref6(Screen):
         )
         chip.md_bg_color = "teal"
         self.ids.common_tags.add_widget(chip)
+
+
+class CreateGroupScreenPref6(Screen):
+    field_default_text = ""
+    additional_description_text = ""
+    curr_word_count = 0
+    max_word_count = 1000
+
+    def __init__(self, parent, **kwargs):
+        super(CreateGroupScreenPref6, self).__init__(**kwargs)
+        self.class_parent = parent
+        self.field_default_text = ("Enter additional information: -rules to follow, -what to expect, -what to bring, "
+                                  "-will food be served?")
+        self.ids.additional_info_text_field.text = ("Enter additional information: -rules to follow, -what to expect, "
+                                                    "-what to bring, -will food be served?")
+        self.ids.additional_info_text_field.helper_text = f'0/{self.max_word_count}'
+
+    def clear_text(self, is_focused):
+        if is_focused and self.ids.additional_info_text_field.text == self.field_default_text:
+            self.ids.additional_info_text_field.text = ""
+        elif not is_focused and len(self.ids.additional_info_text_field.text) == 0:
+            self.ids.additional_info_text_field.text = self.field_default_text
+            self.ids.additional_info_text_field.helper_text = f'0/{self.max_word_count}'
+        elif not is_focused and self.ids.additional_info_text_field.text == self.field_default_text:
+            self.curr_word_count = 0
+            self.ids.additional_info_text_field.helper_text = f'0/{self.max_word_count}'
+
+    def update_and_limit_word_count(self, text):
+        self.additional_description_text = text.split()
+        self.curr_word_count = len(text.split())
+        if self.curr_word_count >= self.max_word_count:
+            self.additional_description_text = ' '.join(self.additional_description_text[:self.max_word_count])
+            self.ids.additional_info_text_field.text = self.additional_description_text
+            self.curr_word_count = self.max_word_count
+            self.ids.additional_info_text_field.helper_text = f'Max Word Count Reached: {self.curr_word_count}/{self.max_word_count}'
+        else:
+            self.ids.additional_info_text_field.helper_text = f'{self.curr_word_count}/{self.max_word_count}'
 
 
 class PopupImageSelection(Popup):
