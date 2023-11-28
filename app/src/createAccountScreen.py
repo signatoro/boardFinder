@@ -205,4 +205,5 @@ class CreateAccountScreen(Screen):
         self.ids.create_account_button.opacity = 0
 
     def create_account_attempt(self):
+        App.get_running_app().set_signed_in(True)
         App.get_running_app().change_screen("home_screen", direction="left")
