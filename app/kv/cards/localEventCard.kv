@@ -23,13 +23,13 @@
             # Calender
             MDBoxLayout:
                 orientation: "vertical"
-                # padding: [10, 50, 10, 50]
+                padding: [0, 15, 0, 10]
 
                 pos_hint: {"center_x":.5, "center_y": .5}
                 # md_bg_color: [1, .5, .5, 1]  # Use the primary color as the outline color
 
                 size_hint_x: .75
-                size_hint_y: .8
+                size_hint_y: .7
                 # id: tag_table
 
                 # Headers
@@ -42,8 +42,8 @@
                     # valign: "top"
                     # padding: [100, 0, 50, 0]
                     font_size: self.width/8
-                    size_hint_y: None  # This allows you to set a fixed height
-                    height: root.height/12 # max(self.texture_size[1], root.height/110)  # Adjust the minimum height here
+                    size_hint_y: .3  # This allows you to set a fixed height
+                    height: max(self.texture_size[1], 10)  # Adjust the minimum height here
                     # height: self.height/3
                     # width: self.width/2
                     theme_text_color: "Custom"
@@ -62,8 +62,8 @@
                     valign: "center"
                     # font_style: "H4"
                     font_size: self.width/7
-                    size_hint_y: None  # This allows you to set a fixed height
-                    height: root.height/6 #max(self.texture_size[1], )  # Adjust the minimum height here
+                    size_hint_y: .8  # This allows you to set a fixed height
+                    height: max(self.texture_size[1], 110)  # Adjust the minimum height here
                     # size_hint_x: .25
                     # padding: [100, 0, 50, 0]
                     # size_hint: (1, 1)
