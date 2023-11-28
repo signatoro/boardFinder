@@ -16,7 +16,7 @@
             md_bg_color: app.theme_cls.primary_color
             orientation: 'vertical'
             # padding: [5,50,5,50]
-            spacing: 25
+            # spacing: 25
 
             # radius: 25
 
@@ -81,26 +81,34 @@
                 # md_bg_color: [0.9,0.9,0.9,1]
                 # size_hint_y: None
                 size_hint_x: 1
+                # size_hint_y: None  # This allows you to set a fixed height
+                # height: max(self.texture_size[1], 50)  # Adjust the minimum height here
                 # height: self.texture_size[1] + 5
                 # pos_hint: {"center_x": .8, "center_y": .5} 
 
-            # Location Type    
-            MDLabel:
-                text: f"{root.location_type}"
-                halign: "center"
-                # font_style: "H4"
-                font_size: self.width/8
-                theme_text_color: "Custom"
-                text_color: app.theme_cls.primary_color
-                md_bg_color: [1,1,1,1]
-                # size_hint_y: None
-                # padding: [20, 0, 0, 0]
-                size_hint_x: .5
-                text_size: self.size
-                size_hint_y: None  # This allows you to set a fixed height
-                height: max(self.texture_size[1], 50)  # Adjust the minimum height here
+            MDBoxLayout:
+                size_hint_x: .75
                 pos_hint: {"center_x": .5, "center_y": .5} 
-                # radius: 25
+
+                # Location Type    
+                MDLabel:
+                    text: f"{root.location_type}"
+                    halign: "center"
+                    valign: "center"
+                    size_hint: (.5, .4)
+                    # font_style: "H4"
+                    font_size: self.width/8
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.primary_color
+                    md_bg_color: [1,1,1,1]
+                    # size_hint_y: None
+                    # padding: [20, 0, 0, 0]
+                    # size_hint_x: .5
+                    text_size: self.size
+                    # size_hint_y: None  # This allows you to set a fixed height
+                    # height: max(self.texture_size[1], 50)  # Adjust the minimum height here
+                    # pos_hint: {"center_x": .5, "center_y": .5} 
+                    # radius: 25
 
             # Location
             MDLabel:
@@ -111,8 +119,8 @@
                 font_size: self.width/8
                 theme_text_color: "Custom"
                 text_color: [1,1,1,1]
-                size_hint_y: None  # This allows you to set a fixed height
-                height: max(self.texture_size[1], 10)  # Adjust the minimum height here
+                # size_hint_y: None  # This allows you to set a fixed height
+                # height: max(self.texture_size[1], 10)  # Adjust the minimum height here
                 # padding: [20, 0, 0, 0]
                 # size_hint_y: None
                 # size_hint_x: 1
