@@ -15,6 +15,7 @@ from kivy.properties import StringProperty
 
 from src.localEventCard import LocalEventCard
 from src.groupCard import GroupCard
+from src.topBar import TopBar
 
 
 class Tab(MDFloatLayout, MDTabsBase):

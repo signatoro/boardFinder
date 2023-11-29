@@ -7,10 +7,8 @@
         orientation: "vertical"
         spacing: 10
 
-        MDTopAppBar:
-            title: "BoardGameTopBar"
-            left_action_items:
-                [["home", lambda x: app.change_screen("home_screen", direction='right'), "Home", "Home"]]
+        TopBar:
+            id: topBar
 
         MDLabel:
             text: 'Learn A Game'

@@ -3,6 +3,8 @@
 
 #:include kv/homeScreen.kv
 #:include kv/createAccountScreen.kv
+#:include kv/signInScreen.kv
+#:include kv/profileScreen.kv
 #:include kv/createGroupScreen.kv
 #:include kv/findGroupScreen.kv
 #:include kv/learnGameScreen.kv
@@ -32,6 +34,12 @@ MDScreen:
                 CreateGroupScreen:
                     name: "create_group_screen"
                     id: create_group_screen
+                SignInScreen:
+                    name: "sign_in_screen"
+                    id: sign_in_screen
+                ProfileScreen:
+                    name: "profile_screen"
+                    id: profile_screen
                 CreateAccountScreen:
                     name: "create_account_screen"
                     id: create_account_screen

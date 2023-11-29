@@ -12,11 +12,8 @@
     MDBoxLayout:
         orientation: "vertical"
 
-        MDTopAppBar:
-            title: "BoardGameTopBar"
-            pos_hint_y: None
-            left_action_items:
-                [["home", lambda x: app.change_screen("home_screen", direction='right'), "Home", "Home"]]
+        TopBar:
+            id: topBar
 
         MDLabel:
             text: 'Create a Group'

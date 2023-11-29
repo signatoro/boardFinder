@@ -1,0 +1,8 @@
+<TopBar>:
+    #id: top_bar_id_yes
+    #title: root.title
+    #left_action_items: root.left_action_item
+        #[[root.get_homeButtonIcon, lambda x: app.change_screen("home_screen", direction='right'), root.get_homeButtonDesc, root.questionMark]]
+    #right_action_items:
+        #[[root.get_profileButtonIcon, lambda x: app.change_screen("create_account_screen", direction='left'), root.get_profileButtonDesc, root.questionMark]]
+    #on_pre_enter: root.update_actions()
