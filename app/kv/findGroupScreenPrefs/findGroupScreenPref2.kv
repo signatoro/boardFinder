@@ -32,16 +32,17 @@
                 text: "Ideal player count:"
                 text_color: [0.3, 0.3, 0.3, 1]
 
-            MDLabel:
-                id: player_count_label
-                size_hint_x: 1
-                size_hint_y: 0.3
-                halign: 'center'
-                text: "4"
-                text_color: [0.3, 0.3, 0.3, 1]
+#            MDLabel:
+#                id: player_count_label
+#                size_hint_x: 1
+#                size_hint_y: 0.3
+#                halign: 'center'
+#                text: "4"
+#                text_color: [0.3, 0.3, 0.3, 1]
 
             MDSlider:
-                hint: False
+                hint_bg_color: "teal"
+                hint_text_color: "white"
                 show_off: False
                 color: "teal"
                 id: player_slider
@@ -56,6 +57,20 @@
                 on_touch_up: (lambda x : print("up"))
                 on_touch_down: (lambda x : print("down"))
                 on_value: root.class_parent.player_count_set(self.value)
+
+#            MDBoxLayout:
+#                MDLabel:
+#                    size_hint_x: 0.142857143
+#                    halign: 'left'
+#                    valign: 'top'
+#                    text: "2"
+#                    text_color: [0.8, 0.8, 0.8, 1]
+#                MDLabel:
+#                    size_hint_x: 0.142857143
+#                    halign: 'right'
+#                    valign: 'top'
+#                    text: "8+"
+#                    text_color: [0.8, 0.8, 0.8, 1]
 
             MDBoxLayout:
                 orientation: 'horizontal'
@@ -97,6 +112,9 @@
                     text: "8+"
                     text_color: [0.8, 0.8, 0.8, 1]
 
+            MDLabel:
+                size_hint_x: 1
+                size_hint_y: 0.3
         MDLabel:
             size_hint_y: .1
 
@@ -110,6 +128,10 @@
             MDLabel:
                 size_hint_x: 1
                 size_hint_y: 0.3
+
+            MDLabel:
+                size_hint_x: 1
+                size_hint_y: 0.3
                 halign: 'center'
                 text: "Player count variation allowed:"
                 text_color: [0.3, 0.3, 0.3, 1]
@@ -119,11 +141,12 @@
                 size_hint_x: 1
                 size_hint_y: 0.3
                 halign: 'center'
-                text: "1"
-                text_color: [0.3, 0.3, 0.3, 1]
+                text: ""
+                text_color: [0, 0, 0, 1]
 
             MDSlider:
-                hint: False
+                hint_bg_color: "teal"
+                hint_text_color: "white"
                 show_off: False
                 color: "teal"
                 id: variation_slider
