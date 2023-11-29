@@ -1,0 +1,965 @@
+<FindGroupScreenPref3>
+    name: "find_group_pref3"
+
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: 10
+        padding: 10
+
+        AnchorLayout:
+            size_hint_x: 1
+            size_hint_y: .05
+            anchor_x: 'center'
+            anchor_y: 'center'
+            MDLabel:
+                halign: 'center'
+                text: 'Please select when you are available!'
+
+        MDGridLayout:
+            id: times_available_grid
+            cols: 8
+            rows: 19
+            size_hint_x: 1
+            size_hint_y: .6
+
+####################################################
+
+            Button:
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+                opacity: 0
+            Button:
+                text: "Mon"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+
+            Button:
+                text: "Tue"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "Wed"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "Thu"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "Fri"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "Sat"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "Sun"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "8 - 9"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Mon 8")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Tue 8")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Wed 8")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Thu 8")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Fri 8")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sat 8")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sun 8")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "9 - 10"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Mon 9")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Tue 9")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Wed 9")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Thu 9")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Fri 9")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sat 9")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sun 9")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "10 - 11"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Mon 10")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Tue 10")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Wed 10")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Thu 10")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Fri 10")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sat 10")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sun 10")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "11 - 12"
+                label: 'Pill Shape'
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Mon 11")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Tue 11")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Wed 11")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Thu 11")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Fri 11")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sat 11")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sun 11")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "12 - 1"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Mon 12")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Tue 12")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Wed 12")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Thu 12")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Fri 12")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sat 12")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sun 12")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "1 - 2"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Mon 1")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Tue 1")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Wed 1")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Thu 1")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Fri 1")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sat 1")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sun 1")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "2 - 3"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Mon 2")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Tue 2")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Wed 2")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Thu 2")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Fri 2")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sat 2")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sun 2")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "3 - 4"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Mon 3")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Tue 3")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Wed 3")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Thu 3")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Fri 3")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sat 3")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sun 3")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "4 - 5"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Mon 4")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Tue 4")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Wed 4")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Thu 4")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Fri 4")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sat 4")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sun 4")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "5 - 6"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Mon 5")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Tue 5")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Wed 5")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Thu 5")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Fri 5")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sat 5")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sun 5")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "6 - 7"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Mon 6")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Tue 6")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Wed 6")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Thu 6")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Fri 6")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sat 6")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sun 6")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "7 - 8"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Mon 7")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Tue 7")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Wed 7")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Thu 7")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Fri 7")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sat 7")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sun 7")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "8 - 9"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Mon 8p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Tue 8p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Wed 8p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Thu 8p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Fri 8p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sat 8p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sun 8p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "9 - 10"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Mon 9p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Tue 9p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Wed 9p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Thu 9p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Fri 9p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sat 9p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sun 9p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "10 - 11"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Mon 10p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Tue 10p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Wed 10p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Thu 10p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Fri 10p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sat 10p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sun 10p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                text: "11 - 12"
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Mon 11p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Tue 11p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Wed 11p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Thu 11p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Fri 11p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sat 11p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+            Button:
+                on_release: root.class_parent.time_pressed(self, "Sun 11p")
+                font_color: [.3, 1, .3, 1]
+                text: ""
+                label: 'Pill Shape'
+                size_hint_x: 1/8
+                size_hint_y: 1/8
+
+
+
+
+####################################################
+
+
+
+        MDBoxLayout:
+            size_hint_x: 1
+            size_hint_y: .15
+            orientation: 'horizontal'
+            padding: 0
+
+            AnchorLayout:
+                anchor_x: 'left'
+                anchor_y: 'bottom'
+                MDFillRoundFlatIconButton:
+                    text: "Previous Preference"
+                    #pos_hint: {"right": 1, "y": 0.5}
+                    icon: "arrow-left"
+                    on_release: root.class_parent.load_next_pref_page(1)
+
+            AnchorLayout:
+                anchor_x: 'right'
+                anchor_y: 'bottom'
+                MDFillRoundFlatIconButton:
+                    text: "Find Groups!"
+                    pos_hint: {'x': 0.9} # , "y": 0.5
+                    halign: 'right'
+                    icon: "arrow-right"
+                    on_release: root.class_parent.preferences_done()

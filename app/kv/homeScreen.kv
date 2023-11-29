@@ -1,0 +1,97 @@
+#:include kv/cards/localEventCard.kv
+#:include kv/cards/groupCard.kv
+#:include kv/TopBar.kv
+
+<HomeScreen>:
+    name: "home_screen"
+    id: home_screen
+
+    MDBoxLayout:
+        spacing: 10
+        orientation: 'vertical'
+        cols: 1
+
+        TopBar:
+            id: topBar
+
+        # BoxLayout widget for central buttons
+        MDBoxLayout:
+            spacing: 15
+            padding: 15
+            orientation: 'horizontal'
+            size_hint: (1, 0.3)
+
+            MDRectangleFlatButton:
+                ripple_scale: 2
+                size_hint: (1, 1)
+                font_size: self.width/6
+                #font_size: 22
+                #text_size: self.size
+                text: 'Find a \nGroup'
+                halign: 'center'
+                on_release: app.change_screen("find_group_screen")
+            MDRectangleFlatButton:
+                ripple_scale: 2
+                size_hint: (1, 1)
+                font_size: self.width/6
+                #font_size: 22
+                #text_size: self.size
+                text: 'Learn a \nGame'
+                halign: 'center'
+                on_release: app.change_screen("learn_game_screen")
+            MDRectangleFlatButton:
+                ripple_scale: 2
+                size_hint: (1, 1)
+                font_size: self.width/6
+                #font_size: 22
+                #text_size: self.size
+                text: 'Create a \nGroup'
+                halign: 'center'
+                on_release: app.change_screen("create_group_screen")
+
+        
+        MDBoxLayout:
+            # size_hint_x: 1
+            orientation: "vertical"
+            md_bg_color: app.theme_cls.primary_color
+
+            MDTabs:
+                lock_swiping: True
+                anim_duration: 0
+                id: home_tabs
+                #anim_threshold: 0
+                #scroll_timeout: 0
+
+                Tab:
+                    title: "Local Events"
+                    md_bg_color: app.theme_cls.primary_color
+                    #lock_swiping: True
+                    #anim_duration: 0
+                    #anim_threshold: 0
+                    #scroll_timeout: 0
+                    MDCarousel:
+                        id: local_event_carou
+                        #min_move: 0.0001
+                        #anim_cancel_duration: 0.0001
+                        #scroll_distance: 0.0001
+                        padding: [100, 100, 100, 100]
+
+                Tab:
+                    title: "My Groups"
+                    #lock_swiping: True
+                    #anim_duration: 0
+                    #anim_threshold: 0
+                    #scroll_timeout: 0
+                    MDCarousel:
+                        id: group_card_carou
+                        padding: [100, 100, 100, 100]
+                
+            MDLabel:
+                size_hint_y: .05
+                text: f"<   {root.carol_index}   >"
+                theme_text_color: "Custom"
+                text_color: [1,1,1,1]  # White text color
+                text_size: self.size
+                halign: "center"
+                valign: "center"
+

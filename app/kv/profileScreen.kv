@@ -1,0 +1,32 @@
+<ProfileScreen>
+    name: "profile_screen"
+
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: 15
+
+        TopBar:
+            id: topBar
+
+        MDLabel:
+            id: main_label
+            size_hint_x: 1
+            size_hint_y: 0.05
+            text: 'Welcome!'
+            pos_hint: {"center_x": 0.5, "center_y": 0.9}
+            underline: "true"
+            halign: "center"
+            font_style: "H3"
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        AnchorLayout:
+            anchor_x: 'right'
+            anchor_y: 'bottom'
+            padding: 10
+            MDFillRoundFlatIconButton:
+                text: "Sign Out"
+                pos_hint: {'x': 0.9} # , "y": 0.5
+                halign: 'right'
+                icon: "account-remove"
+                on_release: root.sign_out()

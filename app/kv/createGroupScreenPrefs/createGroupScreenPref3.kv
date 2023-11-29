@@ -1,0 +1,194 @@
+<CreateGroupScreenPref3>
+    name: "create_group_pref3"
+
+    MDScrollView:
+        size_hint: (1, 1)
+        do_scroll_y: True
+        do_scroll_x: False
+
+        MDBoxLayout:
+            orientation: "vertical"
+            spacing: 10
+            size_hint_y: None
+            adaptive_height: True
+            padding: [25, 10, 25, 10]
+            # height: self.minimum_height
+
+            MDLabel:
+                text: 'Meeting Information'
+                halign: "center"
+                pos_hint: {"center_x":.5, "top": 1}
+                underline: "true"
+                font_style: "H4"
+                size_hint_y: None
+                height: self.texture_size[1]
+                spacing: 5
+
+            MDLabel:
+                id: dow_label
+                text: 'Choose Day Of Week'
+                underline: "true"
+                font_style: "H6"
+                size_hint_y: None
+                height: self.texture_size[1]
+                spacing: 5
+
+            MDFillRoundFlatIconButton:
+                id: dow_button
+                text: "Select Day"
+                icon: "arrow-down"
+                #height: self.texture_size[1]
+                spacing: 5
+                on_release: root.menu.open()
+
+            MDLabel:
+                id: recurring_label
+                text: 'Recurring Meeting?'
+                underline: "true"
+                font_style: "H6"
+                size_hint_y: None
+                height: self.texture_size[1]
+                spacing: 5
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+                adaptive_size: True
+                spacing: dp(10)
+
+                MyToggleButton:
+                    id: recurring_toggle_btn
+                    #md_bg_color: (1, 1, 1, 1)
+                    text: "Recurring"
+                    group: "general_info"
+
+                MyToggleButton:
+                    id: non_recurring_toggle_btn
+                    #md_bg_color: "teal"
+                    text: "Non-Recurring"
+                    group: "general_info"
+
+            MDLabel:
+                id: start_time_label
+                text: 'Choose Start Time'
+                spacing: 5
+                underline: "true"
+                font_style: "H6"
+                size_hint_y: None
+                mode: "rectangle"
+                height: self.texture_size[1]
+
+            MDRoundFlatButton:
+                id: start_time_button
+                text: "Select Start Time"
+                required: "true"
+                # pos_hint: {"left": 1, "center_y": .5}
+                on_release: root.open_time_button("start")
+                spacing: 5
+
+            MDLabel:
+                id: end_time_label
+                text: 'Choose End Time'
+                spacing: 5
+                underline: "true"
+                mode: "rectangle"
+                font_style: "H6"
+                size_hint_y: None
+                height: self.texture_size[1]
+                spacing: 5
+
+            MDRoundFlatButton:
+                id: end_time_button
+                text: "Select End Time"
+                required: "true"
+                #pos_hint: {"left": 1, "center_y": .3}
+                spacing: 5
+                on_release: root.open_time_button("end")
+
+            MDLabel:
+                text: 'Location'
+                spacing: 5
+                underline: "true"
+                font_style: "H6"
+                mode: "rectangle"
+                size_hint_y: None
+                height: self.texture_size[1]
+                spacing: 5
+
+            MDTextField:
+                hint_text: "Ex: Boston Public Library"
+                mode: "rectangle"
+                multiline: True
+                line_color_normal: "teal"
+                required: True
+                size_hint_y: None
+                spacing: 5
+                padding: [10, 10, 10, 10]
+
+            MDLabel:
+                text: 'Max Players'
+                mode: "rectangle"
+                pos_hint: {"center_x": 0.5, "center_y": 0.1}
+                underline: "true"
+                font_style: "H6"
+                size_hint_y: None
+                height: self.texture_size[1]
+                spacing: 5
+
+            MDBoxLayout:
+                orientation: 'horizontal'
+                size_hint_y: None
+                height: dp(40)
+
+                MDSlider:
+                    id: max_players_slider
+                    min: 2
+                    max: 10
+                    step: 1
+                    value: 4
+                    hint: True
+                    hint_bg_color: "teal"
+                    hint_text_color: "white"
+                    size_hint_y: None
+                    height: dp(40)
+                    hint_radius: [6, 0, 6, 0]
+                    thumb_color_active: "teal"
+                    thumb_color_inactive: "teal"
+
+                MDLabel:
+                    id: max_players_value_label
+                    text: root.set_mp_slider_value(max_players_slider.value)
+                    size_hint: None, None
+                    size: dp(50), dp(40)
+                    # pos_hint: {'center_y': 0.5, 'left': 1}
+
+            MDBoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                padding: 0
+
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'bottom'
+                    padding: [dp(5), 0, 0, dp(10)]
+
+                    MDFillRoundFlatIconButton:
+                        text: "Prev Pref"
+                        icon: "arrow-left"
+                        on_release: root.class_parent.load_next_pref_page(1, "right")
+
+                AnchorLayout:
+                    anchor_x: 'right'
+                    anchor_y: 'bottom'
+                    padding: [0, 0, dp(5), dp(10)]
+
+                    MDFillRoundFlatIconButton:
+                        text: "Next Pref"
+                        icon: "arrow-right"
+                        on_release: root.class_parent.load_next_pref_page(3)
+
+
+
+<MyToggleButton>:
+    MDRectangleFlatButton:
+        text: root.text
+        on_release: root.on_toggle(root.text)

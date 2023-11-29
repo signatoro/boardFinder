@@ -1,0 +1,217 @@
+<CreateAccountScreen>
+    name: "create_account_screen"
+    on_pre_enter: root.screen_entered()
+
+# TOP BAR
+
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: 15
+
+        TopBar:
+            id: topBar
+
+        MDLabel:
+            id: create_account_label
+            text: "Create an Account"
+            font_size: 26
+            #pos_hint: {'center_x': 0.5, 'center_y': 0.85}
+            halign: "center"
+
+#        MDLabel:
+#            opacity: 0
+
+# USERNAME WIDGETS
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            spacing: 10
+
+            MDLabel:
+                id: username_prompt_label
+                text: "Username:"
+                color: [.2, .2, .2, 1]
+                font_size: 24
+                size_hint_x: 0.3
+                #pos_hint: {'x': -0.65, 'center_y': 0.7}
+                pos_hint: {'x': 0, 'y': 0}
+                disabled: False
+                halign: "right"
+
+            MDTextField:
+                id: username_text_field
+                text: ""
+                font_size: 20
+                size_hint_x: 0.7
+                # size_hint: (None, None)
+                # size: (220, 60)
+                #pos_hint: {'center_x': 0.65, 'y': 0.65}
+                pos_hint: {'x': 0, 'center_y': 0.5}
+                multiline: False
+                on_focus: root.submit_username() if not self.focus else None
+                disabled: False
+
+        MDLabel:
+            id: username_message_label
+            text: "Please enter a username"
+            color: [.5, .5, .5, 1]
+            font_size: 18
+            #pos_hint: {'x': 0, 'center_y': 0.64}
+            pos_hint: {'x': 0, 'center_y': 0}
+            disabled: False
+            halign: "center"
+
+        #MDLabel:
+        #    opacity: 0
+
+# EMAIL WIDGETS
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            spacing: 10
+
+            MDLabel:
+                id: email_prompt_label
+                text: "Email:"
+                color: [.2, .2, .2, 1]
+                opacity: 0
+                font_size: 24
+                size_hint_x: 0.3
+                #pos_hint: {'x': -0.65, 'center_y': 0.55}
+                pos_hint: {'x': 0, 'y': 0}
+                halign: "right"
+
+            MDTextField:
+                id: email_text_field
+                text: ""
+                font_size: 24
+                size_hint_x: 0.7
+                # size_hint: (None, None)
+                # size: (220, 60)
+                #pos_hint: {'center_x': 0.65, 'y': 0.5}
+                pos_hint: {'x': 0, 'center_y': 0.5}
+                multiline: False
+                on_focus: root.submit_email() if not self.focus else None
+                disabled: True
+                opacity: 0
+
+        MDLabel:
+            id: email_message_label
+            text: "Please enter your email"
+            color: [.5, .5, .5, 1]
+            font_size: 18
+            #pos_hint: {'x': 0, 'center_y': 0.49}
+            pos_hint: {'x': 0, 'center_y': 0}
+            opacity: 0
+            halign: "center"
+
+        #MDLabel:
+        #    opacity: 0
+
+# PASSWORD WIDGETS
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            spacing: 10
+
+            MDLabel:
+                id: password_prompt_label
+                text: "Password:"
+                color: [.2, .2, .2, 1]
+                opacity: 0
+                font_size: 24
+                size_hint_x: 0.3
+                #pos_hint: {'x': -0.65, 'center_y': 0.4}
+                pos_hint: {'x': 0, 'y': 0}
+                halign: "right"
+
+            MDTextField:
+                id: password_text_field
+                text: ""
+                font_size: 24
+                size_hint_x: 0.7
+                # size_hint: (None, None)
+                # size: (220, 60)
+                #pos_hint: {'center_x': 0.65, 'y': 0.35}
+                pos_hint: {'x': 0, 'center_y': 0.5}
+                multiline: False
+                disabled: True
+                opacity: 0
+                password: True
+                on_focus: root.submit_password() if not self.focus else None
+
+        MDLabel:
+            id: password_message_label
+            text: "Please create a unique password"
+            color: [.5, .5, .5, 1]
+            font_size: 18
+            #pos_hint: {'x': 0, 'center_y': 0.34}
+            pos_hint: {'x': 0, 'center_y': 0}
+            opacity: 0
+            halign: "center"
+
+        #MDLabel:
+        #    opacity: 0
+
+# PASSWORD CONFIRM WIDGETS
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            spacing: 10
+
+            MDLabel:
+                id: password_confirm_prompt_label
+                text: "Confirm\nPassword:"
+                color: [.2, .2, .2, 1]
+                opacity: 0
+                font_size: 24
+                size_hint_x: 0.3
+                #pos_hint: {'x': -0.65, 'center_y': 0.25}
+                pos_hint: {'x': 0, 'y': 0}
+                halign: "right"
+
+            MDTextField:
+                id: password_confirm_text_field
+                text: ""
+                font_size: 24
+                size_hint_x: 0.7
+                # size_hint: (None, None)
+                # size: (220, 60)
+                #pos_hint: {'center_x': 0.65, 'y': 0.2}
+                pos_hint: {'x': 0, 'center_y': 0.5}
+                multiline: False
+                disabled: True
+                opacity: 0
+                password: True
+                on_focus: root.submit_password_confirm() if not self.focus else None
+
+        MDLabel:
+            id: password_confirm_message_label
+            text: "Please re-type your password"
+            color: [.5, .5, .5, 1]
+            font_size: 18
+            #pos_hint: {'x': 0, 'center_y': 0.17}
+            pos_hint: {'x': 0, 'center_y': 0}
+            opacity: 0
+            halign: "center"
+
+        MDLabel:
+            opacity: 0
+
+        MDLabel:
+            opacity: 0
+
+# CREATE ACCOUNT WIDGETS
+
+        MDFillRoundFlatIconButton:
+            id: create_account_button
+            text: "Create Account!"
+            size_hint: (None, None)
+            size: (150, 50)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            on_release: root.create_account_attempt()
+            disabled: True
+            opacity: 0
+
+        MDLabel:
+            opacity: 0

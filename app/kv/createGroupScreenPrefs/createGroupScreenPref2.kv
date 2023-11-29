@@ -1,0 +1,186 @@
+<CreateGroupScreenPref2>
+    name: "create_group_pref2"
+
+    MDScrollView:
+        size_hint: (1, 1)
+        do_scroll_y: True
+        do_scroll_x: False
+
+        MDBoxLayout:
+            orientation: "vertical"
+            #spacing: 10
+            size_hint_y: None
+            adaptive_height: True
+            padding: [25, 10, 25, 10]
+
+            MDLabel:
+                text: 'Public Information'
+                halign: "center"
+                pos_hint: {"center_x":.5, "top": 1}
+                underline: "true"
+                font_style: "H4"
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            MDLabel:
+                id: group_img_label
+                text: 'Upload Group Image'
+                underline: "true"
+                font_style: "H6"
+                size_hint_y: None
+                height: self.texture_size[1]
+                padding: [0, dp(10), 0, dp(10)]
+
+            FitImage:
+                id: group_image
+                md_bg_color: (0.76, 0.74, 0.78, 1)
+                allow_stretch: True
+                keep_ratio: True
+                source: ""
+                size_hint: None, None
+                size: dp(150), dp(150)
+                spacing: dp(10)
+
+            MDBoxLayout:
+                orientation: "vertical"
+                padding: [0, dp(10), 0, 0]
+                size_hint_y: None
+                adaptive_height: True
+
+                MDRectangleFlatButton:
+                    id: group_img_btn
+                    text: "Choose Image"
+                    on_release: root.open_image_popup()
+                    spacing: 5
+
+            MDLabel:
+                text: 'Group Name'
+                underline: "true"
+                font_style: "H6"
+                text_color: "teal"
+                size_hint_y: None
+                height: self.texture_size[1]
+                padding: [0, dp(20), 0, 0]
+
+            MDTextField:
+                id: group_name
+                hint_text: "Ex: Susie's Gamers"
+                mode: "rectangle"
+                multiline: False
+                hint_text_color: "teal"
+                line_color_normal: "teal"
+                required: True
+                size_hint_y: None
+
+            MDLabel:
+                text: 'General Description'
+                underline: "true"
+                font_style: "H6"
+                text_color: "teal"
+                size_hint_y: None
+                height: self.texture_size[1]
+                padding: [0, dp(20), 0, 0]
+
+            MDTextField:
+                id: general_description_text_field
+                hint_text: "Enter general description about your group!"
+                mode: "rectangle"
+                multiline: True
+                required: True
+                max_input_size: 500
+                line_color_normal: "teal"
+                text_size: self.width, None
+                height: dp(150)
+                padding: [0, 0, 0, dp(500)]
+                size_hint_y: None
+                on_text: root.update_and_limit_word_count(self.text)
+                helper_text: f'{root.curr_word_count}/500'
+                helper_text_mode: "persistent"
+
+            MDBoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                padding: 0
+
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'bottom'
+                    padding: [dp(5), 0, 0, dp(10)]
+
+                    MDFillRoundFlatIconButton:
+                        text: "Prev Pref"
+                        icon: "arrow-left"
+                        on_release: root.class_parent.load_next_pref_page(0, "right")
+
+                AnchorLayout:
+                    anchor_x: 'right'
+                    anchor_y: 'bottom'
+                    padding: [0, 0, dp(5), dp(10)]
+
+                    MDFillRoundFlatIconButton:
+                        text: "Next Pref"
+                        icon: "arrow-right"
+                        on_release: root.class_parent.load_next_pref_page(2)
+
+
+<PopupImageSelection>:
+    auto_dismiss: False
+    size_hint: (0.8, 0.8)
+
+    BoxLayout:
+        orientation: "vertical"
+
+        GridLayout:
+            cols: 3
+            padding: 10
+            spacing: 10
+
+            MDRectangleFlatButton:
+                size_hint: None, None
+                size: dp(50), dp(50)
+                on_release: root.select_image('images/pikachu.jpg')
+
+                FitImage:
+                    size_hint: None, None
+                    size: dp(50), dp(50)
+                    allow_stretch: True
+                    keep_ratio: True
+                    pos_hint: {"left": 1}
+                    source: 'images/pikachu.jpg'
+
+            MDRectangleFlatButton:
+                size_hint: None, None
+                size: dp(50), dp(50)
+                on_release: root.select_image('images/piplup.jpg')
+
+                FitImage:
+                    size_hint: None, None
+                    size: dp(50), dp(50)
+                    allow_stretch: True
+                    keep_ratio: True
+                    pos_hint: {"left": 1}
+                    source: 'images/piplup.jpg'
+
+            MDRectangleFlatButton:
+                size_hint: None, None
+                size: dp(50), dp(50)
+                on_release: root.select_image('images/celebi.png')
+
+                FitImage:
+                    size_hint: None, None
+                    allow_stretch: True
+                    keep_ratio: True
+                    size: dp(50), dp(50)
+                    pos_hint: {"left": 1}
+                    source: 'images/celebi.png'
+
+            # Add more images as needed
+
+
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'bottom'
+
+            MDRaisedButton:
+                text: "Cancel"
+                on_release: root.dismiss()

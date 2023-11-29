@@ -1,0 +1,76 @@
+
+
+<GameCard>:
+
+    radius: 36
+    pos_hint: {"center_x": .5, "center_y": .5}
+    size_hint_y: None
+    height: "175dp" 
+    md_bg_color: app.theme_cls.primary_color  
+    on_release: app.change_screen(screen_name="board_game_screen",load_deps=f'{root.title}')
+    
+    
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: 3
+        
+
+        #Top Sections
+        MDBoxLayout:
+            padding: [0, 10, 0, 0]
+            orientation: "horizontal"
+            spacing: 10
+
+            # Left section with a photo
+            MDBoxLayout:
+                orientation: "vertical"
+                size_hint_x: 0.25 
+                padding: [15, 15, 15, 15]
+                radius: 15
+        
+                AsyncImage:
+                    source: root.image_path  
+                    size_hint: 1, 1  
+
+            # Right section with text
+            MDBoxLayout:
+                orientation: "vertical"
+                spacing: dp(10)
+                size_hint_x: .75
+
+                # Game Title
+                MDLabel:
+                    text: f"{root.title}"
+                    pos_hint: {"center_x":.5, "center_y": 0.9}
+                    underline: "true"
+                    font_style: "H5"
+                    size_hint_y: None
+                    height: self.texture_size[1] + 5
+
+                # Description
+                MDLabel:
+                    size_hint: (1, 0.8) 
+                    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum..."
+                    font_style: "Body1"
+                    valign: 'top'
+                    text_size: self.size
+
+        # Tags
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: .2
+            pos_hint: {'x': .01, 'y': 0.2}
+            spacing: 8
+            padding: [20, 0, 0, 10]  
+
+            MDChip:
+                label: 'Pill Shape'
+                text: "Family Game"
+                font_size: "8sp"  
+                icon: 'pill'
+                type: 'outline'
+                pos_hint: {'center_x': 0.5}
+                size_hint_y: 0.5
+
+
+            

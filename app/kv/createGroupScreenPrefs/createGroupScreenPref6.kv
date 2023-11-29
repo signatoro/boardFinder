@@ -1,0 +1,62 @@
+<CreateGroupScreenPref6>
+    name: "create_group_pref6"
+
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: [25, 10, 25, 10]
+
+        MDLabel:
+            text: 'General Meeting Description'
+            halign: "center"
+            pos_hint: {"center_x":.5, "center_y": 0.8}
+            underline: "true"
+            font_style: "H4"
+            size_hint_y: None
+            height: self.texture_size[1]
+            padding: [0, 0, 0, dp(10)]
+
+        MDTextField:
+            id: additional_info_text_field
+            hint_text: "Enter additional information: "
+            text: ""
+            on_focus: root.clear_text(self.focus)
+            mode: "rectangle"
+            multiline: True
+            line_color_normal: "teal"
+            required: True
+            text_size: self.width
+            max_input_size: 1000
+            on_text: root.update_and_limit_word_count(self.text)
+            helper_text: f'{root.curr_word_count}/1000'
+            helper_text_mode: "persistent"
+            height: self.minimum_height
+            size_hint_y: dp(15)
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            padding: 0
+
+            AnchorLayout:
+                anchor_x: 'left'
+                anchor_y: 'bottom'
+                padding: [dp(5), 0, 0, dp(10)]
+
+                MDFillRoundFlatIconButton:
+                    text: "Prev Pref"
+                    icon: "arrow-left"
+                    on_release: root.class_parent.load_next_pref_page(4, "right")
+
+            AnchorLayout:
+                anchor_x: 'right'
+                anchor_y: 'bottom'
+                padding: [0, 0, dp(5), dp(10)]
+
+                MDFillRoundFlatIconButton:
+                    text: "Create Group!"
+                    icon: "arrow-right"
+                    on_release: root.class_parent.load_next_pref_page(6)
+
+
+
+

@@ -1,0 +1,89 @@
+<CreateGroupScreenPref1>
+    name: "create_group_pref1"
+
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: [50, 0, 50, 0]
+
+        MDLabel:
+            text: 'Add your Board Game'
+            halign: "center"
+            pos_hint: {"center_x":.5, "top": 1}
+            underline: "true"
+            font_style: "H4"
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        # search board game text field
+        MDTextField:
+            id: search_board_game
+            pos_hint:{ 'center_x': 0.5 , 'top': 1}
+            size_hint_x: 0.8
+            hint_text: 'Search Board Game'
+            hint_text_color: 1,1,1,1
+            icon_left: 'magnify'
+            mode: "rectangle"
+            font_size: 22
+            active_line: False
+            multiline: False
+            on_text: root.generate_search_game_options(self.text)
+
+        MDScrollView:
+            size_hint: (1, 1)
+            do_scroll_y: True
+            do_scroll_x: False
+
+            MDList:
+                adaptive_height: True
+                size_hint_y: None
+                md_bg_color: "darkgrey"
+                halign: "center"
+                pos_hint: {"center_x": 0.5}
+                id: game_results
+
+        MDLabel:
+            text: 'Added Board Games'
+            halign: "center"
+            underline: "true"
+            font_style: "H5"
+            size_hint_y: None
+            height: self.texture_size[1]
+
+
+        MDScrollView:
+            size_hint: (1, 1)
+            do_scroll_y: True
+            do_scroll_x: False
+
+            MDList:
+                adaptive_height: True
+                size_hint_y: None
+                padding: dp(30)
+                #height: self.minimum_height
+                md_bg_color: "teal"
+                id: selected_games
+
+        AnchorLayout:
+            anchor_x: 'right'
+            anchor_y: 'bottom'
+            padding: [0, 0, 0, dp(10)]
+
+            MDFillRoundFlatIconButton:
+                text: "Next Pref"
+                icon: "arrow-right"
+                on_release: root.class_parent.load_next_pref_page(1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
