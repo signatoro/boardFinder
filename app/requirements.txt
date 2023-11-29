@@ -21,3 +21,4 @@ urllib3==2.1.0
 uvicorn==0.24.0.post1
 kivymd==1.1.1
 ffpyplayer==4.5.1
+httpx==0.25.2

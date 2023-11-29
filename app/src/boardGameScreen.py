@@ -1,4 +1,6 @@
 # from kivy.uix import webview
+import asyncio
+from kivy.app import App
 from kivymd.uix.screen import MDScreen
 from kivy.properties import StringProperty, ListProperty
 
@@ -37,15 +39,18 @@ class BoardGameScreen(MDScreen):
     helpful_links = ListProperty([])
 
     def load_depends(self, load_deps=None):
-        print("Loading Deps")
-        self.title: str = load_deps
-        self.image_path: str = 'images/pikachu.jpg'
-        self.general_description: str = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'
-        self.main_description: str = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.'
-        self.tutorial_video_link: str = 'videos/Videotemp1.mp4'
 
-        self.tags: list[str] = ['Helpful', 'Awesome', 'Cool', 'Helpful', 'Awesome', 'Cool', 'Helpful', 'Awesome', 'Cool', 'Helpful', 'Awesome', 'Cool']
-        self.helpful_links: list[str] = ['Long.link.1', 'Long.link.2', 'Long.link.3']
+        data = asyncio.run(App.get_running_app().make_get_api_call(f"/boardFinder/boardgames/{load_deps}"))
+
+        print("Loading Deps")
+        self.title: str = data["title"]
+        self.image_path: str = data["image_path"]
+        self.general_description: str = data["general_description"]
+        self.main_description: str = data["main_description"]
+        self.tutorial_video_link: str = data["tutorial_video_link"]
+
+        self.tags: list[str] = data["tags"]
+        self.helpful_links: list[str] = data["helpful_links"]
 
         self.add_urls()
         self.add_tags()
@@ -66,7 +71,7 @@ class BoardGameScreen(MDScreen):
 
     def add_tags(self):
         self.ids.tags_stack.clear_widgets()
-        for tag in self.tags:
+        for tag in self.tags[:3]:
             chip = MDChip(
                     text=tag
                 )

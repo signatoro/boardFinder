@@ -1,7 +1,9 @@
-from kivy.lang import Builder
-from kivy.uix.screenmanager import NoTransition, SlideTransition
-from kivy.core.window import Window
+import httpx
 from kivymd.app import MDApp
+from kivy.lang import Builder
+from kivy.core.window import Window
+from kivy.uix.screenmanager import NoTransition, SlideTransition
+
 
 from src.createAccountScreen import CreateAccountScreen
 from src.signInScreen import SignInScreen
@@ -23,6 +25,9 @@ Clock.max_iteration = 60
 
 # The main application
 class MyApp(MDApp):
+
+    # This will need to be changed based on the current endpoint address
+    url: str = 'http://10.110.185.117:8000'
 
     lastResize = 0
     searched_games = []
@@ -94,6 +99,23 @@ class MyApp(MDApp):
     def add_top_bar(self, bar):
         self.top_bars.append(bar)
         bar.update_actions()
+
+
+    async def make_get_api_call(self, path: str, data: dict = None):
+
+        request = f"{self.url}{path}"
+
+        async with httpx.AsyncClient() as client:
+            
+            try:
+                response = await client.get(request)
+                response.raise_for_status()
+                data = response.json()
+                print (data)
+                return data
+            except Exception as ex: 
+                print(f"{ex}")
+                return None
 
 
 if __name__ == "__main__":

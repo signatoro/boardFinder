@@ -9,9 +9,10 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from api.src.view import APIEndpoints
 from api.src.controller import Controller
+from api.src.boardGameEndpoints import BoardGameEndpoints
 
 
-MONGO_ADDRESS = '10.110.177.171'
+MONGO_ADDRESS = '10.110.185.117'
 MONGO_PORT = 27017
 MONGO_DB_NAME = 'boardFinder_db'
 
@@ -19,7 +20,7 @@ MONGO_DB_NAME = 'boardFinder_db'
 
 def start_program():
 
-    uvicorn.run("main:run_program", host="0.0.0.0", port=8000, reload="True", factory=True)
+    uvicorn.run("main:run_program", host="10.110.185.117", port=8000, reload="True", factory=True)
 
     return 0
 
@@ -51,14 +52,20 @@ def run_program():
         allow_headers=["*"],
     )
 
-    controller = Controller()
+    client = AsyncIOMotorClient(host=MONGO_ADDRESS, port=MONGO_PORT)
+    db = client[MONGO_DB_NAME]
+
+    controller = Controller(client, db)
+
+    board_game_endpoints = BoardGameEndpoints(controller)
+    app.include_router(board_game_endpoints.router)
+    
     api_endpoints = APIEndpoints(controller)
     app.include_router(api_endpoints.router)
 
     logging.debug("Started connection to db")
 
-    controller.client = AsyncIOMotorClient(host=MONGO_ADDRESS, port=MONGO_PORT)
-    controller.db = controller.client[MONGO_DB_NAME]
+    
 
     controller.initialize()
 

@@ -7,7 +7,7 @@
     size_hint_y: None
     height: "175dp" 
     md_bg_color: app.theme_cls.primary_color  
-    on_release: app.change_screen(screen_name="board_game_screen",load_deps=f'{root.title}')
+    on_release: app.change_screen(screen_name="board_game_screen",load_deps=f'{root.id}')
     
     
     MDBoxLayout:
@@ -35,7 +35,7 @@
             # Right section with text
             MDBoxLayout:
                 orientation: "vertical"
-                spacing: dp(10)
+                # spacing: dp(10)
                 size_hint_x: .75
 
                 # Game Title
@@ -50,7 +50,7 @@
                 # Description
                 MDLabel:
                     size_hint: (1, 0.8) 
-                    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum..."
+                    text: f"{root.general_description}"
                     font_style: "Body1"
                     valign: 'top'
                     text_size: self.size
@@ -60,17 +60,10 @@
             orientation: "horizontal"
             size_hint_y: .2
             pos_hint: {'x': .01, 'y': 0.2}
-            spacing: 8
-            padding: [20, 0, 0, 10]  
+            spacing: 15
+            padding: [20, 0, 0, 10] 
+            id:tags_box 
 
-            MDChip:
-                label: 'Pill Shape'
-                text: "Family Game"
-                font_size: "8sp"  
-                icon: 'pill'
-                type: 'outline'
-                pos_hint: {'center_x': 0.5}
-                size_hint_y: 0.5
 
 
             

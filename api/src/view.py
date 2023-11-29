@@ -26,7 +26,7 @@ class APIEndpoints():
         self.router.add_api_route("/login", self.login_user, methods=["POST"], response_model=Token)
         self.router.add_api_route("/user", self.get_users, methods=["GET"])
         self.router.add_api_route("/user", self.add_user, methods=["POST"])
-        self.router.add_api_route("/user/me", self.read_users_me, methods=["GET"], response_model=User)
+        # self.router.add_api_route("/user/me", self.read_users_me, methods=["GET"], response_model=User)
 
 
         self.user_list: list[User] = []
@@ -55,8 +55,8 @@ class APIEndpoints():
 
         return {"Message": "Hello"}
     
-    # async def login_user(self, form_data: OAuth2PasswordRequestForm = Depends()):
-    #     return await self.controller.login_for_token(form_data)
+    async def login_user(self, form_data: OAuth2PasswordRequestForm = Depends()):
+        return await self.controller.login_for_token(form_data)
 
 
     # async def read_users_me(self, current_user: str = Depends()):

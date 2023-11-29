@@ -2,6 +2,7 @@
 import asyncio
 import logging
 from typing import Any
+from bson import ObjectId
 from datetime import datetime, timedelta
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer
@@ -9,8 +10,11 @@ from fastapi import Depends, HTTPException, status
 from api.src.constance import ACCESS_TOKEN_EXPIRE_MINUTES
 from motor.motor_asyncio import AsyncIOMotorCollection, AsyncIOMotorClient, AsyncIOMotorDatabase
 
+
 from model.User import User, UserDb, Token
 from api.src.user_authenticator import Authenticator
+from model.BoardGame import BoardGame, BoardGameDB, BoardGameCard
+
 
 
 class Controller():
@@ -25,7 +29,9 @@ class Controller():
     join_group_requests_collection: AsyncIOMotorCollection = None
     
 
-    def __init__(self) -> None:
+    def __init__(self, client, db) -> None:
+        self.client = client
+        self.db = db
 
         self.pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
         self.oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -105,5 +111,55 @@ class Controller():
             return {"Message": "Successfully create user"}
         except Exception as ex:
             return {"Message": "Failed to create the user somehow", "Error": f"{ex}"}
+        
+    async def get_board_games(self):
+
+        logging.debug("Here 1")
+
+        count = await self.boardgames_collection.count_documents({})
+        
+        if count > 0:
+            raw_board_games = self.boardgames_collection.find()
+            board_game_list = await raw_board_games.to_list(length=count)
+
+            logging.debug(board_game_list)
+
+            board_games = [BoardGameCard(id =game["_id"].__str__() ,**game) for game in board_game_list]
+            return board_games
+        else:
+            raise Exception("No Board Games in Database")
+
+
+    async def add_board_game(self, board_game: BoardGame):
+        boardgamedb = BoardGameDB(**board_game.model_dump(by_alias=True))
+        try:
+            await self.boardgames_collection.insert_one(boardgamedb.model_dump(by_alias=True))
+        except Exception as ex:
+            raise Exception(f"Error: {ex}") 
+        
+    async def get_board_game(self, raw_id: str):
+        
+        id = ObjectId(raw_id)
+
+        raw_board_games = await self.boardgames_collection.find_one({'_id': id})
+
+        if raw_board_games:
+            return BoardGameDB(**raw_board_games)
+        else:
+            raise Exception("BoardGame Not Found")
+    
+    async def delete_board_game(self, raw_id: str) -> bool:
+
+        id = ObjectId(raw_id)
+
+        result = await self.boardgames_collection.delete_one({'_id': id})
+
+        if result.deleted_count == 1:
+            return True
+        else:
+            raise Exception("There was an error delete a board game")
+
+
+
 
 
