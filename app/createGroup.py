@@ -60,6 +60,10 @@ class CreateGroupScreen(Screen):
             self.currPrefPage += 1
         screen_name = f"create_group_pref{self.currPrefPage}"
 
+        if self.currPrefPage > 6:
+            App.get_running_app().change_screen("home_screen")
+            return
+
         screen_manager.transition = SlideTransition(direction=direction)
         screen_manager.current = screen_name
         self.ids.progress_bar.value = self.display_progress_bar_value()
