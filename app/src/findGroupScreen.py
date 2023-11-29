@@ -109,17 +109,20 @@ class FindGroupScreen(Screen):
 
     def player_count_set(self, value):
         self.player_count_preference = value
-        self.child2.ids.player_count_label.text = str(value)
-        if value > 7:
-            self.child2.ids.player_count_label.text = "8+"
+        # self.child2.ids.player_count_label.text = str(value)
+        # if value > 7:
+        #     self.child2.ids.player_count_label.text = "8+"
 
     def player_variation_set(self, value):
         self.player_count_variation = value
-        self.child2.ids.player_variation_label.text = str(int(value))
+        self.child2.ids.player_variation_label.text = ""  # str(int(value))
+        # self.child2.ids.variation_slider.hint = True
         if value > 4:
             self.child2.ids.player_variation_label.text = "Any Amount"
+            # self.child2.ids.variation_slider.hint = False
         if value < 1:
             self.child2.ids.player_variation_label.text = "Exact Number"
+            # self.child2.ids.variation_slider.hint = False
 
     def time_pressed(self, button, time):
         if button.text == "Free!":
@@ -159,10 +162,11 @@ class FindGroupScreenPref2(Screen):
         self.class_parent = parent
 
     def reset_screen(self):
-        self.ids.player_count_label.text = '4'
-        self.ids.player_variation_label.text = '1'
+        # self.ids.player_count_label.text = '4'
+        self.ids.player_variation_label.text = ""
         self.ids.player_slider.value = 4
         self.ids.variation_slider.value = 1
+        # self.ids.variation_slider.hint = True
 
 
 class FindGroupScreenPref3(Screen):

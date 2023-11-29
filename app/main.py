@@ -93,6 +93,8 @@ class MyApp(MDApp):
 
     def add_top_bar(self, bar):
         self.top_bars.append(bar)
+        bar.update_actions()
+
 
 if __name__ == "__main__":
     MyApp().run()
