@@ -45,7 +45,7 @@ class GameCard(MDCard):
 
     def add_tags(self):
         self.ids.tags_box.clear_widgets()
-        for tag in self.tags:
+        for tag in self.tags[:3]:
             chip = MDChip(
                     text=tag
                 )

@@ -71,7 +71,7 @@ class BoardGameScreen(MDScreen):
 
     def add_tags(self):
         self.ids.tags_stack.clear_widgets()
-        for tag in self.tags[:3]:
+        for tag in self.tags:
             chip = MDChip(
                     text=tag
                 )

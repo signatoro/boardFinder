@@ -20,7 +20,7 @@ MONGO_DB_NAME = 'boardFinder_db'
 
 def start_program():
 
-    uvicorn.run("main:run_program", host="10.110.185.117", port=8000, reload="True", factory=True)
+    uvicorn.run("main:run_program", host="0.0.0.0", port=8000, reload="True", factory=True)
 
     return 0
 
