@@ -56,12 +56,14 @@ class TopBar(MDTopAppBar):
             self.left_action_items = \
                 []
 
-        if App.get_running_app().get_screen_name() == "create_account_screen" or App.get_running_app().get_screen_name() == "sign_in_screen":
+        if App.get_running_app().get_screen_name() == "create_account_screen" \
+                or App.get_running_app().get_screen_name() == "sign_in_screen"\
+                or App.get_running_app().get_screen_name() == "profile_screen":
             self.right_action_items = []
         else:
             if App.get_running_app().get_signed_in():
                 self.right_action_items = \
-                    [["account", lambda x: App.get_running_app().change_screen("profile_screen", direction='left'),
+                    [["account-check", lambda x: App.get_running_app().change_screen("profile_screen", direction='left'),
                       "My Profile"]]
             else:
                 self.right_action_items = \
