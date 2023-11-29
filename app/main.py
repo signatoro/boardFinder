@@ -7,7 +7,7 @@ from src.createAccountScreen import CreateAccountScreen
 from src.signInScreen import SignInScreen
 from src.homeScreen import HomeScreen
 from src.profileScreen import ProfileScreen
-from createGroup import CreateGroupScreen
+from src.createGroup import CreateGroupScreen
 from src.findGroupScreen import FindGroupScreen
 from src.gameCard import GameCard
 from src.topBar import TopBar
@@ -44,7 +44,7 @@ class MyApp(MDApp):
         self.theme_cls.primary_palette = "Teal"
         # self.theme_cls.theme_style = "Dark"
         # Window.bind(on_resize=self.force_window_ratio)
-        return Builder.load_file("main.kv")  # GUI
+        return Builder.load_file("kv/main.kv")  # GUI
 
     def change_screen(self, screen_name, direction='left', mode="", load_deps=None):
         # Get the screen manager from the kv file
