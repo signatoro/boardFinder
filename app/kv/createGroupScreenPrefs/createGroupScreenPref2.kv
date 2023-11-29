@@ -8,7 +8,6 @@
 
         MDBoxLayout:
             orientation: "vertical"
-            #spacing: 10
             size_hint_y: None
             adaptive_height: True
             padding: [25, 10, 25, 10]
@@ -54,6 +53,7 @@
                     spacing: 5
 
             MDLabel:
+                id: group_name
                 text: 'Group Name'
                 underline: "true"
                 font_style: "H6"
@@ -61,6 +61,7 @@
                 size_hint_y: None
                 height: self.texture_size[1]
                 padding: [0, dp(20), 0, 0]
+                on_text: root.group_name(self.text)
 
             MDTextField:
                 id: group_name
@@ -110,7 +111,7 @@
                     MDFillRoundFlatIconButton:
                         text: "Prev Pref"
                         icon: "arrow-left"
-                        on_release: root.class_parent.load_next_pref_page(0, "right")
+                        on_release: root.add_data_to_final(0, "right")
 
                 AnchorLayout:
                     anchor_x: 'right'
@@ -120,7 +121,7 @@
                     MDFillRoundFlatIconButton:
                         text: "Next Pref"
                         icon: "arrow-right"
-                        on_release: root.class_parent.load_next_pref_page(2)
+                        on_release: root.add_data_to_final(2)
 
 
 <PopupImageSelection>:

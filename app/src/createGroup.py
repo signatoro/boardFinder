@@ -20,9 +20,34 @@ tags_list = ('AllLevels,Casual,Hardcore,LGBTQIA+,Food Included,Pet Friendly,21+,
              'Women Only,Easy To Learn,Short-Game Length,Long-Game Length,Cosplay').split(',')
 days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
+created_groups_list = []
+
+'''
+Created Group Dictionary:
+
+"board_game_list": [str]
+"group_image": ""
+"group_name": ""
+"group_general_description: ""
+"group_additional_description": ""
+"group_mtg_day_and_recurring_info": {"dow": recurring (bool)}
+"group_mtg_start_time": int
+"group_mtg_end_time": int
+"group_mtg_location": ""
+"group_max_players": int
+"group_host_fname": ""
+"group_host_lname": ""
+"group_host_email": ""
+"group_host_phone_num": ""
+"group_tags": [chip]
+"new_group": bool
+
+new_group is for notifying whether to render gameGroupHostScreen with Publish/Edit (true) or with Close/Edit (false)
+'''
+
 
 class CreateGroupScreen(Screen):
-    # current_progress_bar_window_value = 0
+    new_created_group = {}
     currPrefPage = 1
     screen_name = ""
     initialized = False
@@ -61,7 +86,8 @@ class CreateGroupScreen(Screen):
         screen_name = f"create_group_pref{self.currPrefPage}"
 
         if self.currPrefPage > 6:
-            App.get_running_app().change_screen("home_screen")
+            self.new_created_group["new_group"] = True
+            App.get_running_app().change_screen("game_group_host_screen", direction="right", load_deps=self.new_created_group)
             return
 
         screen_manager.transition = SlideTransition(direction=direction)
@@ -152,10 +178,15 @@ class CreateGroupScreenPref1(Screen):
         self.selected_games.remove(item_text)
         self.update_selected_games()
 
+    def add_data_to_final(self, new_page, direction="left"):
+        self.class_parent.new_created_group["board_game_list"] = self.selected_games
+        self.class_parent.load_next_pref_page(new_page, direction)
+
 
 class CreateGroupScreenPref2(Screen):
     image_source = ""
     general_description_text = ""
+    group_name = ""
     curr_word_count = 0
     max_word_count = 0
 
@@ -164,6 +195,7 @@ class CreateGroupScreenPref2(Screen):
         self.class_parent = parent
         self.imagePopup = PopupImageSelection(self)
         self.max_word_count = self.ids.general_description_text_field.max_input_size
+
 
     def open_image_popup(self):
         self.imagePopup.open()
@@ -179,8 +211,17 @@ class CreateGroupScreenPref2(Screen):
         else:
             self.ids.general_description_text_field.helper_text = f'{self.curr_word_count}/{self.max_word_count}'
 
+    def add_data_to_final(self, new_page, direction="left"):
+        self.class_parent.new_created_group["group_image"] = self.image_source
+        self.class_parent.new_created_group["group_name"] = self.group_name
+        self.class_parent.new_created_group["group_general_description"] = self.general_description_text
+        self.class_parent.load_next_pref_page(new_page, direction)
+
 
 class CreateGroupScreenPref3(Screen):
+    meeting_days = {}
+    meeting_start_time = ""
+    meeting_end_time = ""
     menu_items = []
     max_players = 0
     recurring_meeting = False
@@ -212,7 +253,6 @@ class CreateGroupScreenPref3(Screen):
         self.menu.dismiss()
 
     def show_days_dropdown(self):
-
         self.ids.dow_drop_down_selection.set_item(days)
         self.ids.dow_drop_down_selection.bind(on_release=self.on_dropdown_select)
 
@@ -220,12 +260,15 @@ class CreateGroupScreenPref3(Screen):
         selected_day = instance_drop.get_item()
         if selected_day:
             self.ids.dow_drop_down_selection.text = selected_day
+            self.meeting_days[selected_day] = False
 
     def get_start_time(self, instance, time):
         self.ids.start_time_button.text = str(time)
+        self.meeting_start_time = str(time)
 
     def get_end_time(self, instance, time):
         self.ids.end_time_button.text = str(time)
+        self.meeting_end_time = str(time)
 
     def open_time_button(self, btn_type):
         time_dialog = MDTimePicker()
@@ -246,16 +289,37 @@ class CreateGroupScreenPref3(Screen):
 
     def toggle_recurring_meeting(self, state):
         self.recurring_meeting = state
+        self.meeting_days[0] = self.recurring_meeting # TODO need to fix this for multiple days
+
+    def add_data_to_final(self, new_page, direction="left"):
+        self.class_parent.new_created_group["group_mtg_day_and_recurring_info"] = self.meeting_days
+        self.class_parent.new_created_group["group_mtg_start_time"] = self.meeting_start_time
+        self.class_parent.new_created_group["group_mtg_end_time"] = self.meeting_end_time
+        self.class_parent.new_created_group["group_max_players"] = self.max_players
+        self.class_parent.load_next_pref_page(new_page, direction)
 
 
 class CreateGroupScreenPref4(Screen):
+    host_fname = ""
+    host_lname = ""
+    host_email = ""
+    host_phone_num = ""
+
     def __init__(self, parent, **kwargs):
         super(CreateGroupScreenPref4, self).__init__(**kwargs)
         self.class_parent = parent
 
+    def add_data_to_final(self, new_page, direction="left"):
+        self.class_parent.new_created_group["group_host_fname"] = self.host_fname
+        self.class_parent.new_created_group["group_host_lname"] = self.host_lname
+        self.class_parent.new_created_group["group_host_email"] = self.host_email
+        self.class_parent.new_created_group["group_host_phone_num"] = self.host_phone_num
+        self.class_parent.load_next_pref_page(new_page, direction)
+
 
 class CreateGroupScreenPref5(Screen):
     added_tags = {}
+    group_tags = []
 
     def __init__(self, parent, **kwargs):
         super(CreateGroupScreenPref5, self).__init__(**kwargs)
@@ -303,8 +367,10 @@ class CreateGroupScreenPref5(Screen):
             # Add the item to the selected items list
             if self.is_tag_unique(instance.text):
                 self.added_tags[instance.text] = True
+                self.group_tags.append(instance)
             else:
                 self.added_tags[instance.text] = False
+                self.group_tags.append(instance)
             instance.md_bg_color = "teal"
             if self.added_tags[instance.text]:
                 self.update_common_tags(instance)
@@ -313,6 +379,7 @@ class CreateGroupScreenPref5(Screen):
             if self.added_tags[instance.text]:
                 self.ids.common_tags.remove_widget(instance)
             del self.added_tags[instance.text]
+            self.group_tags.remove(instance)
 
     def on_list_item_clicked(self, instance):
         self.ids.tag_results.clear_widgets()
@@ -321,9 +388,11 @@ class CreateGroupScreenPref5(Screen):
             # Add the item to the selected items list
             if self.is_tag_unique(instance.text):
                 self.added_tags[instance.text] = True
+                self.group_tags.append(instance)
                 self.update_common_tags(instance)
             else:
                 self.added_tags[instance.text] = False
+                self.group_tags.append(instance)
                 for chip in self.ids.common_tags.children:
                     if chip.text == instance.text:
                         chip.md_bg_color = "teal"
@@ -332,6 +401,7 @@ class CreateGroupScreenPref5(Screen):
                 if chip.text == instance.text:
                     chip.md_bg_color = (0.74, 0.74, 0.74, 1)
             del self.added_tags[instance.text]
+            self.group_tags.remove(instance)
 
     def is_tag_unique(self, tag):
         return tag not in tags_list
@@ -344,6 +414,10 @@ class CreateGroupScreenPref5(Screen):
         )
         chip.md_bg_color = "teal"
         self.ids.common_tags.add_widget(chip)
+
+    def add_data_to_final(self, new_page, direction="left"):
+        self.class_parent.new_created_group["group_tags"] = self.group_tags
+        self.class_parent.load_next_pref_page(new_page, direction)
 
 
 class CreateGroupScreenPref6(Screen):
@@ -381,6 +455,10 @@ class CreateGroupScreenPref6(Screen):
             self.ids.additional_info_text_field.helper_text = f'Max Word Count Reached: {self.curr_word_count}/{self.max_word_count}'
         else:
             self.ids.additional_info_text_field.helper_text = f'{self.curr_word_count}/{self.max_word_count}'
+
+    def add_data_to_final(self, new_page, direction="left"):
+        self.class_parent.new_created_group["group_additional_description"] = self.additional_description_text
+        self.class_parent.load_next_pref_page(new_page, direction)
 
 
 class PopupImageSelection(Popup):

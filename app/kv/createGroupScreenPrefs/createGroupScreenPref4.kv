@@ -37,6 +37,7 @@
                 multiline: True
                 size_hint_y: None
                 required: True
+                on_text: root.host_fname(self.text)
 
             MDLabel:
                 id: host_last_name
@@ -54,6 +55,7 @@
                 multiline: True
                 size_hint_y: None
                 required: True
+                on_text: root.host_lname(self.text)
 
             MDLabel:
                 id: host_email
@@ -71,6 +73,7 @@
                 size_hint_y: None
                 line_color_normal: "teal"
                 required: True
+                on_text: root.host_email(self.text)
 
             MDLabel:
                 id: host_phone_num
@@ -89,6 +92,7 @@
                 required: True
                 size_hint_y: None
                 max_input_size: 12
+                on_text: root.host_phone_num(self.text)
 
             MDBoxLayout:
                 orientation: "horizontal"
@@ -103,7 +107,7 @@
                     MDFillRoundFlatIconButton:
                         text: "Prev Pref"
                         icon: "arrow-left"
-                        on_release: root.class_parent.load_next_pref_page(2, "right")
+                        on_release: root.add_data_to_final(2, "right")
 
                 AnchorLayout:
                     anchor_x: 'right'
@@ -113,7 +117,7 @@
                     MDFillRoundFlatIconButton:
                         text: "Next Pref"
                         icon: "arrow-right"
-                        on_release: root.class_parent.load_next_pref_page(4)
+                        on_release: root.add_data_to_final(4)
 
 
 

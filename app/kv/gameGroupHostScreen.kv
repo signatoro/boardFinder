@@ -1,0 +1,182 @@
+<GameGroupHostScreen>:
+    name: 'game_group_host_screen'
+
+    # to create scrolling effect
+    MDScrollView:
+        size_hint: (1, 1)
+        do_scroll_y: True
+        do_scroll_x: False
+
+        # container for scroll view
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint_y: None
+            adaptive_height: True
+
+            # top bar
+            TopBar:
+                id: topBar
+
+            # container for screen content - 2 columns with info
+            MDGridLayout:
+                size_hint_y: None
+                cols: 2
+
+
+                # Left column: group image, host info, meet info, users attending
+                MDBoxLayout:
+                    orientation: "vertical"
+                    spacing: dp(15)
+
+                    # group image
+                    FitImage:
+                        id: game_group_image
+                        md_bg_color: (0.76, 0.74, 0.78, 1)
+                        allow_stretch: True
+                        keep_ratio: True
+                        source: root.group_image
+                        size_hint: None, None
+                        size: dp(300), dp(300)
+
+                    # host info
+                    MDBoxLayout:
+                        id: game_group_host_info_container
+                        orientation: "vertical"
+                        padding: [20, 0, 20, 50]
+                        size_hint: None, None
+                        height: self.minimum_height
+                        radius: 25
+                        md_bg_color: app.theme_cls.primary_color
+
+                        # host info header
+                        MDLabel:
+                            id: game_group_host_info_header
+                            radius: 25
+                            text: "Host Info"
+                            font_style: "H4"
+                            pos_hint: {"center_x": 0.5, "center_y": 1}
+                            theme_text_color: "Custom"
+                            text_color: 1, 1, 1, 1  # White text color
+                            md_bg_color: app.theme_cls.primary_color  # Use the primary color as the outline color
+                            size_hint_y: None
+                            height: self.texture_size[1]  # Adjust the size based on text size
+
+                        # host info content
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            spacing: dp(5)
+
+                            # host name
+                            MDLabel:
+                                id: game_group_host_name
+                                text: f"Name: {root.group_host_fname} {root.group_host_lname}"
+                                color: [.2, .2, .2, 1]
+                                font_size: 24
+                                size_hint_x: 1
+                                halign: "left"
+
+                            # host email
+                            MDLabel:
+                                id: game_group_host_email
+                                text: f"Email: {root.group_host_email}"
+                                color: [.2, .2, .2, 1]
+                                font_size: 24
+                                size_hint_x: 1
+                                halign: "left"
+
+                            # host phone number
+                            MDLabel:
+                                id: game_group_host_phone_num
+                                text: f"Phone #: {root.group_host_phone_num}"
+                                color: [.2, .2, .2, 1]
+                                font_size: 24
+                                size_hint_x: 1
+                                halign: "left"
+
+                    # meet info
+                    MDBoxLayout:
+                        id: game_group_meet_info_container
+                        orientation: "vertical"
+                        padding: [20, 0, 20, 50]
+                        size_hint: None, None
+                        height: self.minimum_height
+                        radius: 25
+                        md_bg_color: app.theme_cls.primary_color
+
+                        # meet info header
+                        MDLabel:
+                            id: game_group_meet_info_header
+                            radius: 25
+                            text: "Meet Info"
+                            font_style: "H4"
+                            pos_hint: {"center_x": 0.5, "center_y": 1}
+                            theme_text_color: "Custom"
+                            text_color: 1, 1, 1, 1  # White text color
+                            md_bg_color: app.theme_cls.primary_color  # Use the primary color as the outline color
+                            size_hint_y: None
+                            height: self.texture_size[1]  # Adjust the size based on text size
+
+                        # meet info content
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            spacing: dp(5)
+
+                            # meet days and times
+                            MDStackLayout:
+                                orientation: 'lr-tb'
+                                md_bg_color: [.9, .9, .9, .5]
+                                spacing: dp(5)
+                                padding: [15, 10, 0, 0]
+                                id: game_group_days_and_times
+
+                            # meet location
+                            MDLabel:
+                                id: game_group_meet_location
+                                text: f"Location: {root.group_meeting_location}"
+                                color: [.2, .2, .2, 1]
+                                font_size: 24
+                                size_hint_y: None
+                                height: self.texture_size[1]
+                                text_size: self.width, None
+                                halign: "left"
+
+                            # meet board games
+                            MDStackLayout:
+                                orientation: 'lr-tb'
+                                md_bg_color: [.9, .9, .9, .5]
+                                spacing: dp(5)
+                                padding: [15, 10, 0, 0]
+                                id: game_group_board_games
+
+                    # users attending
+                    MDBoxLayout:
+                        id: game_group_users_container
+                        orientation: "vertical"
+                        padding: [20, 0, 20, 50]
+                        size_hint: None, None
+                        height: self.minimum_height
+                        radius: 25
+                        md_bg_color: app.theme_cls.primary_color
+
+                        # users attending header
+                        MDLabel:
+                            id: game_group_users_header
+                            radius: 25
+                            text: "Users Attending"
+                            font_style: "H4"
+                            pos_hint: {"center_x": 0.5, "center_y": 1}
+                            theme_text_color: "Custom"
+                            text_color: 1, 1, 1, 1  # White text color
+                            md_bg_color: app.theme_cls.primary_color  # Use the primary color as the outline color
+                            size_hint_y: None
+                            height: self.texture_size[1]  # Adjust the size based on text size
+
+                        # users attending list
+                        MDStackLayout:
+                            orientation: 'lr-tb'
+                            md_bg_color: [.9, .9, .9, .5]
+                            spacing: dp(5)
+                            padding: [15, 10, 0, 0]
+                            id: game_group_users_list
+
+
