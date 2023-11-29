@@ -3,13 +3,15 @@ import asyncio
 import logging
 import uvicorn
 from fastapi import FastAPI
+from logging.handlers import RotatingFileHandler
 from motor.motor_asyncio import AsyncIOMotorClient
 from fastapi.middleware.cors import CORSMiddleware
 
 
 from api.src.view import APIEndpoints
 from api.src.controller import Controller
-from api.src.boardGameEndpoints import BoardGameEndpoints
+from api.src.api.boardGameEndpoints import BoardGameEndpoints
+from api.src.api.localEventsEndpoints import LocalEventEndpoints
 
 
 MONGO_ADDRESS = '10.110.185.117'
@@ -27,7 +29,7 @@ def start_program():
 def run_program():
 
     console_handler = logging.StreamHandler()
-    file_handler = logging.FileHandler(filename="logs/log.log")
+    file_handler = RotatingFileHandler(filename="logs/log.log", maxBytes=1e8, backupCount=5)
 
     logging.basicConfig(format='%(levelname)s [%(asctime)s]: %(message)s (Line: %(lineno)d [%(filename)s])',
                         datefmt='%Y.%m.%d %I:%M:%S %p',
@@ -65,11 +67,8 @@ def run_program():
 
     logging.debug("Started connection to db")
 
-    
-
     controller.initialize()
 
-    
 
     return app
 
