@@ -55,15 +55,16 @@ class APIEndpoints():
 
         return {"Message": "Hello"}
     
-    async def login_user(self, form_data: OAuth2PasswordRequestForm = Depends()):
-        return await self.controller.login_for_token(form_data)
+    # async def login_user(self, form_data: OAuth2PasswordRequestForm = Depends()):
+    #     return await self.controller.login_for_token(form_data)
 
 
-    async def read_users_me(self, current_user: str = Depends()):
-        # TODO: oK so you got most of it working and this will probably work once u get it working 
-        # You need to make it so the fast api docs page requires authentication for calls like this
-        # Look at the last chat gpt thing and maybe do some more research
-        return current_user
+    # async def read_users_me(self, current_user: str = Depends()):
+    #     # TODO: oK so you got most of it working and this will probably work once u get it working 
+    #     # You need to make it so the fast api docs page requires authentication for calls like this
+    #     # Look at the last chat gpt thing and maybe do some more research
+    #     return current_user
+
     
 
 
