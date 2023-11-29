@@ -15,7 +15,7 @@ class LearnGameScreen(MDScreen):
         self.add_game_card()
         
 
-        print("Hello 1, I am Learning the screen")
+        # print("Hello 1, I am Learning the screen")
         return super().on_pre_enter(*args)
 
     def load_depends(self, load_deps=None):
@@ -26,7 +26,7 @@ class LearnGameScreen(MDScreen):
 
     def add_game_card(self):
         self.ids.game_results.clear_widgets()
-        print("Hello 2, I am Learning the screen")
+        # print("Hello 2, I am Learning the screen")
         game_card = GameCard(title="Catan")
         game_card.pre_load()
         self.ids.game_results.add_widget(game_card)

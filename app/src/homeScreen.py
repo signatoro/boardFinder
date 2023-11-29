@@ -56,7 +56,7 @@ class HomeScreen(Screen):
     def load_local_events(self):
         self.local_event_l.clear()
         self.ids.local_event_carou.clear_widgets()
-        print("Loading Depends")
+        # print("Loading Depends")
         #TODO: Call endpoint get list of Local events
         local_event1 = LocalEventCard(parent=self, title= "Swords and Coffee",
             event_link= "link.url.here",
@@ -166,11 +166,11 @@ class HomeScreen(Screen):
         pass
 
     def refresh_local_events(self):
-        print("Refreshing local Events")
+        # print("Refreshing local Events")
         pass
 
     def refresh_groups(self):
-        print("Refreshing Groups")
+        # print("Refreshing Groups")
         pass
 
 
