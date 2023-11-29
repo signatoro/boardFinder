@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from kivy.app import App
 from kivy.metrics import dp
 from kivy.uix.popup import Popup
@@ -31,10 +33,10 @@ Created Group Dictionary:
 "group_general_description: ""
 "group_additional_description": ""
 "group_mtg_day_and_recurring_info": {"dow": recurring (bool)}
-"group_mtg_start_time": int
-"group_mtg_end_time": int
+"group_mtg_start_time": ""
+"group_mtg_end_time": ""
 "group_mtg_location": ""
-"group_max_players": int
+"group_max_players": ""
 "group_host_fname": ""
 "group_host_lname": ""
 "group_host_email": ""
@@ -210,21 +212,25 @@ class CreateGroupScreenPref2(Screen):
             self.ids.general_description_text_field.helper_text = f'Max Word Count Reached: {self.curr_word_count}/{self.max_word_count}'
         else:
             self.ids.general_description_text_field.helper_text = f'{self.curr_word_count}/{self.max_word_count}'
+            print(self.general_description_text)
 
     def add_data_to_final(self, new_page, direction="left"):
+        print(f"pref 3 group_image: {self.image_source}")
         self.class_parent.new_created_group["group_image"] = self.image_source
         self.class_parent.new_created_group["group_name"] = self.group_name
-        self.class_parent.new_created_group["group_general_description"] = self.general_description_text
+        self.class_parent.new_created_group["group_general_description"] = str(self.general_description_text)
         self.class_parent.load_next_pref_page(new_page, direction)
 
 
 class CreateGroupScreenPref3(Screen):
     meeting_days = {}
+    dow = ""
     meeting_start_time = ""
     meeting_end_time = ""
     menu_items = []
     max_players = 0
     recurring_meeting = False
+    meeting_location = ""
 
     def __init__(self, parent, **kwargs):
         super(CreateGroupScreenPref3, self).__init__(**kwargs)
@@ -250,6 +256,7 @@ class CreateGroupScreenPref3(Screen):
 
     def menu_callback(self, text_item):
         self.ids.dow_button.text = text_item
+        self.dow = text_item
         self.menu.dismiss()
 
     def show_days_dropdown(self):
@@ -258,17 +265,24 @@ class CreateGroupScreenPref3(Screen):
 
     def on_dropdown_select(self, instance_drop):
         selected_day = instance_drop.get_item()
+        print(f"in dropdown select - {selected_day}")
         if selected_day:
-            self.ids.dow_drop_down_selection.text = selected_day
-            self.meeting_days[selected_day] = False
+            self.ids.dow_drop_down_selection.text = selected_day.text
+            #self.meeting_days[selected_day.text] = False
 
     def get_start_time(self, instance, time):
-        self.ids.start_time_button.text = str(time)
-        self.meeting_start_time = str(time)
+        military_time = datetime.strptime(str(time), "%H:%M:%S")
+        # Convert to 12-hour time format
+        twelve_hr_time = military_time.strftime("%I:%M:%S %p")
+        self.ids.start_time_button.text = str(twelve_hr_time)
+        self.meeting_start_time = str(twelve_hr_time)
 
     def get_end_time(self, instance, time):
-        self.ids.end_time_button.text = str(time)
-        self.meeting_end_time = str(time)
+        military_time = datetime.strptime(str(time), "%H:%M:%S")
+        # Convert to 12-hour time format
+        twelve_hr_time = military_time.strftime("%I:%M:%S %p")
+        self.ids.end_time_button.text = str(twelve_hr_time)
+        self.meeting_end_time = str(twelve_hr_time)
 
     def open_time_button(self, btn_type):
         time_dialog = MDTimePicker()
@@ -289,13 +303,19 @@ class CreateGroupScreenPref3(Screen):
 
     def toggle_recurring_meeting(self, state):
         self.recurring_meeting = state
-        self.meeting_days[0] = self.recurring_meeting # TODO need to fix this for multiple days
+        if self.dow != "":
+            self.meeting_days[self.dow] = self.recurring_meeting # TODO need to fix this for multiple days
+            self.dow = ""
+
+    def set_meeting_location(self, text):
+        self.meeting_location = text
 
     def add_data_to_final(self, new_page, direction="left"):
         self.class_parent.new_created_group["group_mtg_day_and_recurring_info"] = self.meeting_days
         self.class_parent.new_created_group["group_mtg_start_time"] = self.meeting_start_time
         self.class_parent.new_created_group["group_mtg_end_time"] = self.meeting_end_time
-        self.class_parent.new_created_group["group_max_players"] = self.max_players
+        self.class_parent.new_created_group["group_max_players"] = str(self.max_players)
+        self.class_parent.new_created_group["group_mtg_location"] = self.meeting_location
         self.class_parent.load_next_pref_page(new_page, direction)
 
 
@@ -308,6 +328,20 @@ class CreateGroupScreenPref4(Screen):
     def __init__(self, parent, **kwargs):
         super(CreateGroupScreenPref4, self).__init__(**kwargs)
         self.class_parent = parent
+
+    def set_host_fname(self, text):
+        self.host_fname = text
+
+    def set_host_lname(self, text):
+        self.host_lname = text
+
+    def set_host_email(self, text):
+        self.host_email = text
+
+
+    def set_host_phone_num(self, text):
+        self.host_phone_num = text
+
 
     def add_data_to_final(self, new_page, direction="left"):
         self.class_parent.new_created_group["group_host_fname"] = self.host_fname
@@ -457,7 +491,7 @@ class CreateGroupScreenPref6(Screen):
             self.ids.additional_info_text_field.helper_text = f'{self.curr_word_count}/{self.max_word_count}'
 
     def add_data_to_final(self, new_page, direction="left"):
-        self.class_parent.new_created_group["group_additional_description"] = self.additional_description_text
+        self.class_parent.new_created_group["group_additional_description"] = str(self.additional_description_text)
         self.class_parent.load_next_pref_page(new_page, direction)
 
 
@@ -467,9 +501,10 @@ class PopupImageSelection(Popup):
         self.group_screen = parent
         self.title = f"Select Group Image"
 
-    def select_image(self, image_source):
-        self.group_screen.image_source = image_source
-        self.group_screen.ids.group_image.source = image_source
+    def select_image(self, img_source):
+        print(f"img source - {img_source}")
+        self.group_screen.image_source = img_source
+        self.group_screen.ids.group_image.source = img_source
         self.dismiss()
 
 
@@ -513,3 +548,4 @@ class MyToggleButton(MDRectangleFlatButton, MDToggleButton):
             self.parent_instance.toggle_recurring_meeting(True)
         else:
             self.parent_instance.toggle_recurring_meeting(False)
+
