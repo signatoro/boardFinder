@@ -200,7 +200,8 @@ class CreateGroupScreenPref2(Screen):
         self.imagePopup = PopupImageSelection(self)
         self.max_word_count = self.ids.general_description_text_field.max_input_size
 
-
+    def set_group_name(self, text):
+        self.group_name = text
     def open_image_popup(self):
         self.imagePopup.open()
 
@@ -214,13 +215,11 @@ class CreateGroupScreenPref2(Screen):
             self.ids.general_description_text_field.helper_text = f'Max Word Count Reached: {self.curr_word_count}/{self.max_word_count}'
         else:
             self.ids.general_description_text_field.helper_text = f'{self.curr_word_count}/{self.max_word_count}'
-            print(self.general_description_text)
 
     def add_data_to_final(self, new_page, direction="left"):
-        print(f"pref 3 group_image: {self.image_source}")
         self.class_parent.new_created_group["group_image"] = self.image_source
         self.class_parent.new_created_group["group_name"] = self.group_name
-        self.class_parent.new_created_group["group_general_description"] = str(self.general_description_text)
+        self.class_parent.new_created_group["group_general_description"] = ''.join(self.general_description_text)
         self.class_parent.load_next_pref_page(new_page, direction)
 
 
@@ -340,9 +339,13 @@ class CreateGroupScreenPref4(Screen):
     def set_host_email(self, text):
         self.host_email = text
 
-
     def set_host_phone_num(self, text):
         self.host_phone_num = text
+
+    def on_text_validate(self, current_textfield, next_textfield):
+        # Move to the next text field if it exists
+        if next_textfield:
+            next_textfield.focus = True
 
 
     def add_data_to_final(self, new_page, direction="left"):

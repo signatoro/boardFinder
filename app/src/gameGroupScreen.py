@@ -58,11 +58,17 @@ class GameGroupScreen(Screen):
 
     warning_popup = None
     success_popup = None
+    home_screen_reference = None
 
     def __init__(self, **kwargs):
         super(GameGroupScreen, self).__init__(**kwargs)
         self.warning_popup = PublishPostWarningPopup(parent=self)
         self.success_popup = PublishSuccessPopup(parent=self)
+
+
+    def on_pre_enter(self, *args):
+        # Access the ScreenManager and get the HomeScreen
+        self.home_screen_reference = App.get_running_app().main_screen_manager.get_screen("home_screen")
 
     def load_depends(self, load_deps):
         self.group_title = load_deps["group_name"]
@@ -167,7 +173,7 @@ class GameGroupScreen(Screen):
         #    "max_players": self.group_max_players,
         #}
 
-        HomeScreen.add_created_group_card(self)
+        self.home_screen_reference.add_created_group_card(game_group_screen_info=self)
 
         # generate popup
         self.success_popup.open()
@@ -219,4 +225,5 @@ class PublishSuccessPopup(Popup):
 
     def on_ok(self, instance):
         self.dismiss()
+        App.get_running_app().change_screen("home_screen")
 

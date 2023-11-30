@@ -32,11 +32,11 @@ class MyApp(MDApp):
 
     signed_in = False
     username = None
+    main_screen_manager = None
 
     def build(self):
         self.signed_in = False
         self.username = None
-
         Window.minimum_width = 400
         Window.minimum_height = 600
         # self.lastResize = time.time()-2
@@ -47,8 +47,15 @@ class MyApp(MDApp):
         # Window.bind(on_resize=self.force_window_ratio)
         return Builder.load_file("kv/main.kv")  # GUI
 
+    def on_start(self):
+        self.main_screen_manager = self.root.ids['screen_manager']
+
+    def get_screen_manager(self):
+        return self.root.ids['screen_manager']
+
     def change_screen(self, screen_name, direction='left', mode="", load_deps=None):
         # Get the screen manager from the kv file
+        print(f"screen manager initiliazed {self.main_screen_manager}")
         screen_manager = self.root.ids['screen_manager']
         # print(direction, mode)
         # If going left, change the transition. Else make left the default
@@ -85,6 +92,7 @@ class MyApp(MDApp):
         if self.root is None or self.root.ids['screen_manager'] is None:
             return ""
         return self.root.ids['screen_manager'].current
+
 
     def get_signed_in(self):
         return self.signed_in

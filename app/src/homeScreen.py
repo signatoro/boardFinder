@@ -15,7 +15,6 @@ from kivy.properties import StringProperty
 
 from src.localEventCard import LocalEventCard
 from src.groupCard import GroupCard
-from src.topBar import TopBar
 
 from app.src import createGroup
 
@@ -31,14 +30,19 @@ class HomeScreen(Screen):
     local_event_l: list = []
     group_cards: list = []
 
+    days = []
+
     def __init__(self, **kwargs):
         
         # self.local_event_l: list = []
         super(HomeScreen, self).__init__(**kwargs)
+        self.days = [day.lower() for day in createGroup.days]
+        self.add_dummy_cards_to_group_list() # TODO: delete eventually
+        self.add_dummy_local_events_to_list() # TODO: delete eventually
+
         
 
     def on_enter(self, *args):
-        
         Clock.schedule_once(self.load_depends)
         return super().on_enter(*args)
     
@@ -56,44 +60,99 @@ class HomeScreen(Screen):
         self.load_local_events()
         self.load_group_cards()
 
+    def add_dummy_cards_to_group_list(self):
+        group_card_1 = GroupCard(
+            parent=self,
+            title="Rishav's Group",
+            description="The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
+            user_status="Request Pending",
+            month='12',
+            day='4',
+            time="1:30 pm",
+            location="Library, Boston MA",
+            image_path='images/celebi.png',
+            session_length="4 - 6 Hrs",
+            participant='1/4 Attending',
+        )
+
+        group_card_2 = GroupCard(
+            parent=self,
+            title="Scott's Group",
+            description="The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
+            user_status="Request Pending",
+            month='2',
+            day='5',
+            time="5:30 pm",
+            location="Library, Boston MA",
+            image_path='images/pikachu.jpg',
+            session_length="4 - 6 Hrs",
+            participant='1/4 Attending',
+        )
+
+        group_card_3 = GroupCard(
+            parent=self,
+            title="Matty's Group",
+            description="The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
+            user_status="Request Pending",
+            month='1',
+            day='0',
+            time="1:30 pm",
+            location="Library, Boston MA",
+            image_path='images/piplup.jpg',
+            session_length="4 - 6 Hrs",
+            participant='3/6 Attending',
+        )
+
+        self.group_cards.append(group_card_1)
+        self.group_cards.append(group_card_2)
+        self.group_cards.append(group_card_3)
+
+    def add_dummy_local_events_to_list(self):
+        local_event1 = LocalEventCard(
+            parent=self,
+            title="Swords and Coffee",
+            event_link="link.url.here",
+            description="The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
+            location_type="In Person",
+            month='12',
+            day='4',
+            time="1:30 pm",
+           location="Library, Boston MA"
+        )
+        local_event2 = LocalEventCard(
+            parent=self,
+            title="Cards and Coffee",
+            event_link="link.url.here",
+            description="The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
+            location_type="In Person",
+            month='12',
+            day='15',
+            time="3:45 pm",
+            location="Library, Boston MA"
+        )
+        local_event3 = LocalEventCard(
+            parent=self,
+            title="Magic The Gathering: New Release",
+            event_link="link.url.here",
+            description="The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
+            location_type="In Person",
+            month='1',
+            day='31',
+            time="5:00 pm",
+            location="Library, Boston MA"
+        )
+
+        self.local_event_l.append(local_event1)
+        self.local_event_l.append(local_event2)
+        self.local_event_l.append(local_event3)
 
     def load_local_events(self):
-        self.local_event_l.clear()
         self.ids.local_event_carou.clear_widgets()
         # print("Loading Depends")
         #TODO: Call endpoint get list of Local events
-        local_event1 = LocalEventCard(parent=self, title= "Swords and Coffee",
-            event_link= "link.url.here",
-            description= "The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
-            location_type= "In Person",
-            month= '12',
-            day= '4',
-            time= "1:30 pm",
-            location= "Library, Boston MA"
-        )
-        local_event2 = LocalEventCard(parent=self, title= "Cards and Coffee",
-            event_link= "link.url.here",
-            description= "The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
-            location_type= "In Person",
-            month= '12',
-            day= '15',
-            time= "3:45 pm",
-            location= "Library, Boston MA"
-        )
-        local_event3 = LocalEventCard(parent=self, title= "Magic The Gathering: New Release",
-            event_link= "link.url.here",
-            description= "The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
-            location_type= "In Person",
-            month= '1',
-            day= '31',
-            time= "5:00 pm",
-            location= "Library, Boston MA"
-        )
-        local_event_l: list = [local_event1, local_event2, local_event3]
-
 
         # adds widgets 
-        for event in local_event_l:
+        for event in self.local_event_l:
             # event.add_parent(self)
             self.ids.local_event_carou.add_widget(event)
 
@@ -102,7 +161,7 @@ class HomeScreen(Screen):
 
         current_day = current_date.weekday()
 
-        target_day = createGroup.days.index(
+        target_day = self.days.index(
             next_dow.lower())
 
         days_until_next = (target_day - current_day + 7) % 7
@@ -122,9 +181,10 @@ class HomeScreen(Screen):
         return total_hours
 
     def add_created_group_card(self, game_group_screen_info):
-
-        next_date_of_meeting = self.get_updated_date_of_next_meeting(
-            game_group_screen_info.group_mtg_day_and_recurring_info.key)
+        dow = ""
+        for key in game_group_screen_info.group_mtg_day_and_recurring_info.keys():
+            dow = key
+        next_date_of_meeting = self.get_updated_date_of_next_meeting(dow)
         session_length = self.get_hours_between_times(game_group_screen_info.group_meeting_start_time,
                                                       game_group_screen_info.group_meeting_end_time)
 
@@ -132,7 +192,7 @@ class HomeScreen(Screen):
             parent=self,
             title=game_group_screen_info.group_title,
             description=game_group_screen_info.group_general_description,
-            user_status="Open",
+            user_status="Open To New Members",
             month=str(next_date_of_meeting.month),
             day=str(next_date_of_meeting.day),
             time=f"{game_group_screen_info.group_meeting_start_time} - {game_group_screen_info.group_meeting_end_time}",
@@ -142,75 +202,19 @@ class HomeScreen(Screen):
             participant=f'1/{game_group_screen_info.group_max_players} Attending',
         )
 
-        self.group_cards.clear()
-        self.group_cards.append(created_group_card)
+        print(f"create group card title: {created_group_card.title}")
+        print(f"create group card description: {created_group_card.description}")
+
+        self.group_cards.insert(0, created_group_card)
         self.load_group_cards()
     
     def load_group_cards(self):
-        '''
-        title= StringProperty()
-        description= StringProperty()
-
-        month= NumericProperty()
-        day= NumericProperty()
-        time= StringProperty()
-        location= StringProperty()
-
-        session_length= StringProperty()
-        participant = StringProperty()
-
-        parent_screen = ObjectProperty() 
-        '''
-
         self.ids.group_card_carou.clear_widgets()
 
-        
-        group_card_1 = GroupCard(parent=self, title= "Rishav's Group",
-            description= "The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
-            user_status = "Request Pending",
-            month= '12',
-            day= '4',
-            time= "1:30 pm",
-            location= "Library, Boston MA",
-            image_path = 'images/celebi.png',
-            session_length= "4 - 6 Hrs",
-            participant = '1/4 Attending',
-        )
-
-        group_card_2 = GroupCard(parent=self, title= "Scott's Group",
-            description= "The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
-            user_status = "Request Pending",
-            month= '2',
-            day= '5',
-            time= "5:30 pm",
-            location= "Library, Boston MA",
-            image_path = 'images/pikachu.jpg',
-            session_length= "4 - 6 Hrs",
-            participant = '1/4 Attending',
-        )
-
-        group_card_3 = GroupCard(parent=self, title= "Matty's Group",
-            description= "The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
-            user_status = "Request Pending",
-            month= '1',
-            day= '0',
-            time= "1:30 pm",
-            location= "Library, Boston MA",
-            image_path = 'images/piplup.jpg',
-            session_length= "4 - 6 Hrs",
-            participant = '3/6 Attending',
-            
-        )
-
-        self.group_cards.append(group_card_1)
-        self.group_cards.append(group_card_2)
-        self.group_cards.append(group_card_3)
-
-        # adds widgets 
+        # adds widgets
         for group in self.group_cards:
             # event.add_parent(self)
             self.ids.group_card_carou.add_widget(group)
-
         pass
         
     def create_redirect_popup(self, url: str):

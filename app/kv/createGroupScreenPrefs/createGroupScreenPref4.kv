@@ -31,6 +31,7 @@
                 padding: [0, dp(20), 0, 0]
 
             MDTextField:
+                id: first_name_text_field
                 hint_text: "Ex: Bob"
                 mode: "rectangle"
                 line_color_normal: "teal"
@@ -38,6 +39,7 @@
                 size_hint_y: None
                 required: True
                 on_text: root.set_host_fname(self.text)
+                on_text_validate: root.on_text_validate(first_name_text_field, last_name_text_field)
 
             MDLabel:
                 id: host_last_name
@@ -49,6 +51,7 @@
                 padding: [0, dp(20), 0, 0]
 
             MDTextField:
+                id: last_name_text_field
                 hint_text: "Ex: Smith"
                 mode: "rectangle"
                 line_color_normal: "teal"
@@ -56,6 +59,7 @@
                 size_hint_y: None
                 required: True
                 on_text: root.set_host_lname(self.text)
+                on_text_validate: root.on_text_validate(last_name_text_field, email_text_field)
 
             MDLabel:
                 id: host_email
@@ -67,6 +71,7 @@
                 padding: [0, dp(20), 0, 0]
 
             MDTextField:
+                id: email_text_field
                 hint_text: "Ex: bobsmith@gmail.com"
                 mode: "rectangle"
                 multiline: True
@@ -74,6 +79,7 @@
                 line_color_normal: "teal"
                 required: True
                 on_text: root.set_host_email(self.text)
+                on_text_validate: root.on_text_validate(email_text_field, phone_num_text_field)
 
             MDLabel:
                 id: host_phone_num
@@ -85,6 +91,7 @@
                 padding: [0, dp(20), 0, 0]
 
             MDTextField:
+                id: phone_num_text_field
                 hint_text: "Ex: XXX-XXX-XXXX"
                 mode: "rectangle"
                 line_color_normal: "teal"
