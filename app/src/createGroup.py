@@ -43,6 +43,7 @@ Created Group Dictionary:
 "group_host_phone_num": ""
 "group_tags": [chip]
 "new_group": bool
+"owner": bool
 
 new_group is for notifying whether to render gameGroupHostScreen with Publish/Edit (true) or with Close/Edit (false)
 '''
@@ -89,7 +90,8 @@ class CreateGroupScreen(Screen):
 
         if self.currPrefPage > 6:
             self.new_created_group["new_group"] = True
-            App.get_running_app().change_screen("game_group_host_screen", direction="right", load_deps=self.new_created_group)
+            self.new_created_group["owner"] = False
+            App.get_running_app().change_screen("game_group_screen", direction="right", load_deps=self.new_created_group)
             return
 
         screen_manager.transition = SlideTransition(direction=direction)

@@ -1,7 +1,6 @@
 from kivy.app import App
 from kivy.metrics import dp
-from kivy.properties import StringProperty, ListProperty, DictProperty
-from kivy.tools.packaging.pyinstaller_hooks.pyi_rth_kivy import root
+from kivy.properties import StringProperty, ListProperty, DictProperty, BooleanProperty
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen
@@ -9,6 +8,8 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDRaisedButton
 from kivymd.uix.chip import MDChip
 from kivymd.uix.label import MDLabel
+
+from app.src.homeScreen import HomeScreen
 
 '''
 Load Deps Dictionary:
@@ -29,12 +30,13 @@ Load Deps Dictionary:
 "group_host_phone_num": ""
 "group_tags": [chip]
 "new_group": bool
+"owner": bool
 
-new_group is for notifying whether to render gameGroupHostScreen with Publish/Edit (true) or with Close/Edit (false)
+new_group is for notifying whether to render gameGroupScreen with Publish/Edit (true) or with Close/Edit (false)
 '''
 
 
-class GameGroupHostScreen(Screen):
+class GameGroupScreen(Screen):
     group_title = StringProperty()
     group_image = StringProperty()
     group_general_description = StringProperty()
@@ -51,6 +53,16 @@ class GameGroupHostScreen(Screen):
     group_mtg_day_and_recurring_info = DictProperty()
     group_meeting_start_time = StringProperty()
     group_meeting_end_time = StringProperty()
+    new_group = BooleanProperty()
+    owner = BooleanProperty()
+
+    warning_popup = None
+    success_popup = None
+
+    def __init__(self, **kwargs):
+        super(GameGroupScreen, self).__init__(**kwargs)
+        self.warning_popup = PublishPostWarningPopup(parent=self)
+        self.success_popup = PublishSuccessPopup(parent=self)
 
     def load_depends(self, load_deps):
         self.group_title = load_deps["group_name"]
@@ -68,6 +80,8 @@ class GameGroupHostScreen(Screen):
         self.group_mtg_day_and_recurring_info = load_deps["group_mtg_day_and_recurring_info"]
         self.group_meeting_start_time = load_deps["group_mtg_start_time"]
         self.group_meeting_end_time = load_deps["group_mtg_end_time"]
+        self.new_group = load_deps["new_group"]
+        self.owner = load_deps["owner"]
         self.add_meeting_days_and_times()
         self.add_board_games()
         self.add_host_to_member_list()
@@ -130,28 +144,39 @@ class GameGroupHostScreen(Screen):
         self.ids.game_group_max_players.text = f"Looking for {int(self.group_max_players) - 1} / {self.group_max_players} more players"
 
     def open_publish_warning_popup(self):
-        warning_popup = PublishPostWarningPopup(self)
-        warning_popup.open()
+        self.warning_popup.open()
 
     def publish_group(self):
         print("publishing post...")
-        # create game group page with class object
+        self.new_group = False
 
-        # add class object to groups list
+        # TODO: add class object to groups list
 
-        # create game card for group
+        # send info to home screen for it to create a game card
 
-        # add to home screen carousel (and give it class object to store)
+        #group_card_info = {
+        #    "title": self.group_title,
+        #    "description": self.group_general_description,
+        #    "user_status": "Open",
+        #    "month": "12",
+        #    "days_and_recurring_info": self.group_mtg_day_and_recurring_info,
+        #    "start_time": self.group_meeting_start_time,
+        #    "end_time": self.group_meeting_end_time,
+        #    "location": self.group_meeting_location,
+        #    "image_path": self.group_image,
+        #    "max_players": self.group_max_players,
+        #}
+
+        HomeScreen.add_created_group_card(self)
 
         # generate popup
-        success_popup = PublishSuccessPopup(self)
-        success_popup.open()
+        self.success_popup.open()
 
 
 class PublishPostWarningPopup(Popup):
     def __init__(self, parent, **kwargs):
         super(PublishPostWarningPopup, self).__init__(**kwargs)
-        self.parent = parent
+        self.class_parent = parent
         self.title = f"Publish Post Warning"
         self.size_hint_y = 0.5
         self.content = MDBoxLayout(orientation="vertical", spacing=dp(10), padding=dp(10))
@@ -168,7 +193,7 @@ class PublishPostWarningPopup(Popup):
 
     def on_publish(self, instance):
         self.dismiss()
-        self.parent.publish_group()
+        self.class_parent.publish_group()
 
     def on_go_back(self, instance):
         self.dismiss()
@@ -177,7 +202,7 @@ class PublishPostWarningPopup(Popup):
 class PublishSuccessPopup(Popup):
     def __init__(self, parent, **kwargs):
         super(PublishSuccessPopup, self).__init__(**kwargs)
-        self.parent = parent
+        self.class_parent = parent
         self.title = f"Publish Success!"
         self.size_hint_y = 0.5
         self.content = MDBoxLayout(orientation="vertical", spacing=dp(10), padding=dp(10))
@@ -195,30 +220,3 @@ class PublishSuccessPopup(Popup):
     def on_ok(self, instance):
         self.dismiss()
 
-
-class DOWMeeting:
-    dow = None
-    recurring = None
-    start_time = None
-    end_time = None
-
-    def __init__(self, **kwargs):
-        super(DOWMeeting, self).__init__(**kwargs)
-
-    def add_to_game_group_day_stack(self):
-        day_label = MDLabel()
-        if self.recurring:
-            day_label.text = f"Every {self.dow}, {self.start_time} - {self.end_time}"
-        else:
-            day_label.text = f"This {self.dow}, {self.start_time} - {self.end_time}"
-        day_label.text_color = [1, 1, 1, 1]
-        root.ids.game_group_days_and_times.add_widget(day_label)
-
-        meeting_type = MDLabel()
-        if self.recurring:
-            meeting_type.text = "RECURRING"
-        else:
-            meeting_type.text = "ONE-TIME"
-        meeting_type.text_color = (1, 1, 1, 1)
-        meeting_type.md_bg_color = App.get_running_app().theme_cls.primary_color
-        root.ids.game_group_days_and_times.add_widget(meeting_type)

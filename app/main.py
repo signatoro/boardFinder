@@ -13,7 +13,7 @@ from src.gameCard import GameCard
 from src.topBar import TopBar
 from src.learnGameScreen import LearnGameScreen
 from src.boardGameScreen import BoardGameScreen
-from src.gameGroupHostScreen import GameGroupHostScreen
+from src.gameGroupScreen import GameGroupScreen
 
 
 import time
