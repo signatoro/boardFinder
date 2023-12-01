@@ -64,7 +64,7 @@ class HomeScreen(Screen):
         group_card_1 = GroupCard(
             parent=self,
             title="Rishav's Group",
-            description="The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
+            description="Come have a grand ol' time with your boi, chef Rish",
             user_status="Request Pending",
             month='12',
             day='4',
@@ -78,7 +78,7 @@ class HomeScreen(Screen):
         group_card_2 = GroupCard(
             parent=self,
             title="Scott's Group",
-            description="The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
+            description="By the end of it we might hate each other, but boy will we have fun!",
             user_status="Request Pending",
             month='2',
             day='5',
@@ -92,7 +92,7 @@ class HomeScreen(Screen):
         group_card_3 = GroupCard(
             parent=self,
             title="Matty's Group",
-            description="The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
+            description="We give free stuff!! Please come! Free food, water, new dice set!!! ~Join now~",
             user_status="Request Pending",
             month='1',
             day='0',

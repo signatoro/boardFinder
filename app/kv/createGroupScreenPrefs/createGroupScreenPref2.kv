@@ -53,18 +53,16 @@
                     spacing: 5
 
             MDLabel:
-                id: group_name
-                text: 'Group Name'
+                text: 'Group Title'
                 underline: "true"
                 font_style: "H6"
                 text_color: "teal"
                 size_hint_y: None
                 height: self.texture_size[1]
                 padding: [0, dp(20), 0, 0]
-                on_text: root.set_group_name(self.text)
 
             MDTextField:
-                id: group_name
+                id: group_title
                 hint_text: "Ex: Susie's Gamers"
                 mode: "rectangle"
                 multiline: False
@@ -72,6 +70,7 @@
                 line_color_normal: "teal"
                 required: True
                 size_hint_y: None
+                on_text: root.set_group_title(self.text)
 
             MDLabel:
                 text: 'General Description'

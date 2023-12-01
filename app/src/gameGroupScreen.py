@@ -16,7 +16,7 @@ Load Deps Dictionary:
 
 "board_game_list": [str]
 "group_image": ""
-"group_name": ""
+"group_title": ""
 "group_general_description: ""
 "group_additional_description": ""
 "group_mtg_day_and_recurring_info": {"dow": recurring (bool)}
@@ -71,9 +71,10 @@ class GameGroupScreen(Screen):
         self.home_screen_reference = App.get_running_app().main_screen_manager.get_screen("home_screen")
 
     def load_depends(self, load_deps):
-        self.group_title = load_deps["group_name"]
+        self.group_title = load_deps["group_title"]
         self.group_image = load_deps["group_image"]
         self.group_general_description = load_deps["group_general_description"]
+        print(f"group_description_text is in game_group: {self.group_general_description}")
         self.group_additional_description = load_deps["group_additional_description"]
         self.group_board_games = load_deps["board_game_list"]
         self.group_host_fname = load_deps["group_host_fname"]
@@ -159,20 +160,6 @@ class GameGroupScreen(Screen):
         # TODO: add class object to groups list
 
         # send info to home screen for it to create a game card
-
-        #group_card_info = {
-        #    "title": self.group_title,
-        #    "description": self.group_general_description,
-        #    "user_status": "Open",
-        #    "month": "12",
-        #    "days_and_recurring_info": self.group_mtg_day_and_recurring_info,
-        #    "start_time": self.group_meeting_start_time,
-        #    "end_time": self.group_meeting_end_time,
-        #    "location": self.group_meeting_location,
-        #    "image_path": self.group_image,
-        #    "max_players": self.group_max_players,
-        #}
-
         self.home_screen_reference.add_created_group_card(game_group_screen_info=self)
 
         # generate popup

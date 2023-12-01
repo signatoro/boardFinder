@@ -55,8 +55,7 @@ class MyApp(MDApp):
 
     def change_screen(self, screen_name, direction='left', mode="", load_deps=None):
         # Get the screen manager from the kv file
-        print(f"screen manager initiliazed {self.main_screen_manager}")
-        screen_manager = self.root.ids['screen_manager']
+        #screen_manager = self.root.ids['screen_manager']
         # print(direction, mode)
         # If going left, change the transition. Else make left the default
         if direction == 'left':
@@ -64,17 +63,17 @@ class MyApp(MDApp):
         elif direction == 'right':
             mode = 'pop'
         elif direction == "None":
-            screen_manager.transition = NoTransition()
-            screen_manager.current = screen_name
+            self.main_screen_manager.transition = NoTransition()
+            self.main_screen_manager.current = screen_name
             return
 
         if load_deps: 
-            screen_manager.get_screen(screen_name).load_depends(load_deps)
+            self.main_screen_manager.get_screen(screen_name).load_depends(load_deps)
 
 
-        screen_manager.transition = SlideTransition(direction=direction)  # mode=mode)
+        self.main_screen_manager.transition = SlideTransition(direction=direction)  # mode=mode)
 
-        screen_manager.current = screen_name
+        self.main_screen_manager.current = screen_name
 
         for bar in self.top_bars:
             bar.update_actions()

@@ -29,7 +29,7 @@ Created Group Dictionary:
 
 "board_game_list": [str]
 "group_image": ""
-"group_name": ""
+"group_title": ""
 "group_general_description: ""
 "group_additional_description": ""
 "group_mtg_day_and_recurring_info": {"dow": recurring (bool)}
@@ -190,7 +190,7 @@ class CreateGroupScreenPref1(Screen):
 class CreateGroupScreenPref2(Screen):
     image_source = ""
     general_description_text = ""
-    group_name = ""
+    group_title = ""
     curr_word_count = 0
     max_word_count = 0
 
@@ -200,16 +200,17 @@ class CreateGroupScreenPref2(Screen):
         self.imagePopup = PopupImageSelection(self)
         self.max_word_count = self.ids.general_description_text_field.max_input_size
 
-    def set_group_name(self, text):
-        self.group_name = text
+    def set_group_title(self, text):
+        self.group_title = text
+
     def open_image_popup(self):
         self.imagePopup.open()
 
     def update_and_limit_word_count(self, text):
-        self.general_description_text = text.split()
+        self.general_description_text = ''.join(text.split())
         self.curr_word_count = len(text.split())
         if self.curr_word_count >= self.max_word_count:
-            self.general_description_text = ' '.join(self.general_description_text[:self.max_word_count])
+            self.general_description_text = self.general_description_text[:self.max_word_count]
             self.ids.general_description_text_field.text = self.general_description_text
             self.curr_word_count = self.max_word_count
             self.ids.general_description_text_field.helper_text = f'Max Word Count Reached: {self.curr_word_count}/{self.max_word_count}'
@@ -218,8 +219,8 @@ class CreateGroupScreenPref2(Screen):
 
     def add_data_to_final(self, new_page, direction="left"):
         self.class_parent.new_created_group["group_image"] = self.image_source
-        self.class_parent.new_created_group["group_name"] = self.group_name
-        self.class_parent.new_created_group["group_general_description"] = ''.join(self.general_description_text)
+        self.class_parent.new_created_group["group_title"] = self.group_title
+        self.class_parent.new_created_group["group_general_description"] = self.general_description_text
         self.class_parent.load_next_pref_page(new_page, direction)
 
 
@@ -485,10 +486,10 @@ class CreateGroupScreenPref6(Screen):
             self.ids.additional_info_text_field.helper_text = f'0/{self.max_word_count}'
 
     def update_and_limit_word_count(self, text):
-        self.additional_description_text = text.split()
+        self.additional_description_text = ''.join(text.split())
         self.curr_word_count = len(text.split())
         if self.curr_word_count >= self.max_word_count:
-            self.additional_description_text = ' '.join(self.additional_description_text[:self.max_word_count])
+            self.additional_description_text = self.additional_description_text[:self.max_word_count]
             self.ids.additional_info_text_field.text = self.additional_description_text
             self.curr_word_count = self.max_word_count
             self.ids.additional_info_text_field.helper_text = f'Max Word Count Reached: {self.curr_word_count}/{self.max_word_count}'
@@ -496,7 +497,7 @@ class CreateGroupScreenPref6(Screen):
             self.ids.additional_info_text_field.helper_text = f'{self.curr_word_count}/{self.max_word_count}'
 
     def add_data_to_final(self, new_page, direction="left"):
-        self.class_parent.new_created_group["group_additional_description"] = str(self.additional_description_text)
+        self.class_parent.new_created_group["group_additional_description"] = self.additional_description_text
         self.class_parent.load_next_pref_page(new_page, direction)
 
 

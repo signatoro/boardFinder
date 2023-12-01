@@ -95,7 +95,7 @@
 
             # Title
             MDLabel:
-                text: f"{root.title}"
+                text: root.title
                 size_hint_y: None
                 height: self.texture_size[1] + 5
                 font_size: self.width/10
@@ -106,7 +106,7 @@
             # General Descriptions
             MDLabel:
                 size_hint_y: 1
-                text: f"asd;lfkjads l;fjasdl fasdl;kjf a;dslkjf ;laskdjf a;sldkjf ;alskdj ;alkdjf ;alsdkjf ;lasdkjf ;alskdfj ;alkjf ;alksjf ;alksjf a;lskdf j"
+                text: root.description
                 theme_text_color: "Custom"
                 font_size: self.width/15
                 text_size: self.size
