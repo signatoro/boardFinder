@@ -207,7 +207,7 @@ class CreateGroupScreenPref2(Screen):
         self.imagePopup.open()
 
     def update_and_limit_word_count(self, text):
-        self.general_description_text = ''.join(text.split())
+        self.general_description_text = ' '.join(text.split())
         self.curr_word_count = len(text.split())
         if self.curr_word_count >= self.max_word_count:
             self.general_description_text = self.general_description_text[:self.max_word_count]
@@ -486,7 +486,7 @@ class CreateGroupScreenPref6(Screen):
             self.ids.additional_info_text_field.helper_text = f'0/{self.max_word_count}'
 
     def update_and_limit_word_count(self, text):
-        self.additional_description_text = ''.join(text.split())
+        self.additional_description_text = ' '.join(text.split())
         self.curr_word_count = len(text.split())
         if self.curr_word_count >= self.max_word_count:
             self.additional_description_text = self.additional_description_text[:self.max_word_count]

@@ -1,7 +1,9 @@
+
+
 <GameGroupScreen>:
     name: 'game_group_screen'
 
-    # container for own screen
+    # container for whole screen
     MDBoxLayout:
         orientation: "vertical"
 
@@ -15,13 +17,14 @@
             do_scroll_y: True
             do_scroll_x: False
 
-            # Left column: group image, host info, meet info, users attending
+            # Container for whole scrolling container
             MDBoxLayout:
                 orientation: "vertical"
-                spacing: dp(50)
                 size_hint_y: None
+                size_hint_x: 1
                 adaptive_height: True
-                orientation: "vertical"
+                padding: [dp(10), dp(15), dp(10), dp(15)]
+                spacing: dp(10)
 
                 # group image
                 FitImage:
@@ -31,7 +34,62 @@
                     keep_ratio: True
                     source: root.group_image
                     size_hint: None, None
-                    size: dp(300), dp(300)
+                    size: dp(400), dp(300)
+                    halign: "center"
+                    pos_hint: {"center_x": 0.5}
+
+                # group title
+                MDLabel:
+                    id: game_group_title
+                    text: root.group_title
+                    font_style: "H2"
+                    text_color: "teal"
+                    md_bg_color: (0.76, 0.74, 0.78, 1)
+                    size_hint_y: None
+                    halign: "center"
+                    height: self.texture_size[1]  # Adjust the size based on text size
+
+                # group description label:
+                MDLabel:
+                    id: gen_description_label
+                    text: "Description"
+                    font_style: "H6"
+                    text_color: (0, 0, 0, 0) # black
+                    size_hint_y: None
+                    halign: "left"
+                    height: self.texture_size[1]  # Adjust the size based on text size
+
+                # group general description
+                MDLabel:
+                    id: game_group_gen_description
+                    text: root.group_general_description
+                    text_color: (0, 0, 0, 1) # black
+                    #font_style: "H5"
+                    size_hint_y: None
+                    halign: "center"
+                    height: self.texture_size[1]  # Adjust the size based on text size
+
+                SeparatorLine:
+                    size_hint: 1, None
+                    size: dp(3), dp(3)
+
+                # group additional description
+                MDLabel:
+                    id: game_group_additional_description
+                    text: root.group_additional_description
+                    #font_style: "normal"
+                    text_color: (0, 0, 0, 1) # black
+                    size_hint_y: None
+                    halign: "center"
+                    height: self.texture_size[1]  # Adjust the size based on text size
+
+                # Tags section
+                MDStackLayout:
+                    id: group_tags_list
+                    orientation: 'lr-tb'
+                    spacing: dp(10)
+                    adaptive_height: True
+
 
                 # host info
                 MDBoxLayout:
@@ -49,7 +107,6 @@
                         radius: 25
                         text: "Host Info"
                         font_style: "H4"
-                        pos_hint: {"center_x": 0.5, "center_y": 1}
                         theme_text_color: "Custom"
                         text_color: 1, 1, 1, 1  # White text color
                         md_bg_color: app.theme_cls.primary_color  # Use the primary color as the outline color
@@ -103,7 +160,7 @@
                     orientation: "vertical"
                     padding: [20, 0, 20, 50]
                     size_hint: 1, None
-                    height: self.minimum_height
+                    adaptive_height: True
                     radius: 25
                     md_bg_color: app.theme_cls.primary_color
 
@@ -113,25 +170,24 @@
                         radius: 25
                         text: "Meet Info"
                         font_style: "H4"
-                        pos_hint: {"center_x": 0.5, "center_y": 1}
                         theme_text_color: "Custom"
                         text_color: 1, 1, 1, 1  # White text color
                         md_bg_color: app.theme_cls.primary_color  # Use the primary color as the outline color
                         size_hint_y: None
+                        halign: "center"
                         height: self.texture_size[1]  # Adjust the size based on text size
 
                     # meet info content
                     MDBoxLayout:
                         orientation: "vertical"
                         spacing: dp(5)
+                        size_hint_y: None
 
                         # meet days and times
                         MDStackLayout:
-                            orientation: 'lr-tb'
-                            md_bg_color: [.9, .9, .9, .5]
-                            spacing: dp(5)
-                            padding: [15, 10, 0, 0]
                             id: game_group_days_and_times
+                            orientation: 'lr-tb'
+                            spacing: dp(10)
 
                         # meet location
                         MDLabel:
@@ -146,11 +202,13 @@
 
                         # meet board games
                         MDStackLayout:
+                            id: game_group_board_games
                             orientation: 'lr-tb'
                             md_bg_color: [.9, .9, .9, .5]
                             spacing: dp(5)
                             padding: [15, 10, 0, 0]
-                            id: game_group_board_games
+                            halign: "left"
+
 
                 # users attending
                 MDBoxLayout:
@@ -220,3 +278,10 @@
                             text: "Publish your Group!"
                             icon: "publish"
                             on_release: root.open_publish_warning_popup()
+
+<SeparatorLine>:
+    canvas:
+        Color:
+            rgb: 0.5, 0.5, 0.5, 1  # Set the color of the line (gray)
+        Line:
+            points: self.x, self.y, self.x + self.width, self.y

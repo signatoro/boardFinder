@@ -4,12 +4,15 @@ from kivy.properties import StringProperty, ListProperty, DictProperty, BooleanP
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen
+from kivy.uix.widget import Widget
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDRaisedButton
 from kivymd.uix.chip import MDChip
 from kivymd.uix.label import MDLabel
 
-from app.src.homeScreen import HomeScreen
+
+class SeparatorLine(Widget):
+    pass
 
 '''
 Load Deps Dictionary:
@@ -67,14 +70,41 @@ class GameGroupScreen(Screen):
 
 
     def on_pre_enter(self, *args):
+        print("pre-enter in game group called")
         # Access the ScreenManager and get the HomeScreen
         self.home_screen_reference = App.get_running_app().main_screen_manager.get_screen("home_screen")
 
+    def delete_group(self):
+        App.get_running_app().remove_group(self)
+
+    def render_saved_data(self):
+        self.group_title = self.loaded_data.group_title
+        self.group_image = self.loaded_data.group_image
+        self.group_general_description = self.loaded_data.group_general_description
+        self.group_additional_description = self.loaded_data.group_additional_description
+        self.group_board_games = self.loaded_data.group_board_games
+        self.group_host_fname = self.loaded_data.group_host_fname
+        self.group_host_lname = self.loaded_data.group_host_lname
+        self.group_host_email = self.loaded_data.group_host_email
+        self.group_host_phone_num = self.loaded_data.group_host_phone_num
+        self.group_tags = self.loaded_data.group_tags
+        self.group_max_players = self.loaded_data.group_max_players
+        self.group_meeting_location = self.loaded_data.group_meeting_location
+        self.group_mtg_day_and_recurring_info = self.loaded_data.group_mtg_day_and_recurring_info
+        self.group_meeting_start_time = self.loaded_data.group_meeting_start_time
+        self.group_meeting_end_time = self.loaded_data.group_meeting_end_time
+        self.add_meeting_days_and_times()
+        self.add_board_games()
+        self.add_host_to_member_list()
+        self.set_looking_for_players()
+        self.render_tags()
+
+
     def load_depends(self, load_deps):
+        print("load depends in game group called")
         self.group_title = load_deps["group_title"]
         self.group_image = load_deps["group_image"]
         self.group_general_description = load_deps["group_general_description"]
-        print(f"group_description_text is in game_group: {self.group_general_description}")
         self.group_additional_description = load_deps["group_additional_description"]
         self.group_board_games = load_deps["board_game_list"]
         self.group_host_fname = load_deps["group_host_fname"]
@@ -87,12 +117,46 @@ class GameGroupScreen(Screen):
         self.group_mtg_day_and_recurring_info = load_deps["group_mtg_day_and_recurring_info"]
         self.group_meeting_start_time = load_deps["group_mtg_start_time"]
         self.group_meeting_end_time = load_deps["group_mtg_end_time"]
-        self.new_group = load_deps["new_group"]
+        self.new_group = False
         self.owner = load_deps["owner"]
         self.add_meeting_days_and_times()
         self.add_board_games()
         self.add_host_to_member_list()
         self.set_looking_for_players()
+        self.render_tags()
+        App.get_running_app().add_group(self)
+
+
+    def load_screen_data(self, game_group_data):
+        print("load screen data in game group called")
+        self.group_title = game_group_data.group_title
+        self.group_image = game_group_data.group_image
+        self.group_general_description = game_group_data.group_general_description
+        self.group_additional_description = game_group_data.group_additional_description
+        self.group_board_games = game_group_data.group_board_games
+        self.group_host_fname = game_group_data.group_host_fname
+        self.group_host_lname = game_group_data.group_host_lname
+        self.group_host_email = game_group_data.group_host_email
+        self.group_host_phone_num = game_group_data.group_host_phone_num
+        self.group_tags = game_group_data.group_tags
+        self.group_max_players = game_group_data.group_max_players
+        self.group_meeting_location = game_group_data.group_meeting_location
+        self.group_mtg_day_and_recurring_info = game_group_data.group_mtg_day_and_recurring_info
+        self.group_meeting_start_time = game_group_data.group_meeting_start_time
+        self.group_meeting_end_time = game_group_data.group_meeting_end_time
+        self.add_meeting_days_and_times()
+        self.add_board_games()
+        self.add_host_to_member_list()
+        self.set_looking_for_players()
+        self.render_tags()
+
+    def render_tags(self):
+        self.ids.group_tags_list.clear_widgets()
+        for tag in self.group_tags:
+            # clear former parent of tag
+            tag.parent = None
+            self.ids.group_tags_list.add_widget(tag)
+
 
     def add_meeting_days_and_times(self):
         self.ids.game_group_days_and_times.clear_widgets()
@@ -102,7 +166,7 @@ class GameGroupScreen(Screen):
                 day_label.text = f"Every {dow}, {self.group_meeting_start_time} - {self.group_meeting_end_time}"
             else:
                 day_label.text = f"This {dow}, {self.group_meeting_start_time} - {self.group_meeting_end_time}"
-            day_label.text_color = [1, 1, 1, 1]
+            day_label.text_color = [0, 0, 0, 1]
             self.ids.game_group_days_and_times.add_widget(day_label)
 
             meeting_type = MDLabel()

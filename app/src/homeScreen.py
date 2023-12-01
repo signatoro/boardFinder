@@ -1,8 +1,11 @@
 from datetime import time, datetime, timedelta
 
+from kivy.app import App
 from kivy.metrics import dp
 from kivy.clock import Clock
+from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.popup import Popup
+from kivymd.uix.chip import MDChip
 from kivymd.uix.label import MDLabel
 from kivymd.uix.tab import MDTabsBase
 from kivy.uix.screenmanager import Screen
@@ -17,6 +20,7 @@ from src.localEventCard import LocalEventCard
 from src.groupCard import GroupCard
 
 from app.src import createGroup
+from app.src.gameGroupScreen import GameGroupScreen
 
 
 class Tab(MDFloatLayout, MDTabsBase):
@@ -32,15 +36,19 @@ class HomeScreen(Screen):
 
     days = []
 
+    successful_card_delete_popup = None
+
+    dummy_group_data_1 = None
+
     def __init__(self, **kwargs):
         
         # self.local_event_l: list = []
         super(HomeScreen, self).__init__(**kwargs)
         self.days = [day.lower() for day in createGroup.days]
+        self.generate_one_game_group()  # TODO: Delete for testing
         self.add_dummy_cards_to_group_list() # TODO: delete eventually
         self.add_dummy_local_events_to_list() # TODO: delete eventually
-
-        
+        self.successful_card_delete_popup = SuccessPopup(self, "delete card")
 
     def on_enter(self, *args):
         Clock.schedule_once(self.load_depends)
@@ -60,23 +68,87 @@ class HomeScreen(Screen):
         self.load_local_events()
         self.load_group_cards()
 
-    def add_dummy_cards_to_group_list(self):
-        group_card_1 = GroupCard(
+    def generate_one_game_group(self):
+        '''
+        "board_game_list": [str]
+        "group_image": ""
+        "group_title": ""
+        "group_general_description": ""
+        "group_additional_description": ""
+        "group_mtg_day_and_recurring_info": {"dow": recurring(bool)}
+        "group_mtg_start_time": ""
+        "group_mtg_end_time": ""
+        "group_mtg_location": ""
+        "group_max_players": ""
+        "group_host_fname": ""
+        "group_host_lname": ""
+        "group_host_email": ""
+        "group_host_phone_num": ""
+        "group_tags": [chip]
+        "new_group": bool
+        "owner": bool
+        '''
+        print("creating fake game group data")
+        tags_list = []
+        for i in range(3):
+            chip = MDChip(
+                text=f"tag {i}",
+                text_color=(0, 0, 0, 1),
+            )
+            chip.md_bg_color = "teal"
+            tags_list.append(chip)
+
+        game_data = {
+            "board_game_list": ["catan", "monopoly"],
+            "group_image": "images/piplup.jpg",
+            "group_title": "test group",
+            "group_general_description": "Come have a grand ol' time with your boi, chef Rish",
+            "group_additional_description": "this is addy info",
+            "group_mtg_day_and_recurring_info": {"Saturday": True},
+            "group_mtg_start_time": "4:00:00 PM",
+            "group_mtg_end_time": "8:00:00 PM",
+            "group_mtg_location": "BPD",
+            "group_max_players": "8",
+            "group_host_fname": "alice",
+            "group_host_lname": "bobol",
+            "group_host_email": "bobol.alice@gmail.com",
+            "group_host_phone_num": "911-991-1000",
+            "group_tags": tags_list,
+            "new_group": False,
+            "owner": False,
+        }
+        game_group_1 = GameGroupScreen()
+        game_group_1.load_depends(game_data)
+
+        dow = ""
+        for key in game_group_1.group_mtg_day_and_recurring_info.keys():
+            dow = key
+        next_date_of_meeting = self.get_updated_date_of_next_meeting(dow)
+        session_length = self.get_hours_between_times(game_group_1.group_meeting_start_time,
+                                                      game_group_1.group_meeting_end_time)
+
+        created_group_card = GroupCard(
             parent=self,
-            title="Rishav's Group",
-            description="Come have a grand ol' time with your boi, chef Rish",
-            user_status="Request Pending",
-            month='12',
-            day='4',
-            time="1:30 pm",
-            location="Library, Boston MA",
-            image_path='images/celebi.png',
-            session_length="4 - 6 Hrs",
-            participant='1/4 Attending',
+            game_group=game_group_1,
+            title=game_group_1.group_title,
+            description=game_group_1.group_general_description,
+            user_status="Open To New Members",
+            month=str(next_date_of_meeting.month),
+            day=str(next_date_of_meeting.day),
+            time=f"{game_group_1.group_meeting_start_time} - {game_group_1.group_meeting_end_time}",
+            location=game_group_1.group_meeting_location,
+            image_path=game_group_1.group_image,
+            session_length=str(session_length),
+            participant=f'1/{game_group_1.group_max_players} Attending',
         )
 
+        self.group_cards.insert(0, created_group_card)
+
+
+    def add_dummy_cards_to_group_list(self):
         group_card_2 = GroupCard(
             parent=self,
+            game_group=None,  # Dummy Group Card
             title="Scott's Group",
             description="By the end of it we might hate each other, but boy will we have fun!",
             user_status="Request Pending",
@@ -91,6 +163,7 @@ class HomeScreen(Screen):
 
         group_card_3 = GroupCard(
             parent=self,
+            game_group=None,  # Dummy Group Card
             title="Matty's Group",
             description="We give free stuff!! Please come! Free food, water, new dice set!!! ~Join now~",
             user_status="Request Pending",
@@ -103,7 +176,6 @@ class HomeScreen(Screen):
             participant='3/6 Attending',
         )
 
-        self.group_cards.append(group_card_1)
         self.group_cards.append(group_card_2)
         self.group_cards.append(group_card_3)
 
@@ -156,6 +228,10 @@ class HomeScreen(Screen):
             # event.add_parent(self)
             self.ids.local_event_carou.add_widget(event)
 
+    def remove_group_card_and_refresh(self, group):
+        self.group_cards.remove(group)
+        self.successful_card_delete_popup.open()
+
     def get_updated_date_of_next_meeting(self, next_dow):
         current_date = datetime.now()
 
@@ -190,20 +266,18 @@ class HomeScreen(Screen):
 
         created_group_card = GroupCard(
             parent=self,
+            game_group=game_group_screen_info,
             title=game_group_screen_info.group_title,
             description=game_group_screen_info.group_general_description,
             user_status="Open To New Members",
             month=str(next_date_of_meeting.month),
-            day=str(next_date_of_meeting.day),
+            day=str(int(next_date_of_meeting.day)),
             time=f"{game_group_screen_info.group_meeting_start_time} - {game_group_screen_info.group_meeting_end_time}",
             location=game_group_screen_info.group_meeting_location,
             image_path=game_group_screen_info.group_image,
             session_length=str(session_length),
             participant=f'1/{game_group_screen_info.group_max_players} Attending',
         )
-
-        print(f"create group card title: {created_group_card.title}")
-        print(f"create group card description: {created_group_card.description}")
 
         self.group_cards.insert(0, created_group_card)
         self.load_group_cards()
@@ -262,3 +336,32 @@ class RedirectSitePopup(Popup):
 
     def on_no(self, instance):
         self.dismiss()
+
+
+class SuccessPopup(Popup):
+    type_response = ""
+    def __init__(self, parent, type, **kwargs):
+        super(SuccessPopup, self).__init__(**kwargs)
+        self.class_parent = parent
+        self.popup_type = type
+        self.set_type_response(self.popup_type)
+        self.title = f"Success!!!"
+        self.size_hint_y = 0.5
+        self.content = MDBoxLayout(orientation="vertical", spacing=dp(10), padding=dp(10))
+        popup_label = MDLabel(
+            text=self.type_response,
+            theme_text_color="Custom", text_color=(1, 1, 1, 1)
+        )
+        self.content.add_widget(popup_label)
+        self.buttons_layout = AnchorLayout(anchor_x='center', anchor_y='bottom')
+        self.buttons_layout.add_widget(MDRaisedButton(text="Ok", on_release=self.on_ok))
+        self.content.add_widget(self.buttons_layout)
+
+    def set_type_response(self, popup_type):
+        if popup_type == "delete card":
+            self.type_response = "You successfully deleted the group!"
+
+
+    def on_ok(self, instance):
+        self.dismiss()
+        self.class_parent.load_group_cards()

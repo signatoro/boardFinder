@@ -133,7 +133,7 @@
                     text_color: [1,1,1,1]  # Set text color to the primary color
                     
                     # Redirect to another website
-                    on_release: # Redirect to page
+                    on_release: root.open_game_group_screen()
                 
                 MDFillRoundFlatIconButton:
                     text: "Leave Group"
@@ -146,5 +146,5 @@
                     # theme_text_color: "Custom"
                     text_color: [1,1,1,1]  # Set text color to the primary color
                     
-                    # Redirect to another website
-                    on_release: # Redirect to page
+                    # Create DeleteCardPopup
+                    on_release: root.open_delete_card_popup()

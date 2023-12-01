@@ -28,6 +28,7 @@ class MyApp(MDApp):
     lastResize = 0
     searched_games = []
     returned_games_to_display = []
+    groups_list = []
     top_bars = []
 
     signed_in = False
@@ -55,7 +56,6 @@ class MyApp(MDApp):
 
     def change_screen(self, screen_name, direction='left', mode="", load_deps=None):
         # Get the screen manager from the kv file
-        #screen_manager = self.root.ids['screen_manager']
         # print(direction, mode)
         # If going left, change the transition. Else make left the default
         if direction == 'left':
@@ -67,9 +67,15 @@ class MyApp(MDApp):
             self.main_screen_manager.current = screen_name
             return
 
-        if load_deps: 
-            self.main_screen_manager.get_screen(screen_name).load_depends(load_deps)
-
+        if load_deps:
+            if self.main_screen_manager.current_screen.name == 'home_screen' and screen_name == 'game_group_screen':
+                # rendering already published group from group card
+                self.main_screen_manager.get_screen(screen_name).load_screen_data(load_deps)
+                print("called load_screen_data")
+            elif self.main_screen_manager.current_screen.name == 'create_group_screen' and screen_name == 'game_group_screen':
+                # rendering review of group host created
+                self.main_screen_manager.get_screen(screen_name).load_depends(load_deps)
+                print("called load depends")
 
         self.main_screen_manager.transition = SlideTransition(direction=direction)  # mode=mode)
 
@@ -102,6 +108,12 @@ class MyApp(MDApp):
     def add_top_bar(self, bar):
         self.top_bars.append(bar)
         bar.update_actions()
+
+    def add_group(self, group):
+        self.groups_list.append(group)
+
+    def remove_group(self, group):
+        self.groups_list.remove(group)
 
 
 if __name__ == "__main__":
