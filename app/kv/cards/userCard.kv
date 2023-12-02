@@ -1,0 +1,48 @@
+<UserCard>:
+    orientation: "vertical"
+    size_hint: None, None
+    size: "90dp", "110dp"
+    radius: ["12dp"]
+
+    # Apply elevation for shadow
+    elevation: 3
+
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [12, ]
+
+        # black border
+        #Color:
+        #    rgba: 0, 0, 0, 1
+        #Line:
+        #    width: dp(2)
+        #    rounded_rectangle: [self.x, self.y, self.width, self.height, 12, ]
+
+    AsyncImage:
+        id: avatar_image
+        size_hint_y: None
+        height: "60dp"
+        source: root.avatar_path
+        padding: [dp(5), 0, dp(10), 0]
+
+    MDLabel:
+        text: root.get_first_name()
+        font_style: "Body1"
+        theme_text_color: "Custom"
+        text_color: 0, 0, 0, 1
+        size_hint_y: None
+        halign: "center"
+        height: self.texture_size[1]
+
+    MDLabel:
+        text: root.member_type
+        font_style: "Button"
+        theme_text_color: "Custom"
+        text_color: 1, 0.843, 0, 1
+        halign: "center"
+        size_hint_y: None
+        height: self.texture_size[1]

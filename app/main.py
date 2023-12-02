@@ -71,11 +71,9 @@ class MyApp(MDApp):
             if self.main_screen_manager.current_screen.name == 'home_screen' and screen_name == 'game_group_screen':
                 # rendering already published group from group card
                 self.main_screen_manager.get_screen(screen_name).load_screen_data(load_deps)
-                print("called load_screen_data")
             elif self.main_screen_manager.current_screen.name == 'create_group_screen' and screen_name == 'game_group_screen':
                 # rendering review of group host created
                 self.main_screen_manager.get_screen(screen_name).load_depends(load_deps)
-                print("called load depends")
 
         self.main_screen_manager.transition = SlideTransition(direction=direction)  # mode=mode)
 

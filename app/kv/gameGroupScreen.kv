@@ -1,4 +1,4 @@
-
+#:include kv/cards/userCard.kv
 
 <GameGroupScreen>:
     name: 'game_group_screen'
@@ -89,7 +89,6 @@
                     orientation: 'lr-tb'
                     spacing: dp(10)
                     adaptive_height: True
-
 
                 # host info
                 MDBoxLayout:
@@ -184,10 +183,11 @@
                         size_hint_y: None
 
                         # meet days and times
-                        MDStackLayout:
+                        MDBoxLayout:
+                            orientation: "vertical"
                             id: game_group_days_and_times
-                            orientation: 'lr-tb'
-                            spacing: dp(10)
+                            height: self.minimum_height
+                            #adaptive_height: True
 
                         # meet location
                         MDLabel:
@@ -195,18 +195,18 @@
                             text: f"Location: {root.group_meeting_location}"
                             color: [.2, .2, .2, 1]
                             font_size: 24
+                            size_hint_x: 1
                             size_hint_y: None
                             height: self.texture_size[1]
-                            text_size: self.width, None
+                            #text_size: self.width, None
                             halign: "left"
 
                         # meet board games
                         MDStackLayout:
                             id: game_group_board_games
                             orientation: 'lr-tb'
-                            md_bg_color: [.9, .9, .9, .5]
                             spacing: dp(5)
-                            padding: [15, 10, 0, 0]
+                            #padding: [15, 10, 0, 0]
                             halign: "left"
 
 
@@ -216,9 +216,10 @@
                     orientation: "vertical"
                     padding: [20, 0, 20, 50]
                     size_hint: 1, None
-                    height: self.minimum_height
+                    height: self.minimum_height + dp(100)
                     radius: 25
                     md_bg_color: app.theme_cls.primary_color
+                    spacing: dp(10)
 
                     # users attending header
                     MDLabel:
@@ -226,20 +227,18 @@
                         radius: 25
                         text: "Users Attending"
                         font_style: "H4"
-                        pos_hint: {"center_x": 0.5, "center_y": 1}
                         theme_text_color: "Custom"
                         text_color: 1, 1, 1, 1  # White text color
                         md_bg_color: app.theme_cls.primary_color  # Use the primary color as the outline color
                         size_hint_y: None
+                        halign: "center"
                         height: self.texture_size[1]  # Adjust the size based on text size
 
                     # users attending list
-                    MDStackLayout:
-                        orientation: 'lr-tb'
-                        md_bg_color: [.9, .9, .9, .5]
-                        spacing: dp(5)
-                        padding: [15, 10, 0, 0]
+                    MDBoxLayout:
                         id: game_group_users_list
+                        orientation: 'horizontal'
+                        spacing: dp(5)
 
 
                 # looking for players... label

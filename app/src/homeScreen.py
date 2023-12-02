@@ -88,7 +88,6 @@ class HomeScreen(Screen):
         "new_group": bool
         "owner": bool
         '''
-        print("creating fake game group data")
         tags_list = []
         for i in range(3):
             chip = MDChip(

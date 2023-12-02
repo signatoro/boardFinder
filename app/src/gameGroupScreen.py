@@ -10,6 +10,7 @@ from kivymd.uix.button import MDRaisedButton
 from kivymd.uix.chip import MDChip
 from kivymd.uix.label import MDLabel
 
+from src.userCard import UserCard
 
 class SeparatorLine(Widget):
     pass
@@ -62,6 +63,7 @@ class GameGroupScreen(Screen):
     warning_popup = None
     success_popup = None
     home_screen_reference = None
+    list_of_members = []
 
     def __init__(self, **kwargs):
         super(GameGroupScreen, self).__init__(**kwargs)
@@ -70,38 +72,13 @@ class GameGroupScreen(Screen):
 
 
     def on_pre_enter(self, *args):
-        print("pre-enter in game group called")
         # Access the ScreenManager and get the HomeScreen
         self.home_screen_reference = App.get_running_app().main_screen_manager.get_screen("home_screen")
 
     def delete_group(self):
         App.get_running_app().remove_group(self)
 
-    def render_saved_data(self):
-        self.group_title = self.loaded_data.group_title
-        self.group_image = self.loaded_data.group_image
-        self.group_general_description = self.loaded_data.group_general_description
-        self.group_additional_description = self.loaded_data.group_additional_description
-        self.group_board_games = self.loaded_data.group_board_games
-        self.group_host_fname = self.loaded_data.group_host_fname
-        self.group_host_lname = self.loaded_data.group_host_lname
-        self.group_host_email = self.loaded_data.group_host_email
-        self.group_host_phone_num = self.loaded_data.group_host_phone_num
-        self.group_tags = self.loaded_data.group_tags
-        self.group_max_players = self.loaded_data.group_max_players
-        self.group_meeting_location = self.loaded_data.group_meeting_location
-        self.group_mtg_day_and_recurring_info = self.loaded_data.group_mtg_day_and_recurring_info
-        self.group_meeting_start_time = self.loaded_data.group_meeting_start_time
-        self.group_meeting_end_time = self.loaded_data.group_meeting_end_time
-        self.add_meeting_days_and_times()
-        self.add_board_games()
-        self.add_host_to_member_list()
-        self.set_looking_for_players()
-        self.render_tags()
-
-
     def load_depends(self, load_deps):
-        print("load depends in game group called")
         self.group_title = load_deps["group_title"]
         self.group_image = load_deps["group_image"]
         self.group_general_description = load_deps["group_general_description"]
@@ -126,9 +103,7 @@ class GameGroupScreen(Screen):
         self.render_tags()
         App.get_running_app().add_group(self)
 
-
     def load_screen_data(self, game_group_data):
-        print("load screen data in game group called")
         self.group_title = game_group_data.group_title
         self.group_image = game_group_data.group_image
         self.group_general_description = game_group_data.group_general_description
@@ -169,15 +144,6 @@ class GameGroupScreen(Screen):
             day_label.text_color = [0, 0, 0, 1]
             self.ids.game_group_days_and_times.add_widget(day_label)
 
-            meeting_type = MDLabel()
-            if recurring:
-                meeting_type.text = "RECURRING"
-            else:
-                meeting_type.text = "ONE-TIME"
-            meeting_type.text_color = (1, 1, 1, 1)
-            meeting_type.md_bg_color = App.get_running_app().theme_cls.primary_color
-            self.ids.game_group_days_and_times.add_widget(meeting_type)
-
     def add_board_games(self):
         self.ids.game_group_board_games.clear_widgets()
 
@@ -193,23 +159,24 @@ class GameGroupScreen(Screen):
     def add_host_to_member_list(self):
         self.ids.game_group_users_list.clear_widgets()
 
-        host_layout = MDBoxLayout(orientation="horizontal", adaptive_width=True)
+        '''
+        UserCard: 
+            parent: Screen
+            first_name: str
+            last_name: str
+            avatar_path: str
+            member_type: str
+        '''
 
-        # Name Label
-        name_label = MDLabel(
-            text=f"{self.group_host_fname} {self.group_host_lname}",
-            halign="center"
+        host_card = UserCard(
+            parent=self,
+            first_name=self.group_host_fname,
+            last_name=self.group_host_lname,
+            avatar_path="images/avatar_stock.png",
+            member_type="Host",
         )
-        host_layout.add_widget(name_label)
-
-        # Host/Member Label
-        status_label = MDLabel(
-            text="Host",
-            halign="center"
-        )
-        host_layout.add_widget(status_label)
-
-        self.ids.game_group_users_list.add_widget(host_layout)
+        self.ids.game_group_users_list.add_widget(host_card)
+        self.list_of_members.append(host_card)
 
     def set_looking_for_players(self):
         self.ids.game_group_max_players.text = f"Looking for {int(self.group_max_players) - 1} / {self.group_max_players} more players"
