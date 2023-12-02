@@ -123,6 +123,7 @@
                 size_hint_y: None
                 spacing: 5
                 padding: [10, 10, 10, 10]
+                on_text: root.set_meeting_location(self.text)
 
             MDLabel:
                 text: 'Max Players'
@@ -174,7 +175,7 @@
                     MDFillRoundFlatIconButton:
                         text: "Prev Pref"
                         icon: "arrow-left"
-                        on_release: root.class_parent.load_next_pref_page(1, "right")
+                        on_release: root.add_data_to_final(1, "right")
 
                 AnchorLayout:
                     anchor_x: 'right'
@@ -184,7 +185,7 @@
                     MDFillRoundFlatIconButton:
                         text: "Next Pref"
                         icon: "arrow-right"
-                        on_release: root.class_parent.load_next_pref_page(3)
+                        on_release: root.add_data_to_final(3)
 
 
 

@@ -8,7 +8,6 @@
 
         MDBoxLayout:
             orientation: "vertical"
-            #spacing: 10
             size_hint_y: None
             adaptive_height: True
             padding: [25, 10, 25, 10]
@@ -54,7 +53,7 @@
                     spacing: 5
 
             MDLabel:
-                text: 'Group Name'
+                text: 'Group Title'
                 underline: "true"
                 font_style: "H6"
                 text_color: "teal"
@@ -63,7 +62,7 @@
                 padding: [0, dp(20), 0, 0]
 
             MDTextField:
-                id: group_name
+                id: group_title
                 hint_text: "Ex: Susie's Gamers"
                 mode: "rectangle"
                 multiline: False
@@ -71,6 +70,7 @@
                 line_color_normal: "teal"
                 required: True
                 size_hint_y: None
+                on_text: root.set_group_title(self.text)
 
             MDLabel:
                 text: 'General Description'
@@ -110,7 +110,7 @@
                     MDFillRoundFlatIconButton:
                         text: "Prev Pref"
                         icon: "arrow-left"
-                        on_release: root.class_parent.load_next_pref_page(0, "right")
+                        on_release: root.add_data_to_final(0, "right")
 
                 AnchorLayout:
                     anchor_x: 'right'
@@ -120,7 +120,7 @@
                     MDFillRoundFlatIconButton:
                         text: "Next Pref"
                         icon: "arrow-right"
-                        on_release: root.class_parent.load_next_pref_page(2)
+                        on_release: root.add_data_to_final(2)
 
 
 <PopupImageSelection>:

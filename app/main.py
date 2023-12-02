@@ -13,6 +13,7 @@ from src.gameCard import GameCard
 from src.topBar import TopBar
 from src.learnGameScreen import LearnGameScreen
 from src.boardGameScreen import BoardGameScreen
+from src.gameGroupScreen import GameGroupScreen
 
 
 import time
@@ -27,15 +28,16 @@ class MyApp(MDApp):
     lastResize = 0
     searched_games = []
     returned_games_to_display = []
+    groups_list = []
     top_bars = []
 
     signed_in = False
     username = None
+    main_screen_manager = None
 
     def build(self):
         self.signed_in = False
         self.username = None
-
         Window.minimum_width = 400
         Window.minimum_height = 600
         # self.lastResize = time.time()-2
@@ -46,9 +48,14 @@ class MyApp(MDApp):
         # Window.bind(on_resize=self.force_window_ratio)
         return Builder.load_file("kv/main.kv")  # GUI
 
+    def on_start(self):
+        self.main_screen_manager = self.root.ids['screen_manager']
+
+    def get_screen_manager(self):
+        return self.root.ids['screen_manager']
+
     def change_screen(self, screen_name, direction='left', mode="", load_deps=None):
         # Get the screen manager from the kv file
-        screen_manager = self.root.ids['screen_manager']
         # print(direction, mode)
         # If going left, change the transition. Else make left the default
         if direction == 'left':
@@ -56,17 +63,21 @@ class MyApp(MDApp):
         elif direction == 'right':
             mode = 'pop'
         elif direction == "None":
-            screen_manager.transition = NoTransition()
-            screen_manager.current = screen_name
+            self.main_screen_manager.transition = NoTransition()
+            self.main_screen_manager.current = screen_name
             return
 
-        if load_deps: 
-            screen_manager.get_screen(screen_name).load_depends(load_deps)
+        if load_deps:
+            if self.main_screen_manager.current_screen.name == 'home_screen' and screen_name == 'game_group_screen':
+                # rendering already published group from group card
+                self.main_screen_manager.get_screen(screen_name).load_screen_data(load_deps)
+            elif self.main_screen_manager.current_screen.name == 'create_group_screen' and screen_name == 'game_group_screen':
+                # rendering review of group host created
+                self.main_screen_manager.get_screen(screen_name).load_depends(load_deps)
 
+        self.main_screen_manager.transition = SlideTransition(direction=direction)  # mode=mode)
 
-        screen_manager.transition = SlideTransition(direction=direction)  # mode=mode)
-
-        screen_manager.current = screen_name
+        self.main_screen_manager.current = screen_name
 
         for bar in self.top_bars:
             bar.update_actions()
@@ -85,6 +96,7 @@ class MyApp(MDApp):
             return ""
         return self.root.ids['screen_manager'].current
 
+
     def get_signed_in(self):
         return self.signed_in
 
@@ -94,6 +106,12 @@ class MyApp(MDApp):
     def add_top_bar(self, bar):
         self.top_bars.append(bar)
         bar.update_actions()
+
+    def add_group(self, group):
+        self.groups_list.append(group)
+
+    def remove_group(self, group):
+        self.groups_list.remove(group)
 
 
 if __name__ == "__main__":
