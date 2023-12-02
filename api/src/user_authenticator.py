@@ -82,10 +82,10 @@ class Authenticator(object):
             logging.error(f"An error occurred while getting user: {username}. Error: {ex}")
             raise Exception(f"An error occurred while getting user: {username}. Error")
     
+    
     async def authenticate_user(cls, username: str, plain_pass: str):
 
         user = await cls.get_user(username=username)
-        
 
         if not user:
             return False

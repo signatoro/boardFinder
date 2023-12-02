@@ -14,8 +14,8 @@ from api.src.constance import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
 class APIEndpoints():
 
     router: APIRouter = APIRouter(
-        prefix='/boards',
-        tags=['Board Apps']
+        prefix='',
+        tags=[]
     )
 
 
@@ -23,7 +23,7 @@ class APIEndpoints():
         self.controller = controller
 
         self.router.add_api_route("/", self.get_website, methods=["GET"])
-        self.router.add_api_route("/login", self.login_user, methods=["POST"], response_model=Token)
+        self.router.add_api_route("/api/auth/token", self.login_user, methods=["POST"], response_model=Token)
         self.router.add_api_route("/user", self.get_users, methods=["GET"])
         self.router.add_api_route("/user", self.add_user, methods=["POST"])
         # self.router.add_api_route("/user/me", self.read_users_me, methods=["GET"], response_model=User)
@@ -46,10 +46,10 @@ class APIEndpoints():
 
     async def add_user(self, user: User, password: str):
         return await self.controller.create_user(user, password)
-        pass
+        
 
     async def get_users(self):
-        mes = asyncio.run(self.controller.get_users())
+        mes = await self.controller.get_users()
 
         print(mes)
 

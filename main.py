@@ -8,15 +8,18 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from fastapi.middleware.cors import CORSMiddleware
 
 
+
 from api.src.view import APIEndpoints
 from api.src.controller import Controller
+from api.src.collects import DB_Collections
+from api.src.api.userEndpoints import UserEndpoints
 from api.src.api.boardGameEndpoints import BoardGameEndpoints
 from api.src.api.localEventsEndpoints import LocalEventEndpoints
 
 
-MONGO_ADDRESS = '10.110.185.117'
-MONGO_PORT = 27017
-MONGO_DB_NAME = 'boardFinder_db'
+# MONGO_ADDRESS = '10.110.185.117'
+# MONGO_PORT = 27017
+# MONGO_DB_NAME = 'boardFinder_db'
 
 
 
@@ -54,16 +57,20 @@ def run_program():
         allow_headers=["*"],
     )
 
-    client = AsyncIOMotorClient(host=MONGO_ADDRESS, port=MONGO_PORT)
-    db = client[MONGO_DB_NAME]
+    # client = AsyncIOMotorClient(host=MONGO_ADDRESS, port=MONGO_PORT)
+    # db = client[MONGO_DB_NAME]
 
-    controller = Controller(client, db)
+    db_collect = DB_Collections()
+    controller = Controller(DB_Collections.client, DB_Collections.db)
 
     board_game_endpoints = BoardGameEndpoints(controller)
     app.include_router(board_game_endpoints.router)
     
     api_endpoints = APIEndpoints(controller)
     app.include_router(api_endpoints.router)
+
+    user_endpoints = UserEndpoints(controller)
+    app.include_router(user_endpoints.router)
 
     logging.debug("Started connection to db")
 

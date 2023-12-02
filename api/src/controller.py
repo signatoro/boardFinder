@@ -93,14 +93,13 @@ class Controller():
         token = Token(access_token=access_token,token_type='bearer')
         
         return token
-
         
 
     async def get_users(self) -> dict:
         users = self.users_collection.find().to_list(length=None)
 
         return {'user': users}
-        pass
+
 
     async def create_user(self, user: User, password: str):
         try:
@@ -112,9 +111,8 @@ class Controller():
         except Exception as ex:
             return {"Message": "Failed to create the user somehow", "Error": f"{ex}"}
         
-    async def get_board_games(self):
 
-        logging.debug("Here 1")
+    async def get_board_games(self):
 
         count = await self.boardgames_collection.count_documents({})
         
