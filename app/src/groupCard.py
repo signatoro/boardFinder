@@ -40,6 +40,7 @@ class GroupCard(MDCard):
     user_status = StringProperty()
     month = NumericProperty()
     day = NumericProperty()
+    dow = StringProperty()
     time = StringProperty()
     location = StringProperty()
 
@@ -65,9 +66,6 @@ class GroupCard(MDCard):
 
     def get_month(self, month_n: int):
         return MONTHS[month_n]
-    
-    def get_day_of_week(self, day_n:int):
-        return DAYS_OF_WEEK[day_n]
 
     def open_delete_card_popup(self):
         self.delete_group_popup.open()
