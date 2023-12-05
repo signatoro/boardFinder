@@ -134,10 +134,11 @@ class HomeScreen(Screen):
             user_status="Open To New Members",
             month=str(next_date_of_meeting.month),
             day=str(next_date_of_meeting.day),
+            dow=dow,
             time=f"{game_group_1.group_meeting_start_time} - {game_group_1.group_meeting_end_time}",
             location=game_group_1.group_meeting_location,
             image_path=game_group_1.group_image,
-            session_length=str(session_length),
+            session_length=f"{str(int(session_length))} Hrs",
             participant=f'1/{game_group_1.group_max_players} Attending',
         )
 
@@ -153,6 +154,7 @@ class HomeScreen(Screen):
             user_status="Request Pending",
             month='2',
             day='5',
+            dow="Friday",
             time="5:30 pm",
             location="Library, Boston MA",
             image_path='images/pikachu.jpg',
@@ -168,6 +170,7 @@ class HomeScreen(Screen):
             user_status="Request Pending",
             month='1',
             day='0',
+            dow="Sunday",
             time="1:30 pm",
             location="Library, Boston MA",
             image_path='images/piplup.jpg',
@@ -271,10 +274,11 @@ class HomeScreen(Screen):
             user_status="Open To New Members",
             month=str(next_date_of_meeting.month),
             day=str(int(next_date_of_meeting.day)),
+            dow=dow,
             time=f"{game_group_screen_info.group_meeting_start_time} - {game_group_screen_info.group_meeting_end_time}",
             location=game_group_screen_info.group_meeting_location,
             image_path=game_group_screen_info.group_image,
-            session_length=str(session_length),
+            session_length=f"{str(int(session_length))} Hrs",
             participant=f'1/{game_group_screen_info.group_max_players} Attending',
         )
 
