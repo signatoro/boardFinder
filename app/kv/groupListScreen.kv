@@ -1,0 +1,53 @@
+#:include kv/cards/gameCard.kv
+
+<GroupListScreen>
+    name: "group_list_screen"
+
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: 10
+
+        TopBar:
+            id: topBar
+
+        MDLabel:
+            text: 'Learn A Game'
+            pos_hint: {"center_x":.5, "center_y": 0.9}
+            underline: "true"
+            font_style: "H4"
+            size_hint_y: None
+            height: self.texture_size[1] + 5  # Set the height based on text size
+        
+        # # search board game text field
+        MDTextField:
+            id: search_board_game
+            # size_hint_y: 0.5
+            pos_hint:{ 'left':0 , 'top': .2}
+            hint_text: 'Search Board Game'
+            hint_text_color: 1,1,1,1
+            icon_left: 'magnify'
+            mode: "fill"
+            # helper_text_mode: "persistent"
+            # helper_text: "Search Board Game"
+            line_color: [1,1,1,1]
+            color_normal: [1,1,1,1]
+            font_size: .35 * self.height
+            active_line: False
+            multiline: False
+            on_text: root.search_games(self.text)
+
+        MDScrollView:
+            size_hint: 1, None
+            height: game_search_results.height
+
+            MDList:
+                id: game_search_results
+
+        # List of Game Cards
+        MDScrollView:
+            MDBoxLayout:
+                spacing: 7
+                orientation: "vertical"
+                padding: 2
+                adaptive_height: True
+                id: game_results

@@ -19,8 +19,8 @@ from kivy.properties import StringProperty
 from src.localEventCard import LocalEventCard
 from src.groupCard import GroupCard
 
-from app.src import createGroup
-from app.src.gameGroupScreen import GameGroupScreen
+from src import createGroup
+from src.gameGroupScreen import GameGroupScreen
 
 
 class Tab(MDFloatLayout, MDTabsBase):
