@@ -29,7 +29,7 @@
                 #text_size: self.size
                 text: 'Find a \nGroup'
                 halign: 'center'
-                on_release: app.change_screen("find_group_screen")
+                on_release: root.try_find_group()
             MDRectangleFlatButton:
                 ripple_scale: 2
                 size_hint: (1, 1)
@@ -47,7 +47,7 @@
                 #text_size: self.size
                 text: 'Create a \nGroup'
                 halign: 'center'
-                on_release: app.change_screen("create_group_screen")
+                on_release: root.try_create_group()
 
         
         MDBoxLayout:

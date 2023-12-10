@@ -15,7 +15,6 @@ from src.learnGameScreen import LearnGameScreen
 from src.boardGameScreen import BoardGameScreen
 from src.gameGroupScreen import GameGroupScreen
 
-
 import time
 from kivy.clock import Clock
 
@@ -24,13 +23,17 @@ Clock.max_iteration = 60
 
 # The main application
 class MyApp(MDApp):
-
     lastResize = 0
     searched_games = []
     returned_games_to_display = []
     groups_list = []
     top_bars = []
-
+    # THIS INFORMATION IS FAKE AND NOT ANYONE'S REAL PERSONAL DATA
+    # All passwords and emails input to this application are NOT stored anywhere
+    # Once the app is closed all user inputted information is discarded
+    accounts = {"Rishav": "123123",
+                "Johnny": "ratLover",
+                "Chloe": "password"}
     signed_in = False
     username = None
     main_screen_manager = None
@@ -38,6 +41,9 @@ class MyApp(MDApp):
     def build(self):
         self.signed_in = False
         self.username = None
+        self.accounts = {"Rishav": "123123",
+                         "Johnny": "ratLover",
+                         "Chloe": "password"}
         Window.minimum_width = 400
         Window.minimum_height = 600
         # self.lastResize = time.time()-2
@@ -86,7 +92,7 @@ class MyApp(MDApp):
         if self.lastResize + 0.1 > time.time():
             return
         self.lastResize = time.time()
-        Window.size_hint = ((2/3), 1)
+        Window.size_hint = ((2 / 3), 1)
         averageSize = (Window.size[0] + Window.size[1]) / 2
         Window.size = (averageSize * 2 * 2 / 5, averageSize * 2 * 3 / 5)
         return True
@@ -96,12 +102,23 @@ class MyApp(MDApp):
             return ""
         return self.root.ids['screen_manager'].current
 
-
     def get_signed_in(self):
         return self.signed_in
 
     def set_signed_in(self, signed_in):
         self.signed_in = signed_in
+
+    def get_username(self):
+        return self.username
+
+    def get_accounts(self):
+        return self.accounts
+
+    def get_username_password_match(self, username, password):
+        return username in self.accounts and self.accounts[username] == password
+
+    def create_account(self, username, password):
+        self.accounts[username] = password
 
     def add_top_bar(self, bar):
         self.top_bars.append(bar)
@@ -116,39 +133,3 @@ class MyApp(MDApp):
 
 if __name__ == "__main__":
     MyApp().run()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
