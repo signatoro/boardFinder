@@ -184,36 +184,38 @@ class HomeScreen(Screen):
     def add_dummy_local_events_to_list(self):
         local_event1 = LocalEventCard(
             parent=self,
-            title="Swords and Coffee",
-            event_link="link.url.here",
-            description="The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
-            location_type="In Person",
-            month='12',
-            day='4',
-            time="1:30 pm",
-           location="Library, Boston MA"
-        )
-        local_event2 = LocalEventCard(
-            parent=self,
-            title="Cards and Coffee",
-            event_link="link.url.here",
-            description="The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
+            title="Rolling Dice Delight",
+            event_link="rolling_dice_delight.eventbrite.com",
+            description="Join us for an afternoon of strategic board gaming and fun! Bring your favorite board game or try one of ours. All skill levels welcome!",
             location_type="In Person",
             month='12',
             day='15',
-            time="3:45 pm",
-            location="Library, Boston MA"
+            time="2:00 pm",
+            location="Boston Library, Boston, MA"
         )
-        local_event3 = LocalEventCard(
+
+        local_event2 = LocalEventCard(
             parent=self,
-            title="Magic The Gathering: New Release",
-            event_link="link.url.here",
-            description="The error message ImportError: cannot import name TimeProperty means that Kivycannot find the TimeProperty class in the kivy.properties module. This can happen for a few reasons:",
+            title="Cards & Conversations",
+            event_link="cards_and_conversations.meetup.com",
+            description="Unplug and unwind with a night of card games and engaging conversations. Whether you're a seasoned gamer or a newbie, there's a game for everyone!",
             location_type="In Person",
             month='1',
-            day='31',
-            time="5:00 pm",
-            location="Library, Boston MA"
+            day='8',
+            time="7:00 pm",
+            location="Boston Library, Boston, MA"
+        )
+
+        local_event3 = LocalEventCard(
+            parent=self,
+            title="Puzzle Palooza",
+            event_link="puzzle_palooza_tickets.io",
+            description="Calling all puzzle enthusiasts! Test your puzzle-solving skills and enjoy a friendly competition. Prizes for the fastest solving times!",
+            location_type="In Person",
+            month='1',
+            day='20',
+            time="6:30 pm",
+            location="Boston Library, Boston, MA"
         )
 
         self.local_event_l.append(local_event1)

@@ -2,13 +2,13 @@ from kivymd.uix.list import OneLineListItem
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.button import MDFlatButton
 
-from src.groupCard import GroupCard
+from src.groupListCard import GroupListCard
 
 from kivy.lang import Builder
 
 # Builder.load_file('/kv')
 class GroupListScreen(MDScreen):
-    game_card_list = {}
+    group_lists = {}
 
     def on_pre_enter(self, *args):
 
@@ -20,20 +20,20 @@ class GroupListScreen(MDScreen):
 
     def load_depends(self, load_deps=None):
         #TODO call the endpoint to get data
+        self.add_game_card()
         pass
     
 
 
     def add_game_card(self):
-        self.ids.game_results.clear_widgets()
+        self.ids.group_list.clear_widgets()
 
-        group_card_2 = GroupCard(
-            parent=self,
-            game_group=None,  # Dummy Group Card
+        group_card_2 = GroupListCard(
             title="Scott's Group",
             description="By the end of it we might hate each other, but boy will we have fun!",
             user_status="Request Pending",
             month='2',
+            dow='Saturday',
             day='5',
             time="5:30 pm",
             location="Library, Boston MA",
@@ -41,16 +41,16 @@ class GroupListScreen(MDScreen):
             session_length="4 - 6 Hrs",
             participant='1/4 Attending',
         )
+        print ("here 1")
 
-        self.ids.game_results.add_widget(group_card_2)
+        self.ids.group_list.add_widget(group_card_2)
 
-        group_card_3 = GroupCard(
-            parent=self,
-            game_group=None,  # Dummy Group Card
+        group_card_3 = GroupListCard(
             title="Matty's Group",
             description="We give free stuff!! Please come! Free food, water, new dice set!!! ~Join now~",
             user_status="Request Pending",
             month='1',
+            dow='Friday',
             day='0',
             time="1:30 pm",
             location="Library, Boston MA",
@@ -58,7 +58,14 @@ class GroupListScreen(MDScreen):
             session_length="4 - 6 Hrs",
             participant='3/6 Attending',
         )
-        self.ids.game_results.add_widget(group_card_3)
+
+        self.ids.group_list.add_widget(group_card_3)
+
+        self.group_lists["Scott's Group"] = (group_card_2)
+        self.group_lists["Matty's Group"] = (group_card_3)
+
+        print ("here 2")
+
 
         # print("Hello 2, I am Learning the screen")
         # game_card = GameCard(title="Catan")
@@ -87,17 +94,18 @@ class GroupListScreen(MDScreen):
         #    return
 
         # Clear previous search results
+        
         self.ids.search_board_game.clear_widgets()
-        self.ids.game_results.clear_widgets()
+        self.ids.group_list.clear_widgets()
 
         # Filter data based on the search text
-        search_results = [item for item in self.game_card_list.keys() if item.lower().startswith(text.lower())]
+        search_results = [item for item in self.group_lists.keys() if item.lower().startswith(text.lower())]
 
         # Display the filtered results
         for result in search_results:
-            game_card = self.game_card_list[result]
-            game_card.pre_load()
-            self.ids.game_results.add_widget(game_card)
+            game_card = self.group_lists[result]
+            # game_card.pre_load()
+            self.ids.group_list.add_widget(game_card)
 
 
 

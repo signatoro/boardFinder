@@ -1,17 +1,17 @@
-#:include kv/cards/gameCard.kv
+#:include kv/cards/groupListCard.kv
 
-<GroupListScreen>
+<GroupListScreen>:
     name: "group_list_screen"
 
     MDBoxLayout:
         orientation: "vertical"
-        spacing: 10
+        spacing: 15
 
         TopBar:
             id: topBar
 
         MDLabel:
-            text: 'Learn A Game'
+            text: 'Groups'
             pos_hint: {"center_x":.5, "center_y": 0.9}
             underline: "true"
             font_style: "H4"
@@ -50,4 +50,4 @@
                 orientation: "vertical"
                 padding: 2
                 adaptive_height: True
-                id: game_results
+                id: group_list
