@@ -53,17 +53,14 @@ class HomeScreen(Screen):
     def on_enter(self, *args):
         Clock.schedule_once(self.load_depends)
         return super().on_enter(*args)
-    
-    def on_carousel_slide(self, *args):
-        current_index = args[0].index + 1
-        total_index = len(args)-1
-        self.carol_index = f"{current_index}/{total_index}"
-        
 
 
     def load_depends(self, load_deps=None):
         self.ids.local_event_carou.bind(on_slide_complete=self.on_carousel_slide)
         self.ids.group_card_carou.bind(on_slide_complete=self.on_carousel_slide)
+        self.ids.home_tabs.bind(on_tab_switch=self.on_thing_switch)
+        self.ids.tab_local.bind(on_tab_switch=self.on_thing_switch)
+        self.ids.tab_group.bind(on_tab_switch=self.on_thing_switch)
         self.carol_index = "1/3"
         self.load_local_events()
         self.load_group_cards()
@@ -308,6 +305,53 @@ class HomeScreen(Screen):
     def refresh_groups(self):
         # print("Refreshing Groups")
         pass
+
+    def on_back_button(self):
+        print(self.ids.home_tabs.get_current_tab().tab_label_text)
+        tab_id = self.ids.home_tabs.get_current_tab().tab_label_text
+        
+        if tab_id == "Local Events":
+            self.ids.local_event_carou.load_previous()
+        elif tab_id == "My Groups":
+            self.ids.group_card_carou.load_previous()
+    
+    def on_forward_button(self):
+        tab_id = self.ids.home_tabs.get_current_tab().tab_label_text
+        
+        if tab_id == "Local Events":
+            self.ids.local_event_carou.load_next()
+        elif tab_id == "My Groups":
+            self.ids.group_card_carou.load_next()
+
+    
+    def on_thing_switch(self, *args):
+        tab_id = self.ids.home_tabs.get_current_tab().tab_label_text
+
+        current_car = None
+        if tab_id == "Local Events":
+            current_car = self.ids.local_event_carou
+        elif tab_id == "My Groups":
+            current_car = self.ids.group_card_carou
+
+        current_index = current_car.index + 1
+        total_index = len(current_car.slides)
+        self.carol_index = f"{current_index}/{total_index}"
+
+    
+    def on_carousel_slide(self, *args):
+
+        tab_id = self.ids.home_tabs.get_current_tab().tab_label_text
+
+        current_car = None
+        if tab_id == "Local Events":
+            current_car = self.ids.local_event_carou
+        elif tab_id == "My Groups":
+            current_car = self.ids.group_card_carou
+
+        current_index = current_car.index + 1
+        total_index = len(current_car.slides)
+        self.carol_index = f"{current_index}/{total_index}"
+
 
 
 class RedirectSitePopup(Popup):
