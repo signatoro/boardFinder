@@ -72,7 +72,7 @@ class GroupListScreen(MDScreen):
             day='9',
             time="6:00 pm",
             location="Game Haven, Denver CO",
-            image_path='images/strategic_board_games.jpg',
+            image_path='images/celebi.png',
             session_length="2 - 4 Hrs",
             participant='4/6 Attending',
         )
@@ -89,7 +89,7 @@ class GroupListScreen(MDScreen):
             day='17',
             time="2:30 pm",
             location="Game Lounge, Portland OR",
-            image_path='images/dice_masters.jpg',
+            image_path='images/pikachu.jpg',
             session_length="2 - 3 Hrs",
             participant='3/5 Attending',
         )
@@ -106,7 +106,7 @@ class GroupListScreen(MDScreen):
             day='2',
             time="7:00 pm",
             location="Tabletop Tavern, Dallas TX",
-            image_path='images/board_game_enthusiasts.jpg',
+            image_path='images/celebi.png',
             session_length="3 - 5 Hrs",
             participant='6/8 Attending',
         )
@@ -123,7 +123,7 @@ class GroupListScreen(MDScreen):
             day='14',
             time="6:30 pm",
             location="Card Kingdom, Seattle WA",
-            image_path='images/card_game_crew.jpg',
+            image_path='images/piplup.jpg',
             session_length="2 - 3 Hrs",
             participant='5/7 Attending',
         )
@@ -140,7 +140,7 @@ class GroupListScreen(MDScreen):
             day='23',
             time="4:00 pm",
             location="Family Game House, Orlando FL",
-            image_path='images/family_board_gaming.jpg',
+            image_path='images/pikachu.jpg',
             session_length="2 - 4 Hrs",
             participant='4/6 Attending',
         )
@@ -157,7 +157,7 @@ class GroupListScreen(MDScreen):
             day='5',
             time="7:30 pm",
             location="Vintage Game Cafe, Chicago IL",
-            image_path='images/classic_board_games.jpg',
+            image_path='images/piplup.jpg',
             session_length="2 - 3 Hrs",
             participant='7/10 Attending',
         )
