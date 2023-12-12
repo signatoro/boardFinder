@@ -124,6 +124,7 @@
                 spacing: 5
                 padding: [10, 10, 10, 10]
                 on_text: root.set_meeting_location(self.text)
+                on_focus: root.set_meeting_location(self.text)
 
             MDLabel:
                 text: 'Max Players'
@@ -173,7 +174,7 @@
                     padding: [dp(5), 0, 0, dp(10)]
 
                     MDFillRoundFlatIconButton:
-                        text: "Prev Pref"
+                        text: "Previous Preference"
                         icon: "arrow-left"
                         on_release: root.add_data_to_final(1, "right")
 
@@ -183,7 +184,10 @@
                     padding: [0, 0, dp(5), dp(10)]
 
                     MDFillRoundFlatIconButton:
-                        text: "Next Pref"
+                        id: next_pref_button
+                        #disabled: True
+                        #opacity: 0
+                        text: "Next Preference"
                         icon: "arrow-right"
                         on_release: root.add_data_to_final(3)
 
