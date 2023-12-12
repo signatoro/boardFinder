@@ -9,11 +9,13 @@ from src.homeScreen import HomeScreen
 from src.profileScreen import ProfileScreen
 from src.createGroup import CreateGroupScreen
 from src.findGroupScreen import FindGroupScreen
+from src.groupListCard import GroupListCard
 from src.gameCard import GameCard
 from src.topBar import TopBar
 from src.learnGameScreen import LearnGameScreen
 from src.boardGameScreen import BoardGameScreen
 from src.gameGroupScreen import GameGroupScreen
+from src.groupListScreen import GroupListScreen
 
 
 import time

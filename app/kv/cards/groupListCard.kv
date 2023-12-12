@@ -1,0 +1,120 @@
+
+
+<GroupListCard>:
+
+    radius: 36
+    pos_hint: {"center_x": .5, "center_y": .5}
+    size_hint_y: None
+    height: "250dp" 
+    md_bg_color: app.theme_cls.primary_color  
+    on_release: app.change_screen(screen_name="board_game_screen",load_deps=f'{root.title}')
+
+    MDBoxLayout:
+        # radius: 25
+        # height: "175dp" 
+        orientation: 'horizontal'
+        md_bg_color: [.8,.9,.9,1]
+
+        padding: [25,25,25,25]
+
+        # Left Side
+        MDBoxLayout:
+            size_hint_x: 0.35
+            size_hint_y: 1
+            md_bg_color: app.theme_cls.primary_color
+            orientation: 'vertical'
+            padding: [5,50,5,50]
+            spacing: 35
+
+            radius: 25
+
+            AsyncImage:
+                source: root.image_path  
+                size_hint: 1, .75
+            
+
+            # Day and Time
+            MDLabel:
+                text: f"{root.dow},\n {root.time}"
+                font_size: self.width/10
+                # text_size: self.size
+                halign: "center"
+                theme_text_color: "Custom"
+                text_color: "white"
+                size_hint_y: .2
+                # height: self.texture_size[1] + 5
+                
+            # Sessions Length
+            MDLabel:
+                text: f"{root.session_length}"
+                font_size: self.width/10
+                # text_size: self.size
+                halign: "center"
+                theme_text_color: "Custom"
+                text_color: "white"
+                size_hint_y: .3
+                # height: self.texture_size[1] + 5
+
+
+            # Number of Participants
+            MDLabel:
+                text: f"{root.participant}"
+                font_size: self.width/10
+                # text_size: self.size
+                halign: "center"
+                theme_text_color: "Custom"
+                text_color: "white"
+                size_hint_y: .1
+                # height: self.texture_size[1] + 5
+
+        MDBoxLayout:
+            orientation: "vertical"
+            size_hint_x: 0.65
+            size_hint_y: 1
+            radius: 15
+
+            md_bg_color: [.7,.8,.8,1]
+
+            padding: [20, 20, 20, 20]
+
+            # Title
+            MDLabel:
+                text: root.title
+                size_hint_y: None
+                height: self.texture_size[1] + 5
+                font_size: self.width/14
+                underline: True
+                theme_text_color: "Custom"
+                text_color: app.theme_cls.primary_color
+
+            # General Descriptions
+            MDLabel:
+                size_hint_y: 1
+                text: root.description
+                theme_text_color: "Custom"
+                font_size: self.width/20
+                text_size: self.size
+                text_color: app.theme_cls.primary_color
+                valign: 'top'
+                text_color: app.theme_cls.primary_color
+                pos_hint: {"center_x":0.5, "center_y": 0.8}
+                padding: [15,20,15,10]
+
+            MDBoxLayout:
+                orientation: "vertical"
+                size_hint_y: .2
+                spacing: 15
+                # Learn More
+                MDFillRoundFlatIconButton:
+                    text: "Learn More"
+                    text_size: self.size
+                    font_style: "Body1"
+                    size_hint: (.7, .5)
+                    text_size: self.size
+                    pos_hint: {"center_x":0.5, "center_y": 0.5}
+                    # Adjust the size as needed
+                    # theme_text_color: "Custom"
+                    text_color: [1,1,1,1]  # Set text color to the primary color
+                    
+                    # Redirect to another website
+                    on_release: root.open_game_group_screen()
