@@ -1,5 +1,6 @@
 #:include kv/cards/userCard.kv
 
+
 <GameGroupScreen>:
     name: 'game_group_screen'
 
@@ -19,12 +20,27 @@
 
             # Container for whole scrolling container
             MDBoxLayout:
+                id: game_group_screen_container
                 orientation: "vertical"
                 size_hint_y: None
                 size_hint_x: 1
                 adaptive_height: True
                 padding: [dp(10), dp(15), dp(10), dp(15)]
                 spacing: dp(10)
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: None
+                    padding: [0, dp(5), 0, 0]
+
+                    AnchorLayout:
+                        anchor_x: 'left'
+                        anchor_y: 'top'
+                        padding: [dp(5), 0, 0, dp(30)]
+
+                        MDFillRoundFlatIconButton:
+                            text: "Back"
+                            on_release: root.go_to_page_before()
 
                 # group image
                 FitImage:
@@ -254,29 +270,28 @@
 
                 # action buttons
                 MDBoxLayout:
-                    orientation: "horizontal"
+                    id: game_group_action_button_container
+                    orientation: "vertical"
                     size_hint_y: None
                     padding: 0
 
-                    AnchorLayout:
-                        anchor_x: 'left'
-                        anchor_y: 'bottom'
-                        padding: [dp(5), 0, 0, dp(10)]
+                    GameGroupActionButtonsEditAndPublish:
+                        id: game_group_buttons_edit_and_publish
+                        game_group_screen: root
 
-                        MDFillRoundFlatIconButton:
-                            text: "Edit Details"
-                            icon: "pencil"
-                            on_release: app.change_screen("game_group_screen")
+                    GameGroupActionButtonsRequestToJoin:
+                        id: game_group_buttons_request_to_join
+                        game_group_screen: root
 
-                    AnchorLayout:
-                        anchor_x: 'right'
-                        anchor_y: 'bottom'
-                        padding: [0, 0, dp(5), dp(10)]
+                    GameGroupActionButtonsEditOrDelete:
+                        id: game_group_buttons_edit_or_delete
+                        game_group_screen: root
 
-                        MDFillRoundFlatIconButton:
-                            text: "Publish your Group!"
-                            icon: "publish"
-                            on_release: root.open_publish_warning_popup()
+                    GameGroupActionButtonsLeave
+                        id: game_group_buttons_leave
+                        game_group_screen: root
+
+
 
 <SeparatorLine>:
     canvas:
@@ -284,3 +299,83 @@
             rgb: 0.5, 0.5, 0.5, 1  # Set the color of the line (gray)
         Line:
             points: self.x, self.y, self.x + self.width, self.y
+
+<GameGroupActionButtonsEditAndPublish>:
+    orientation: "horizontal"
+    size_hint_y: None
+    padding: 0
+
+    AnchorLayout:
+        anchor_x: 'left'
+        anchor_y: 'bottom'
+        padding: [dp(5), 0, 0, dp(10)]
+
+        MDFillRoundFlatIconButton:
+            text: "Edit Details"
+            icon: "pencil"
+            on_release: app.change_screen("create_group_screen")
+
+    AnchorLayout:
+        anchor_x: 'right'
+        anchor_y: 'bottom'
+        padding: [0, 0, dp(5), dp(10)]
+
+        MDFillRoundFlatIconButton:
+            text: "Publish your Group!"
+            icon: "publish"
+            on_release: root.open_publish_warning_popup()
+
+<GameGroupActionButtonsRequestToJoin>:
+    orientation: "horizontal"
+    size_hint_y: None
+    padding: 0
+
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'bottom'
+        padding: [dp(5), 0, 0, dp(10)]
+
+        MDFillRoundFlatIconButton:
+            text: "Request To Join"
+            on_release: root.request_to_join()
+
+
+<GameGroupActionButtonsEditOrDelete>:
+    orientation: "horizontal"
+    size_hint_y: None
+    padding: 0
+
+    AnchorLayout:
+        anchor_x: 'left'
+        anchor_y: 'bottom'
+        padding: [dp(5), 0, 0, dp(10)]
+
+        MDFillRoundFlatIconButton:
+            text: "Edit Details"
+            icon: "pencil"
+            on_release: app.change_screen("create_group_screen")
+
+    AnchorLayout:
+        anchor_x: 'right'
+        anchor_y: 'bottom'
+        padding: [0, 0, dp(5), dp(10)]
+
+        MDFillRoundFlatIconButton:
+            text: "Delete Group"
+            icon: "delete"
+            on_release: root.open_delete_group_popup()
+
+
+<GameGroupActionButtonsLeave>:
+    orientation: "horizontal"
+    size_hint_y: None
+    padding: 0
+
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'bottom'
+        padding: [dp(5), 0, 0, dp(10)]
+
+        MDFillRoundFlatIconButton:
+            text: "Leave Group"
+            on_release: root.open_leave_group_popup()

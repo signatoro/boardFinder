@@ -32,6 +32,7 @@
             size_hint: (1, 1)
             do_scroll_y: True
             do_scroll_x: False
+            bar_width: dp(5)
 
             MDList:
                 adaptive_height: True
@@ -54,6 +55,7 @@
             size_hint: (1, 1)
             do_scroll_y: True
             do_scroll_x: False
+            bar_width: dp(5)
 
             MDList:
                 adaptive_height: True
@@ -69,7 +71,10 @@
             padding: [0, 0, 0, dp(10)]
 
             MDFillRoundFlatIconButton:
-                text: "Next Pref"
+                id: next_pref_button
+                disabled: True
+                opacity: 0
+                text: "Next Preference"
                 icon: "arrow-right"
                 on_release: root.add_data_to_final(1)
 

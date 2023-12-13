@@ -31,6 +31,8 @@
             helper_text_mode: "persistent"
             height: self.minimum_height
             size_hint_y: dp(15)
+            on_text: root.update_buttons()
+            on_focus: root.update_buttons()
 
         MDBoxLayout:
             orientation: "horizontal"
@@ -43,7 +45,7 @@
                 padding: [dp(5), 0, 0, dp(10)]
 
                 MDFillRoundFlatIconButton:
-                    text: "Prev Pref"
+                    text: "Previous Preference"
                     icon: "arrow-left"
                     on_release: root.add_data_to_final(4, "right")
 
@@ -53,6 +55,9 @@
                 padding: [0, 0, dp(5), dp(10)]
 
                 MDFillRoundFlatIconButton:
+                    id: next_pref_button
+                    disabled: True
+                    opacity: 0
                     text: "Create Group!"
                     icon: "arrow-right"
                     on_release: root.add_data_to_final(6)

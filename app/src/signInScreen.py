@@ -20,9 +20,7 @@ class SignInScreen(Screen):
     def __init__(self, **kwargs):
         super(SignInScreen, self).__init__(**kwargs)
         self.username_input_state = InputState.empty
-        self.usernames = ["Rishav", "Johnny", "CleoT"]
         self.password_input_state = InputState.empty
-        self.passwords = ["123123", "123123", "123123"]
 
     def screen_entered(self):
         self.ids.username_text_field.text = ""
@@ -42,6 +40,7 @@ class SignInScreen(Screen):
         self.ids.sign_in_button.opacity = 0
 
     def submit_username(self):
+        accounts = App.get_running_app().get_accounts()
         new_username_input_state = None
         # Empty username was input
         if self.ids.username_text_field.text == "":
@@ -49,7 +48,7 @@ class SignInScreen(Screen):
             self.ids.username_message_label.text = "Please enter your username."
             self.ids.username_message_label.color = [0.7, 0.5, 0.5, 1]
         # Username exists
-        elif self.ids.username_text_field.text in self.usernames:
+        elif self.ids.username_text_field.text in accounts:
             new_username_input_state = InputState.valid
             self.ids.username_message_label.text = "Valid Username!"
             self.ids.username_message_label.color = [0.15, 0.8, 0.15, 1]
@@ -92,17 +91,26 @@ class SignInScreen(Screen):
 
     def submit_password(self):
         new_password_confirm_input_state = None
-        # Password does not match
-        password = "123123"
-        if self.ids.password_text_field.text != password:
+        # Given empty password
+        if self.ids.password_text_field.text == "":
             new_password_input_state = InputState.empty
-            self.ids.password_message_label.text = "Incorrect Password!"
+            self.ids.password_message_label.text = "Please enter your Password!"
             self.ids.password_message_label.color = [0.8, 0.4, 0.4, 1]
-        # Password is valid
         else:
-            new_password_input_state = InputState.valid
-            self.ids.password_message_label.text = "Correct Password!"
-            self.ids.password_message_label.color = [0.15, 0.8, 0.15, 1]
+            accounts = App.get_running_app().get_accounts()
+            password = ""
+            if self.ids.username_text_field.text in accounts:
+                password = accounts[self.ids.username_text_field.text]
+            # Password does not match
+            if self.ids.password_text_field.text != password:
+                new_password_input_state = InputState.invalid
+                self.ids.password_message_label.text = "Incorrect Password!"
+                self.ids.password_message_label.color = [0.8, 0.4, 0.4, 1]
+            # Password is valid
+            else:
+                new_password_input_state = InputState.valid
+                self.ids.password_message_label.text = "Correct Password!"
+                self.ids.password_message_label.color = [0.15, 0.8, 0.15, 1]
 
         self.password_input_state = new_password_input_state
 
@@ -116,8 +124,11 @@ class SignInScreen(Screen):
             self.ids.sign_in_button.opacity = 0
 
     def sign_in_attempt(self):
-        password = "123123"
-        if self.ids.password_text_field.text != password:
+        accounts = App.get_running_app().get_accounts()
+        password = ""
+        if self.ids.username_text_field.text in accounts:
+            password = accounts[self.ids.username_text_field.text]
+        if password == "" or self.ids.password_text_field.text != password:
             self.ids.username_text_field.text = ""
             self.ids.username_message_label.text = "Incorrect Username!"
             self.ids.username_message_label.color = [0.8, 0.4, 0.4, 1]

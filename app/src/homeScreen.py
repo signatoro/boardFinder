@@ -22,6 +22,8 @@ from src.groupCard import GroupCard
 from src import createGroup
 from src.gameGroupScreen import GameGroupScreen
 
+from app.src.groupListCard import GroupListCard
+
 
 class Tab(MDFloatLayout, MDTabsBase):
     '''Class implementing content for a tab.'''
@@ -40,6 +42,8 @@ class HomeScreen(Screen):
 
     dummy_group_data_1 = None
 
+    group_list_screen_reference = None
+
     def __init__(self, **kwargs):
         
         # self.local_event_l: list = []
@@ -54,37 +58,18 @@ class HomeScreen(Screen):
         Clock.schedule_once(self.load_depends)
         return super().on_enter(*args)
 
-
     def load_depends(self, load_deps=None):
         self.ids.local_event_carou.bind(on_slide_complete=self.on_carousel_slide)
         self.ids.group_card_carou.bind(on_slide_complete=self.on_carousel_slide)
         self.ids.home_tabs.bind(on_tab_switch=self.on_thing_switch)
         self.ids.tab_local.bind(on_tab_switch=self.on_thing_switch)
         self.ids.tab_group.bind(on_tab_switch=self.on_thing_switch)
+        self.group_list_screen_reference = App.get_running_app().main_screen_manager.get_screen("group_list_screen")
         self.carol_index = "1/3"
         self.load_local_events()
         self.load_group_cards()
 
     def generate_one_game_group(self):
-        '''
-        "board_game_list": [str]
-        "group_image": ""
-        "group_title": ""
-        "group_general_description": ""
-        "group_additional_description": ""
-        "group_mtg_day_and_recurring_info": {"dow": recurring(bool)}
-        "group_mtg_start_time": ""
-        "group_mtg_end_time": ""
-        "group_mtg_location": ""
-        "group_max_players": ""
-        "group_host_fname": ""
-        "group_host_lname": ""
-        "group_host_email": ""
-        "group_host_phone_num": ""
-        "group_tags": [chip]
-        "new_group": bool
-        "owner": bool
-        '''
         tags_list = []
         for i in range(3):
             chip = MDChip(
@@ -114,7 +99,7 @@ class HomeScreen(Screen):
             "owner": False,
         }
         game_group_1 = GameGroupScreen()
-        game_group_1.load_depends(game_data)
+        game_group_1.load_depends(game_data, 'home_screen')
 
         dow = ""
         for key in game_group_1.group_mtg_day_and_recurring_info.keys():
@@ -140,7 +125,6 @@ class HomeScreen(Screen):
         )
 
         self.group_cards.insert(0, created_group_card)
-
 
     def add_dummy_cards_to_group_list(self):
         group_card_2 = GroupCard(
@@ -244,7 +228,6 @@ class HomeScreen(Screen):
         days_until_next = (target_day - current_day + 7) % 7
         return current_date + timedelta(days=days_until_next)
 
-
     def get_hours_between_times(self, start_time, end_time):
         time_format = "%I:%M:%S %p"
 
@@ -281,6 +264,22 @@ class HomeScreen(Screen):
             participant=f'1/{game_group_screen_info.group_max_players} Attending',
         )
 
+        # adding new group to group list
+        created_group_list_card = GroupListCard(
+            title=game_group_screen_info.group_title,
+            description=game_group_screen_info.group_general_description,
+            user_status="Open To New Members",
+            month=str(next_date_of_meeting.month),
+            day=str(int(next_date_of_meeting.day)),
+            dow=dow,
+            time=f"{game_group_screen_info.group_meeting_start_time} - {game_group_screen_info.group_meeting_end_time}",
+            location=game_group_screen_info.group_meeting_location,
+            image_path=game_group_screen_info.group_image,
+            session_length=f"{str(int(session_length))} Hrs",
+            participant=f'1/{game_group_screen_info.group_max_players} Attending',
+        )
+        self.group_list_screen_reference.add_new_group(created_group_list_card)
+
         self.group_cards.insert(0, created_group_card)
         self.load_group_cards()
     
@@ -292,7 +291,14 @@ class HomeScreen(Screen):
             # event.add_parent(self)
             self.ids.group_card_carou.add_widget(group)
         pass
-        
+
+    def delete_group_card(self, game_group_screen_info):
+        for group in self.group_cards:
+            if group.title == game_group_screen_info.group_title:
+                self.group_cards.remove(group)
+
+        self.load_group_cards()
+
     def create_redirect_popup(self, url: str):
         delete_popup = RedirectSitePopup(url)
         delete_popup.open()
@@ -304,6 +310,22 @@ class HomeScreen(Screen):
 
     def refresh_groups(self):
         # print("Refreshing Groups")
+        pass
+
+    def try_find_group(self):
+        if App.get_running_app().get_signed_in():
+            App.get_running_app().change_screen("find_group_screen")
+        else:
+            sign_in_popup = SignInPopup()
+            sign_in_popup.open()
+        pass
+
+    def try_create_group(self):
+        if App.get_running_app().get_signed_in():
+            App.get_running_app().change_screen("create_group_screen")
+        else:
+            sign_in_popup = SignInPopup()
+            sign_in_popup.open()
         pass
 
     def on_back_button(self):
@@ -353,6 +375,37 @@ class HomeScreen(Screen):
         self.carol_index = f"{current_index}/{total_index}"
 
 
+class SignInPopup(Popup):
+    def __init__(self, **kwargs):
+        super(SignInPopup, self).__init__(**kwargs)
+        self.title = f"Sign in first!"
+        self.title_size = 36
+        self.title_color = (1, 1, 1, 1)
+        self.title_align = 'center'
+        self.size_hint_y = 0.5
+        self.size_hint_x = 0.5
+        self.content = MDBoxLayout(orientation="vertical", spacing=dp(10), padding=dp(10))
+        popup_label = MDLabel(
+            text=f"Please sign in before proceeding!",
+            text_size="root.size",
+            valign="center", halign="center",
+            font_style="H5",
+            theme_text_color="Custom", text_color=(1, 1, 1, 1)
+        )
+        self.content.add_widget(popup_label)
+        self.buttons_layout = MDBoxLayout(orientation="horizontal", spacing=dp(10))
+        self.buttons_layout.add_widget(MDRaisedButton(text="Sign In!", on_release=self.go_sign_in, size_hint_x=.5))
+        self.buttons_layout.add_widget(MDRaisedButton(text="Go Back", on_release=self.stay_here, size_hint_x=.5))
+        self.content.add_widget(self.buttons_layout)
+
+    def go_sign_in(self, instance):
+        App.get_running_app().change_screen("sign_in_screen")
+        self.dismiss()
+
+    def stay_here(self, instance):
+        self.dismiss()
+
+
 
 class RedirectSitePopup(Popup):
     def __init__(self, item_text, **kwargs):
@@ -381,7 +434,6 @@ class RedirectSitePopup(Popup):
     def on_yes(self, instance):
         print("You are being redirected")
         self.dismiss()
-        
 
     def on_no(self, instance):
         self.dismiss()
@@ -389,6 +441,7 @@ class RedirectSitePopup(Popup):
 
 class SuccessPopup(Popup):
     type_response = ""
+
     def __init__(self, parent, type, **kwargs):
         super(SuccessPopup, self).__init__(**kwargs)
         self.class_parent = parent
@@ -409,7 +462,6 @@ class SuccessPopup(Popup):
     def set_type_response(self, popup_type):
         if popup_type == "delete card":
             self.type_response = "You successfully deleted the group!"
-
 
     def on_ok(self, instance):
         self.dismiss()
