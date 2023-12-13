@@ -14,8 +14,7 @@ class UserCard(MDCard):
     avatar_path = StringProperty()
     member_type = StringProperty()
 
-    def __init__(self, parent, *args, **kwargs):
-        self.home_screen = parent
+    def __init__(self,*args, **kwargs):
         super().__init__(*args, **kwargs)
 
     def load_depends(self, load_deps=None):

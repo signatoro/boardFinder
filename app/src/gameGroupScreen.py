@@ -161,7 +161,6 @@ class GameGroupScreen(Screen):
 
         '''
         UserCard: 
-            parent: Screen
             first_name: str
             last_name: str
             avatar_path: str
@@ -169,7 +168,6 @@ class GameGroupScreen(Screen):
         '''
 
         host_card = UserCard(
-            parent=self,
             first_name=self.group_host_fname,
             last_name=self.group_host_lname,
             avatar_path="images/avatar_stock.png",

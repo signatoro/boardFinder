@@ -257,7 +257,7 @@ class HomeScreen(Screen):
 
         return total_hours
 
-    def add_created_group_card(self, game_group_screen_info):
+    def add_created_group_card(self, game_group_screen_info: GameGroupScreen):
         dow = ""
         for key in game_group_screen_info.group_mtg_day_and_recurring_info.keys():
             dow = key

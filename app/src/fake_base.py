@@ -1,18 +1,22 @@
 
 from src.userCard import UserCard
 from src.groupCard import GroupCard
+from src.gameGroupScreen import GameGroupScreen
 
 
 class GroupDB():
 
     pass
 
+
+
 class Database():
 
     _database = None
 
     __user: dict[str, UserCard] = None
-    __groups: dict[str, GroupCard] = None
+    __groups_cards: dict[str, GroupCard] = None
+    __groups_screen: dict[str, GameGroupScreen] = None
     __games: dict = None
 
 
@@ -28,7 +32,7 @@ class Database():
 
     def initialize(cls):
         cls.__user = {}
-        cls.__groups = {}
+        cls.__groups_cards = {}
         cls.__games = {}
 
         cls.generate_information()
@@ -38,13 +42,15 @@ class Database():
 
         pass
 
+    def add_game_group_screen(cls, game):
+        pass
 
 
-    def add_group(cls, groupCard: GroupCard):
-        cls.__groups[groupCard.title] = groupCard 
+    def add_group_card(cls, groupCard: GroupCard):
+        cls.__groups_cards[groupCard.title] = groupCard 
 
-    def get_group(cls, title: str) -> GroupCard:
-        return cls.__groups[title]
+    def get_group_card(cls, title: str) -> GroupCard:
+        return cls.__groups_cards[title]
     
     def add_user(cls, userCard: UserCard):
         cls.__user[userCard.first_name] = userCard
