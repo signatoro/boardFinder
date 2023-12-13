@@ -11,15 +11,22 @@
         TopBar:
             id: topBar
 
-        MDLabel:
-            id: create_account_label
-            text: "Create an Account"
-            font_size: 26
-            #pos_hint: {'center_x': 0.5, 'center_y': 0.85}
-            halign: "center"
+        MDBoxLayout:
+            orientation: "horizontal"
 
-#        MDLabel:
-#            opacity: 0
+            MDFillRoundFlatIconButton:
+                text: "Back"
+                on_release: root.go_to_sign_in_page()
+
+            MDLabel:
+                id: create_account_label
+                text: "Create an Account"
+                text_size: self.size
+                valign: 'center'
+                #font_size: 26
+                halign: "center"
+
+
 
 # USERNAME WIDGETS
 
