@@ -299,6 +299,7 @@ class HomeScreen(Screen):
         for group in self.database.get_group_cards():
             print(group)
             print(group.title)
+            # TODO: THIS WORKS, BUT NOTHING DISPLAYS >:(
             # event.add_parent(self)
             self.ids.group_card_carou.add_widget(group)
         pass
