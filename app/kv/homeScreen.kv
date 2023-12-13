@@ -64,7 +64,9 @@
 
                 Tab:
                     title: "Local Events"
+                    label: "1"
                     md_bg_color: app.theme_cls.primary_color
+                    id: tab_local
                     #lock_swiping: True
                     #anim_duration: 0
                     #anim_threshold: 0
@@ -78,6 +80,8 @@
 
                 Tab:
                     title: "My Groups"
+                    label: "2"
+                    id: tab_group
                     #lock_swiping: True
                     #anim_duration: 0
                     #anim_threshold: 0
@@ -86,12 +90,33 @@
                         id: group_card_carou
                         padding: [100, 100, 100, 100]
                 
-            MDLabel:
+            MDBoxLayout:
+                orientation: "horizontal"
+
                 size_hint_y: .05
-                text: f"<   {root.carol_index}   >"
-                theme_text_color: "Custom"
-                text_color: [1,1,1,1]  # White text color
-                text_size: self.size
-                halign: "center"
-                valign: "center"
+
+                MDIconButton:
+                    size_hint: (0.3, 1)
+                    icon: "menu-left"
+                    theme_icon_color: "Custom"
+                    icon_color: [1,1,1,1]
+                    on_release: root.on_back_button()
+
+
+                MDLabel:
+
+                    size_hint: (0.4, 1)
+                    text: f"{root.carol_index}"
+                    theme_text_color: "Custom"
+                    text_color: [1,1,1,1]  # White text color
+                    text_size: self.size
+                    halign: "center"
+                    valign: "center"
+
+                MDIconButton:
+                    size_hint: (0.3, 1)
+                    icon: "menu-right"
+                    theme_icon_color: "Custom"
+                    icon_color: [1,1,1,1]
+                    on_release: root.on_forward_button()
 
