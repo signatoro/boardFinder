@@ -296,7 +296,7 @@ class HomeScreen(Screen):
         for group in self.group_cards:
             if group.title == game_group_screen_info.group_title:
                 self.group_cards.remove(group)
-
+        print(f"game group not found")
         self.load_group_cards()
 
     def create_redirect_popup(self, url: str):
