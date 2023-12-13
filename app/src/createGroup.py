@@ -109,6 +109,7 @@ class CreateGroupScreenPref1(Screen):
         super(CreateGroupScreenPref1, self).__init__(**kwargs)
         self.class_parent = parent
         self.generate_all_games()
+        self.update_buttons()
 
     def generate_all_games(self):
         for game in games_list:
@@ -153,6 +154,7 @@ class CreateGroupScreenPref1(Screen):
             self.selected_games.append(game.text)
             # Update the selected items MDList
             self.update_selected_games()
+        self.update_buttons()
 
     def update_selected_games(self):
         # Clear the selected items MDList
@@ -181,10 +183,19 @@ class CreateGroupScreenPref1(Screen):
     def delete_item(self, item_text):
         self.selected_games.remove(item_text)
         self.update_selected_games()
+        self.update_buttons()
 
     def add_data_to_final(self, new_page, direction="left"):
         self.class_parent.new_created_group["board_game_list"] = self.selected_games
         self.class_parent.load_next_pref_page(new_page, direction)
+
+    def update_buttons(self):
+        if len(self.selected_games) <= 0:
+            self.ids.next_pref_button.disabled = True
+            self.ids.next_pref_button.opacity = 0
+        else:
+            self.ids.next_pref_button.disabled = False
+            self.ids.next_pref_button.opacity = 1
 
 
 class CreateGroupScreenPref2(Screen):
@@ -199,9 +210,11 @@ class CreateGroupScreenPref2(Screen):
         self.class_parent = parent
         self.imagePopup = PopupImageSelection(self)
         self.max_word_count = self.ids.general_description_text_field.max_input_size
+        self.update_buttons()
 
     def set_group_title(self, text):
         self.group_title = text
+        self.update_buttons()
 
     def open_image_popup(self):
         self.imagePopup.open()
@@ -216,12 +229,21 @@ class CreateGroupScreenPref2(Screen):
             self.ids.general_description_text_field.helper_text = f'Max Word Count Reached: {self.curr_word_count}/{self.max_word_count}'
         else:
             self.ids.general_description_text_field.helper_text = f'{self.curr_word_count}/{self.max_word_count}'
+        self.update_buttons()
 
     def add_data_to_final(self, new_page, direction="left"):
         self.class_parent.new_created_group["group_image"] = self.image_source
         self.class_parent.new_created_group["group_title"] = self.group_title
         self.class_parent.new_created_group["group_general_description"] = self.general_description_text
         self.class_parent.load_next_pref_page(new_page, direction)
+
+    def update_buttons(self):
+        if self.group_title == "" or self.curr_word_count <= 0 or self.image_source == "":
+            self.ids.next_pref_button.disabled = True
+            self.ids.next_pref_button.opacity = 0
+        else:
+            self.ids.next_pref_button.disabled = False
+            self.ids.next_pref_button.opacity = 1
 
 
 class CreateGroupScreenPref3(Screen):
@@ -246,6 +268,7 @@ class CreateGroupScreenPref3(Screen):
         self.max_players = 4
         self.ids.recurring_toggle_btn.set_parent(self)
         self.ids.non_recurring_toggle_btn.set_parent(self)
+        # self.update_buttons()
 
     def setup_dow_menu(self):
         for day in days:
@@ -255,22 +278,26 @@ class CreateGroupScreenPref3(Screen):
                 "on_release": lambda x=f"{day}": self.menu_callback(x),
             }
             self.menu_items.append(item)
+        # self.update_buttons()
 
     def menu_callback(self, text_item):
         self.ids.dow_button.text = text_item
         self.dow = text_item
         self.menu.dismiss()
+        # self.update_buttons()
 
     def show_days_dropdown(self):
         self.ids.dow_drop_down_selection.set_item(days)
         self.ids.dow_drop_down_selection.bind(on_release=self.on_dropdown_select)
+        # self.update_buttons()
 
     def on_dropdown_select(self, instance_drop):
         selected_day = instance_drop.get_item()
         print(f"in dropdown select - {selected_day}")
         if selected_day:
             self.ids.dow_drop_down_selection.text = selected_day.text
-            #self.meeting_days[selected_day.text] = False
+            # self.meeting_days[selected_day.text] = False
+        # self.update_buttons()
 
     def get_start_time(self, instance, time):
         military_time = datetime.strptime(str(time), "%H:%M:%S")
@@ -278,6 +305,7 @@ class CreateGroupScreenPref3(Screen):
         twelve_hr_time = military_time.strftime("%I:%M:%S %p")
         self.ids.start_time_button.text = str(twelve_hr_time)
         self.meeting_start_time = str(twelve_hr_time)
+        # self.update_buttons()
 
     def get_end_time(self, instance, time):
         military_time = datetime.strptime(str(time), "%H:%M:%S")
@@ -285,6 +313,7 @@ class CreateGroupScreenPref3(Screen):
         twelve_hr_time = military_time.strftime("%I:%M:%S %p")
         self.ids.end_time_button.text = str(twelve_hr_time)
         self.meeting_end_time = str(twelve_hr_time)
+        # self.update_buttons()
 
     def open_time_button(self, btn_type):
         time_dialog = MDTimePicker()
@@ -293,11 +322,12 @@ class CreateGroupScreenPref3(Screen):
         elif btn_type == "end":
             time_dialog.bind(time=self.get_end_time)
         time_dialog.open()
+        # self.update_buttons()
 
     def set_mp_slider_value(self, mp_slider_val):
         new_mp = math.floor(mp_slider_val)
         self.max_players = new_mp
-
+        # self.update_buttons()
         if new_mp == 10:
             return "10+"
         else:
@@ -308,9 +338,11 @@ class CreateGroupScreenPref3(Screen):
         if self.dow != "":
             self.meeting_days[self.dow] = self.recurring_meeting # TODO need to fix this for multiple days
             self.dow = ""
+        # self.update_buttons()
 
     def set_meeting_location(self, text):
         self.meeting_location = text
+        # self.update_buttons()
 
     def add_data_to_final(self, new_page, direction="left"):
         self.class_parent.new_created_group["group_mtg_day_and_recurring_info"] = self.meeting_days
@@ -319,6 +351,20 @@ class CreateGroupScreenPref3(Screen):
         self.class_parent.new_created_group["group_max_players"] = str(self.max_players)
         self.class_parent.new_created_group["group_mtg_location"] = self.meeting_location
         self.class_parent.load_next_pref_page(new_page, direction)
+
+    def update_buttons(self):
+        # if len(self.meeting_days) <= 0 \
+        #         or self.meeting_start_time == "" \
+        #         or self.meeting_end_time == "" \
+        #         or self.meeting_location == "":
+        #     self.ids.next_pref_button.disabled = True
+        #     self.ids.next_pref_button.opacity = 0
+        # else:
+        #     self.ids.next_pref_button.disabled = False
+        #     self.ids.next_pref_button.opacity = 1
+
+        self.ids.next_pref_button.disabled = False
+        self.ids.next_pref_button.opacity = 1
 
 
 class CreateGroupScreenPref4(Screen):
@@ -330,23 +376,29 @@ class CreateGroupScreenPref4(Screen):
     def __init__(self, parent, **kwargs):
         super(CreateGroupScreenPref4, self).__init__(**kwargs)
         self.class_parent = parent
+        self.update_buttons()
 
     def set_host_fname(self, text):
         self.host_fname = text
+        self.update_buttons()
 
     def set_host_lname(self, text):
         self.host_lname = text
+        self.update_buttons()
 
     def set_host_email(self, text):
         self.host_email = text
+        self.update_buttons()
 
     def set_host_phone_num(self, text):
         self.host_phone_num = text
+        self.update_buttons()
 
     def on_text_validate(self, current_textfield, next_textfield):
         # Move to the next text field if it exists
         if next_textfield:
             next_textfield.focus = True
+        self.update_buttons()
 
 
     def add_data_to_final(self, new_page, direction="left"):
@@ -355,6 +407,17 @@ class CreateGroupScreenPref4(Screen):
         self.class_parent.new_created_group["group_host_email"] = self.host_email
         self.class_parent.new_created_group["group_host_phone_num"] = self.host_phone_num
         self.class_parent.load_next_pref_page(new_page, direction)
+
+    def update_buttons(self):
+        if self.host_fname == "" \
+                or self.host_lname == "" \
+                or self.host_email == "" \
+                or self.host_phone_num == "":
+            self.ids.next_pref_button.disabled = True
+            self.ids.next_pref_button.opacity = 0
+        else:
+            self.ids.next_pref_button.disabled = False
+            self.ids.next_pref_button.opacity = 1
 
 
 class CreateGroupScreenPref5(Screen):
@@ -468,12 +531,14 @@ class CreateGroupScreenPref6(Screen):
 
     def __init__(self, parent, **kwargs):
         super(CreateGroupScreenPref6, self).__init__(**kwargs)
+        self.curr_word_count = 0
         self.class_parent = parent
         self.field_default_text = ("Enter additional information: -rules to follow, -what to expect, -what to bring, "
                                   "-will food be served?")
         self.ids.additional_info_text_field.text = ("Enter additional information: -rules to follow, -what to expect, "
                                                     "-what to bring, -will food be served?")
         self.ids.additional_info_text_field.helper_text = f'0/{self.max_word_count}'
+        # self.update_buttons()
 
     def clear_text(self, is_focused):
         if is_focused and self.ids.additional_info_text_field.text == self.field_default_text:
@@ -484,6 +549,7 @@ class CreateGroupScreenPref6(Screen):
         elif not is_focused and self.ids.additional_info_text_field.text == self.field_default_text:
             self.curr_word_count = 0
             self.ids.additional_info_text_field.helper_text = f'0/{self.max_word_count}'
+        # self.update_buttons()
 
     def update_and_limit_word_count(self, text):
         self.additional_description_text = ' '.join(text.split())
@@ -495,10 +561,20 @@ class CreateGroupScreenPref6(Screen):
             self.ids.additional_info_text_field.helper_text = f'Max Word Count Reached: {self.curr_word_count}/{self.max_word_count}'
         else:
             self.ids.additional_info_text_field.helper_text = f'{self.curr_word_count}/{self.max_word_count}'
+        # self.update_buttons()
 
     def add_data_to_final(self, new_page, direction="left"):
         self.class_parent.new_created_group["group_additional_description"] = self.additional_description_text
         self.class_parent.load_next_pref_page(new_page, direction)
+
+    def update_buttons(self):
+        if self.ids.additional_info_text_field.text == ""\
+                or self.ids.additional_info_text_field.text == self.field_default_text:
+            self.ids.next_pref_button.disabled = True
+            self.ids.next_pref_button.opacity = 0
+        else:
+            self.ids.next_pref_button.disabled = False
+            self.ids.next_pref_button.opacity = 1
 
 
 class PopupImageSelection(Popup):
@@ -511,6 +587,7 @@ class PopupImageSelection(Popup):
         print(f"img source - {img_source}")
         self.group_screen.image_source = img_source
         self.group_screen.ids.group_image.source = img_source
+        self.group_screen.update_buttons()
         self.dismiss()
 
 

@@ -23,13 +23,12 @@ class CreateAccountScreen(Screen):
     def __init__(self, **kwargs):
         super(CreateAccountScreen, self).__init__(**kwargs)
         self.username_input_state = InputState.empty
-        self.usernames = ["Rishav", "Johnny", "CleoT"]
         self.email_input_state = InputState.empty
-        self.emails = ["Rishav", "Johnny", "CleoT"]
         self.password_input_state = InputState.empty
         self.password_confirm_input_state = InputState.empty
 
     def submit_username(self):
+        accounts = App.get_running_app().get_accounts()
         new_username_input_state = None
         # Empty username was input
         if self.ids.username_text_field.text == "":
@@ -42,7 +41,7 @@ class CreateAccountScreen(Screen):
             self.ids.username_message_label.text = "Please create a username with\nat least five characters."
             self.ids.username_message_label.color = [0.7, 0.5, 0.5, 1]
         # Username is taken
-        elif self.ids.username_text_field.text in self.usernames:
+        elif self.ids.username_text_field.text in accounts:
             new_username_input_state = InputState.invalid
             self.ids.username_message_label.text = "Username taken!"
             self.ids.username_message_label.color = [0.7, 0.3, 0.3, 1]
@@ -82,11 +81,11 @@ class CreateAccountScreen(Screen):
             new_email_input_state = InputState.empty
             self.ids.email_message_label.text = "Please enter your email."
             self.ids.email_message_label.color = [0.7, 0.5, 0.5, 1]
-        # Email is taken
-        elif self.ids.email_text_field.text in self.emails:
-            new_email_input_state = InputState.invalid
-            self.ids.email_message_label.text = "Email in use!"
-            self.ids.email_message_label.color = [0.7, 0.3, 0.3, 1]
+        # # Email is taken
+        # elif self.ids.email_text_field.text in self.emails:
+        #     new_email_input_state = InputState.invalid
+        #     self.ids.email_message_label.text = "Email in use!"
+        #     self.ids.email_message_label.color = [0.7, 0.3, 0.3, 1]
         # Email does not contain '@' and '.' characters
         elif "@" not in self.ids.email_text_field.text or "." not in self.ids.email_text_field.text:
             new_email_input_state = InputState.invalid
@@ -205,5 +204,6 @@ class CreateAccountScreen(Screen):
         self.ids.create_account_button.opacity = 0
 
     def create_account_attempt(self):
+        App.get_running_app().create_account(self.ids.username_text_field.text, self.ids.password_text_field.text)
         App.get_running_app().set_signed_in(True)
         App.get_running_app().change_screen("home_screen", direction="left")

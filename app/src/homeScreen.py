@@ -244,7 +244,6 @@ class HomeScreen(Screen):
         days_until_next = (target_day - current_day + 7) % 7
         return current_date + timedelta(days=days_until_next)
 
-
     def get_hours_between_times(self, start_time, end_time):
         time_format = "%I:%M:%S %p"
 
@@ -306,6 +305,22 @@ class HomeScreen(Screen):
         # print("Refreshing Groups")
         pass
 
+    def try_find_group(self):
+        if App.get_running_app().get_signed_in():
+            App.get_running_app().change_screen("find_group_screen")
+        else:
+            sign_in_popup = SignInPopup()
+            sign_in_popup.open()
+        pass
+
+    def try_create_group(self):
+        if App.get_running_app().get_signed_in():
+            App.get_running_app().change_screen("create_group_screen")
+        else:
+            sign_in_popup = SignInPopup()
+            sign_in_popup.open()
+        pass
+
     def on_back_button(self):
         print(self.ids.home_tabs.get_current_tab().tab_label_text)
         tab_id = self.ids.home_tabs.get_current_tab().tab_label_text
@@ -353,6 +368,37 @@ class HomeScreen(Screen):
         self.carol_index = f"{current_index}/{total_index}"
 
 
+class SignInPopup(Popup):
+    def __init__(self, **kwargs):
+        super(SignInPopup, self).__init__(**kwargs)
+        self.title = f"Sign in first!"
+        self.title_size = 36
+        self.title_color = (1, 1, 1, 1)
+        self.title_align = 'center'
+        self.size_hint_y = 0.5
+        self.size_hint_x = 0.5
+        self.content = MDBoxLayout(orientation="vertical", spacing=dp(10), padding=dp(10))
+        popup_label = MDLabel(
+            text=f"Please sign in before proceeding!",
+            text_size="root.size",
+            valign="center", halign="center",
+            font_style="H5",
+            theme_text_color="Custom", text_color=(1, 1, 1, 1)
+        )
+        self.content.add_widget(popup_label)
+        self.buttons_layout = MDBoxLayout(orientation="horizontal", spacing=dp(10))
+        self.buttons_layout.add_widget(MDRaisedButton(text="Sign In!", on_release=self.go_sign_in, size_hint_x=.5))
+        self.buttons_layout.add_widget(MDRaisedButton(text="Go Back", on_release=self.stay_here, size_hint_x=.5))
+        self.content.add_widget(self.buttons_layout)
+
+    def go_sign_in(self, instance):
+        App.get_running_app().change_screen("sign_in_screen")
+        self.dismiss()
+
+    def stay_here(self, instance):
+        self.dismiss()
+
+
 
 class RedirectSitePopup(Popup):
     def __init__(self, item_text, **kwargs):
@@ -381,7 +427,6 @@ class RedirectSitePopup(Popup):
     def on_yes(self, instance):
         print("You are being redirected")
         self.dismiss()
-        
 
     def on_no(self, instance):
         self.dismiss()
@@ -389,6 +434,7 @@ class RedirectSitePopup(Popup):
 
 class SuccessPopup(Popup):
     type_response = ""
+
     def __init__(self, parent, type, **kwargs):
         super(SuccessPopup, self).__init__(**kwargs)
         self.class_parent = parent
@@ -409,7 +455,6 @@ class SuccessPopup(Popup):
     def set_type_response(self, popup_type):
         if popup_type == "delete card":
             self.type_response = "You successfully deleted the group!"
-
 
     def on_ok(self, instance):
         self.dismiss()
