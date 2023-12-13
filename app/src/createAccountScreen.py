@@ -205,5 +205,6 @@ class CreateAccountScreen(Screen):
 
     def create_account_attempt(self):
         App.get_running_app().create_account(self.ids.username_text_field.text, self.ids.password_text_field.text)
+        App.get_running_app().set_username(self.ids.username_text_field.text)
         App.get_running_app().set_signed_in(True)
         App.get_running_app().change_screen("home_screen", direction="left")

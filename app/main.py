@@ -4,6 +4,7 @@ from kivy.core.window import Window
 from kivymd.app import MDApp
 from kivy.config import Config
 
+from src.fake_base import Database
 from src.createAccountScreen import CreateAccountScreen
 from src.signInScreen import SignInScreen
 from src.homeScreen import HomeScreen
@@ -40,6 +41,7 @@ class MyApp(MDApp):
     signed_in = False
     username = None
     main_screen_manager = None
+    database: Database  = None
 
     def build(self):
         self.signed_in = False
@@ -49,6 +51,11 @@ class MyApp(MDApp):
                          "Chloe": "password"}
         Window.minimum_width = 400
         Window.minimum_height = 600
+
+        self.database = Database()
+
+        self.database.initialize()
+
         # self.lastResize = time.time()-2
         self.force_window_ratio()
         self.title = 'BoardGame Group Finder'
@@ -114,6 +121,9 @@ class MyApp(MDApp):
 
     def set_signed_in(self, signed_in):
         self.signed_in = signed_in
+
+    def set_username(self, username):
+        self.username = username
 
     def get_username(self):
         return self.username

@@ -54,11 +54,14 @@ class GroupCard(MDCard):
 
     delete_group_popup = None
 
-    def __init__(self, parent, game_group, *args, **kwargs):
-        self.home_screen = parent
+    def __init__(self, game_group, *args, **kwargs):
         self.game_group_screen = game_group
         super().__init__(*args, **kwargs)
-        self.delete_group_popup = DeleteGroupCardPopup(self, self.game_group_screen, self.home_screen)
+        
+
+    def on_pre_enter(self, *args):
+        if not self.delete_group_popup:
+            self.delete_group_popup = DeleteGroupCardPopup(self, self.game_group_screen, App.get_running_app().main_screen_manager.get_screen("home_screen"))
 
 
     def load_depends(self, load_deps=None):

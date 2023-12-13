@@ -71,7 +71,8 @@ class GameGroupScreen(Screen):
     actionButtonEditOrDeleteReference = ObjectProperty()
     actionButtonLeaveGroupReference = ObjectProperty()
     home_screen_reference = None
-    list_of_members = []
+    list_of_members:list[UserCard] = ListProperty()
+    list_of_pending: list[UserCard] = ListProperty()
     prev_screen = None
 
     def __init__(self, **kwargs):
@@ -92,6 +93,8 @@ class GameGroupScreen(Screen):
         self.home_screen_reference = App.get_running_app().main_screen_manager.get_screen("home_screen")
         print(f"owner: {self.owner}")
         print(f"new_group: {self.new_group}")
+
+        # TODO: Add the logic and stuff for button based of current user in app and owner
 
         # after create a group
         if self.owner and self.new_group:
@@ -164,6 +167,8 @@ class GameGroupScreen(Screen):
         self.group_meeting_end_time = load_deps["group_mtg_end_time"]
         self.new_group = load_deps["new_group"]
         self.owner = load_deps["owner"]
+        self.list_of_members = load_deps["list_of_members"]
+        self.list_of_pending = load_deps["list_of_pending"]
         self.add_meeting_days_and_times()
         self.add_board_games()
         self.add_host_to_member_list()
@@ -244,7 +249,6 @@ class GameGroupScreen(Screen):
             first_name=self.group_host_fname,
             last_name=self.group_host_lname,
             avatar_path="images/avatar_stock.png",
-            member_type="Host",
         )
         self.ids.game_group_users_list.add_widget(host_card)
         self.list_of_members.append(host_card)
