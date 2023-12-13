@@ -78,6 +78,9 @@ class MyApp(MDApp):
             elif self.main_screen_manager.current_screen.name == 'create_group_screen' and screen_name == 'game_group_screen':
                 # rendering review of group host created
                 self.main_screen_manager.get_screen(screen_name).load_depends(load_deps, self.main_screen_manager.current_screen.name)
+            elif self.main_screen_manager.current_screen.name == 'group_list_screen' and screen_name == 'game_group_screen':
+                # rendering group from find group list screen
+                self.main_screen_manager.get_screen(screen_name).load_screen_data(load_deps, self.main_screen_manager.current_screen.name)
 
         self.main_screen_manager.transition = SlideTransition(direction=direction)  # mode=mode)
 

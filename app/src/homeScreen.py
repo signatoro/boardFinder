@@ -22,6 +22,8 @@ from src.groupCard import GroupCard
 from src import createGroup
 from src.gameGroupScreen import GameGroupScreen
 
+from app.src.groupListCard import GroupListCard
+
 
 class Tab(MDFloatLayout, MDTabsBase):
     '''Class implementing content for a tab.'''
@@ -40,6 +42,8 @@ class HomeScreen(Screen):
 
     dummy_group_data_1 = None
 
+    group_list_screen_reference = None
+
     def __init__(self, **kwargs):
         
         # self.local_event_l: list = []
@@ -54,37 +58,18 @@ class HomeScreen(Screen):
         Clock.schedule_once(self.load_depends)
         return super().on_enter(*args)
 
-
     def load_depends(self, load_deps=None):
         self.ids.local_event_carou.bind(on_slide_complete=self.on_carousel_slide)
         self.ids.group_card_carou.bind(on_slide_complete=self.on_carousel_slide)
         self.ids.home_tabs.bind(on_tab_switch=self.on_thing_switch)
         self.ids.tab_local.bind(on_tab_switch=self.on_thing_switch)
         self.ids.tab_group.bind(on_tab_switch=self.on_thing_switch)
+        self.group_list_screen_reference = App.get_running_app().main_screen_manager.get_screen("group_list_screen")
         self.carol_index = "1/3"
         self.load_local_events()
         self.load_group_cards()
 
     def generate_one_game_group(self):
-        '''
-        "board_game_list": [str]
-        "group_image": ""
-        "group_title": ""
-        "group_general_description": ""
-        "group_additional_description": ""
-        "group_mtg_day_and_recurring_info": {"dow": recurring(bool)}
-        "group_mtg_start_time": ""
-        "group_mtg_end_time": ""
-        "group_mtg_location": ""
-        "group_max_players": ""
-        "group_host_fname": ""
-        "group_host_lname": ""
-        "group_host_email": ""
-        "group_host_phone_num": ""
-        "group_tags": [chip]
-        "new_group": bool
-        "owner": bool
-        '''
         tags_list = []
         for i in range(3):
             chip = MDChip(
@@ -141,31 +126,7 @@ class HomeScreen(Screen):
 
         self.group_cards.insert(0, created_group_card)
 
-
     def add_dummy_cards_to_group_list(self):
-
-        # game_data = {
-        #     "board_game_list": ["catan", "monopoly"],
-        #     "group_image": "images/piplup.jpg",
-        #     "group_title": "test group",
-        #     "group_general_description": "Come have a grand ol' time with your boi, chef Rish",
-        #     "group_additional_description": "this is addy info",
-        #     "group_mtg_day_and_recurring_info": {"Saturday": True},
-        #     "group_mtg_start_time": "4:00:00 PM",
-        #     "group_mtg_end_time": "8:00:00 PM",
-        #     "group_mtg_location": "BPD",
-        #     "group_max_players": "8",
-        #     "group_host_fname": "alice",
-        #     "group_host_lname": "bobol",
-        #     "group_host_email": "bobol.alice@gmail.com",
-        #     "group_host_phone_num": "911-991-1000",
-        #     "group_tags": tags_list,
-        #     "new_group": False,
-        #     "owner": False,
-        # }
-        # game_group_1 = GameGroupScreen()
-        # game_group_1.load_depends(game_data)
-
         group_card_2 = GroupCard(
             parent=self,
             game_group=None,  # Dummy Group Card
@@ -304,6 +265,22 @@ class HomeScreen(Screen):
             participant=f'1/{game_group_screen_info.group_max_players} Attending',
         )
 
+        # adding new group to group list
+        created_group_list_card = GroupListCard(
+            title=game_group_screen_info.group_title,
+            description=game_group_screen_info.group_general_description,
+            user_status="Open To New Members",
+            month=str(next_date_of_meeting.month),
+            day=str(int(next_date_of_meeting.day)),
+            dow=dow,
+            time=f"{game_group_screen_info.group_meeting_start_time} - {game_group_screen_info.group_meeting_end_time}",
+            location=game_group_screen_info.group_meeting_location,
+            image_path=game_group_screen_info.group_image,
+            session_length=f"{str(int(session_length))} Hrs",
+            participant=f'1/{game_group_screen_info.group_max_players} Attending',
+        )
+        self.group_list_screen_reference.add_new_group(created_group_list_card)
+
         self.group_cards.insert(0, created_group_card)
         self.load_group_cards()
     
@@ -315,7 +292,14 @@ class HomeScreen(Screen):
             # event.add_parent(self)
             self.ids.group_card_carou.add_widget(group)
         pass
-        
+
+    def delete_group_card(self, game_group_screen_info):
+        for group in self.group_cards:
+            if group.title == game_group_screen_info.group_title:
+                self.group_cards.remove(group)
+
+        self.load_group_cards()
+
     def create_redirect_popup(self, url: str):
         delete_popup = RedirectSitePopup(url)
         delete_popup.open()
