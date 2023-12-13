@@ -114,7 +114,7 @@ class HomeScreen(Screen):
             "owner": False,
         }
         game_group_1 = GameGroupScreen()
-        game_group_1.load_depends(game_data)
+        game_group_1.load_depends(game_data, 'home_screen')
 
         dow = ""
         for key in game_group_1.group_mtg_day_and_recurring_info.keys():
@@ -143,6 +143,29 @@ class HomeScreen(Screen):
 
 
     def add_dummy_cards_to_group_list(self):
+
+        # game_data = {
+        #     "board_game_list": ["catan", "monopoly"],
+        #     "group_image": "images/piplup.jpg",
+        #     "group_title": "test group",
+        #     "group_general_description": "Come have a grand ol' time with your boi, chef Rish",
+        #     "group_additional_description": "this is addy info",
+        #     "group_mtg_day_and_recurring_info": {"Saturday": True},
+        #     "group_mtg_start_time": "4:00:00 PM",
+        #     "group_mtg_end_time": "8:00:00 PM",
+        #     "group_mtg_location": "BPD",
+        #     "group_max_players": "8",
+        #     "group_host_fname": "alice",
+        #     "group_host_lname": "bobol",
+        #     "group_host_email": "bobol.alice@gmail.com",
+        #     "group_host_phone_num": "911-991-1000",
+        #     "group_tags": tags_list,
+        #     "new_group": False,
+        #     "owner": False,
+        # }
+        # game_group_1 = GameGroupScreen()
+        # game_group_1.load_depends(game_data)
+
         group_card_2 = GroupCard(
             parent=self,
             game_group=None,  # Dummy Group Card
