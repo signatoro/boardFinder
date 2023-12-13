@@ -6,6 +6,8 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDFillRoundFlatIconButton
 from kivymd.uix.chip import MDChip
 from kivymd.uix.label import MDLabel
+from kivymd.uix.list import MDList
+from kivymd.uix.scrollview import MDScrollView
 from kivymd.uix.slider import MDSlider
 from kivymd.uix.menu import MDDropdownMenu
 from kivy.clock import Clock
@@ -186,29 +188,92 @@ class GenrePopup(Popup):
     def __init__(self, parent, **kwargs):
         super(GenrePopup, self).__init__(**kwargs)
         self.group_screen = parent
-        self.title = 'Genre Explanations'
+        self.title = 'Genre Definitions:'
         self.size_hint_x = 0.85
         self.size_hint_y = 0.9
-
-        info_text = "[b]Genre Definitions:[/b] \n\n" + \
-                    "[b]TTRPG:[/b] Table Top Role-Playing Games like Dungeons and Dragons where players act as characters in a story. \n\n" + \
-                    "[b]Strategy:[/b] A broad genre that includes any games where players must strategize and plan their actions to achieve victory. \n\n" + \
-                    "[b]Euro Games:[/b] Typically strategy-focused games designed around player choice over randomness, with passive competition over aggressive conflict. \n\n" + \
-                    "[b]Competitive:[/b] All encompassing category for games with competition between players as a main factor. \n\n" + \
-                    "[b]Social Deduction:[/b] Games with social interactions between players where deceiving your opponents is key to victory. \n\n" + \
-                    "[b]Family Games:[/b] Any family-friendly board games for adults and kids. \n\n" + \
-                    "[b]Card Games:[/b] Typically simple games that revolve around playing with a deck of cards, including both the common deck or something more like Uno. \n\n" + \
-                    "[b]TCG:[/b] Trading Card Games are games like Magic the Gathering and Yu-Gi-Oh, where players collect cards and create decks to play with. \n\n" + \
-                    "[b]War Games:[/b] Usually complex games where players control armies of units in a battle to take victory over the other army. \n\n"
         self.add_widget(
             MDBoxLayout(
-                MDLabel(
-                    valign='center',
-                    halign='center',
-                    markup=True,
-                    text='[color=ffffff]'+info_text,
-                    size_hint_x=1,
-                    size_hint_y=1
+                MDScrollView(
+                    MDList(
+                        MDLabel(
+                            text='[color=ffffff]' + "[b]TTRPG:[/b] Table Top Role-Playing Games like Dungeons and "
+                                 + "Dragons where players act as characters in a story.",
+                            halign='center',
+                            markup=True,
+                            size_hint_x=1,
+                            size_hint_y=None
+                        ),
+                        MDLabel(
+                            text='[color=ffffff]' + "[b]Strategy:[/b] A broad genre that includes any games where "
+                                 + "players must strategize and plan their actions to achieve victory.",
+                            halign='center',
+                            markup=True,
+                            size_hint_x=1,
+                            size_hint_y=None
+                        ),
+                        MDLabel(
+                            text='[color=ffffff]' + "[b]Euro Games:[/b] Strategy-focused games designed around choice "
+                                 + "over randomness, with passive competition over aggressive conflict.",
+                            halign='center',
+                            markup=True,
+                            size_hint_x=1,
+                            size_hint_y=None
+                        ),
+                        MDLabel(
+                            text='[color=ffffff]' + "[b]Competitive:[/b] All encompassing category for games with"
+                                 + " competition between players as a main factor.",
+                            halign='center',
+                            markup=True,
+                            size_hint_x=1,
+                            size_hint_y=None
+                        ),
+                        MDLabel(
+                            text='[color=ffffff]' + "[b]Social Deduction:[/b] Games with social interactions between"
+                                 + " players where deceiving your opponents is key to victory.",
+                            halign='center',
+                            markup=True,
+                            size_hint_x=1,
+                            size_hint_y=None
+                        ),
+                        MDLabel(
+                            text='[color=ffffff]' + "[b]Family Games:[/b] Any family-friendly board games for "
+                                 + "adults and kids.",
+                            halign='center',
+                            markup=True,
+                            size_hint_x=1,
+                            size_hint_y=None
+                        ),
+                        MDLabel(
+                            text='[color=ffffff]' + "[b]Card Games:[/b] Typically simple games that play with a deck "
+                                 + "of cards, including both the common deck and decks like Uno.",
+                            halign='center',
+                            markup=True,
+                            size_hint_x=1,
+                            size_hint_y=None
+                        ),
+                        MDLabel(
+                            text='[color=ffffff]' + "[b]TCG:[/b] Trading Card Games are games like Magic the Gathering"
+                                 + " and Yu-Gi-Oh, where players collect cards and create decks to play with.",
+                            halign='center',
+                            markup=True,
+                            size_hint_x=1,
+                            size_hint_y=None
+                        ),
+                        MDLabel(
+                            text='[color=ffffff]' + "[b]War Games:[/b] Usually complex games where players control"
+                                 + " armies of units in a battle to take victory over the other army.",
+                            halign='center',
+                            markup=True,
+                            size_hint_x=1,
+                            size_hint_y=None
+                        ),
+                        orientation='tb-lr',
+                        size_hint_y=None,
+                        adaptive_height=True
+                        ),
+                    size_hint=(1, 1),
+                    do_scroll_y=True,
+                    do_scroll_x=False
                 ),
                 Button(
                     text="Ok",
