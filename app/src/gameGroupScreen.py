@@ -66,6 +66,8 @@ class GameGroupScreen(Screen):
     success_popup = None
     delete_group_warning_popup = None
     deletion_success_popup = None
+    leave_group_success_popup = None
+    leave_group_warning_popup = None
     actionButtonEditAndPublishReference = ObjectProperty()
     actionButtonRequestToJoinReference = ObjectProperty()
     actionButtonEditOrDeleteReference = ObjectProperty()
@@ -80,6 +82,8 @@ class GameGroupScreen(Screen):
         self.success_popup = PublishSuccessPopup(parent=self)
         self.delete_group_warning_popup = DeletePostWarningPopup(parent=self)
         self.deletion_success_popup = DeletePostSuccessPopup(parent=self)
+        self.leave_group_warning_popup = LeaveGroupWarningPopup(parent=self)
+        self.leave_group_success_popup = LeaveGroupSuccessPopup(parent=self)
         self.actionButtonEditAndPublishReference = GameGroupActionButtonsEditAndPublish()
         self.actionButtonRequestToJoinReference = GameGroupActionButtonsRequestToJoin()
         self.actionButtonEditOrDeleteReference = GameGroupActionButtonsEditOrDelete()
@@ -141,6 +145,16 @@ class GameGroupScreen(Screen):
             self.home_screen_reference.delete_group_card(game_group_screen_info=self)
         #del self
 
+    def leave_group(self):
+        for user in self.list_of_members:
+            if user.first_name == App.get_running_app().get_username():
+                self.list_of_members.remove(user)
+
+        if self.home_screen_reference:
+            self.home_screen_reference.delete_group_card(game_group_screen_info=self)
+
+        self.leave_group_success_popup.open()
+        print("user not found")
 
     def proceed_to_delete(self):
         self.deletion_success_popup.open()
@@ -373,6 +387,51 @@ class DeletePostSuccessPopup(Popup):
         self.class_parent.delete_group()
         App.get_running_app().change_screen("home_screen")
 
+class LeaveGroupWarningPopup(Popup):
+    def __init__(self, parent, **kwargs):
+        super(LeaveGroupWarningPopup, self).__init__(**kwargs)
+        self.class_parent = parent
+        self.title = f"Leave Group Warning"
+        self.size_hint_y = 0.5
+        self.content = MDBoxLayout(orientation="vertical", spacing=dp(10), padding=dp(10))
+        popup_label = MDLabel(
+            text=f"You will not be able to rejoin the group unless the host invites you back! Please ensure this is what you want to do before proceeding!",
+            theme_text_color="Custom", text_color=(1, 1, 1, 1)
+        )
+        self.content.add_widget(popup_label)
+        self.buttons_layout = MDBoxLayout(orientation="horizontal", spacing=dp(10))
+        self.buttons_layout.add_widget(MDRaisedButton(text="Go Back", on_release=self.on_go_back))
+        self.buttons_layout.add_widget(MDRaisedButton(text="Leave Group!", on_release=self.on_leave))
+        self.content.add_widget(self.buttons_layout)
+
+    def on_leave(self, instance):
+        self.dismiss()
+        self.class_parent.leave_group()
+
+    def on_go_back(self, instance):
+        self.dismiss()
+
+
+class LeaveGroupSuccessPopup(Popup):
+    def __init__(self, parent, **kwargs):
+        super(LeaveGroupSuccessPopup, self).__init__(**kwargs)
+        self.class_parent = parent
+        self.title = f"Leave Group Success!"
+        self.size_hint_y = 0.5
+        self.content = MDBoxLayout(orientation="vertical", spacing=dp(10), padding=dp(10))
+        popup_label = MDLabel(
+            text=f"You successfully left the group. You can rejoin if you want by going to the Find A Group Page.",
+            theme_text_color="Custom", text_color=(1, 1, 1, 1)
+        )
+        self.content.add_widget(popup_label)
+        self.buttons_layout = AnchorLayout(anchor_x='center', anchor_y='bottom')
+        self.buttons_layout.add_widget(MDRaisedButton(text="Ok", on_release=self.on_ok))
+        self.content.add_widget(self.buttons_layout)
+
+    def on_ok(self, instance):
+        self.dismiss()
+        App.get_running_app().change_screen("home_screen")
+
 
 class GameGroupActionButtonsEditAndPublish(MDBoxLayout):
     game_group_screen = ObjectProperty()
@@ -411,6 +470,6 @@ class GameGroupActionButtonsLeave(MDBoxLayout):
         super().__init__(*args, **kwargs)
 
     def open_leave_group_popup(self):
-        self.game_group_screen.leave_group_popup.open()
+        self.game_group_screen.leave_group_warning_popup.open()
 
 
