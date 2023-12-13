@@ -6,28 +6,28 @@ from src.groupListCard import GroupListCard
 
 from kivy.lang import Builder
 
+
 # Builder.load_file('/kv')
 class GroupListScreen(MDScreen):
     group_lists = {}
 
     def on_pre_enter(self, *args):
 
-        self.add_game_card()
-        
+        self.update_groups_list()
 
         # print("Hello 1, I am Learning the screen")
         return super().on_pre_enter(*args)
 
-    def load_depends(self, load_deps=None):
-        #TODO call the endpoint to get data
+    def __init__(self, **kwargs):
+        super(GroupListScreen, self).__init__(**kwargs)
         self.add_game_card()
-        pass
-    
 
+    def load_depends(self, load_deps=None):
+        # TODO call the endpoint to get data
+        self.update_groups_list()
+        pass
 
     def add_game_card(self):
-        self.ids.group_list.clear_widgets()
-
         group_card_2 = GroupListCard(
             title="Scott's Group",
             description="By the end of it we might hate each other, but boy will we have fun!",
@@ -41,10 +41,8 @@ class GroupListScreen(MDScreen):
             session_length="4 - 6 Hrs",
             participant='1/4 Attending',
         )
-        print ("here 1")
 
-        self.ids.group_list.add_widget(group_card_2)
-        self.group_lists["Scott's Group"] = (group_card_2)
+        self.group_lists["Scott's Group"] = group_card_2
 
         group_card_3 = GroupListCard(
             title="Matty's Group",
@@ -60,8 +58,7 @@ class GroupListScreen(MDScreen):
             participant='3/6 Attending',
         )
 
-        self.ids.group_list.add_widget(group_card_3)
-        self.group_lists["Matty's Group"] = (group_card_3)
+        self.group_lists["Matty's Group"] = group_card_3
 
         group_card_4 = GroupListCard(
             title="Strategic Board Gamers",
@@ -76,7 +73,6 @@ class GroupListScreen(MDScreen):
             session_length="2 - 4 Hrs",
             participant='4/6 Attending',
         )
-        self.ids.group_list.add_widget(group_card_4)
         self.group_lists["Strategic Board Gamers"] = group_card_4
 
         # Group 5
@@ -93,7 +89,7 @@ class GroupListScreen(MDScreen):
             session_length="2 - 3 Hrs",
             participant='3/5 Attending',
         )
-        self.ids.group_list.add_widget(group_card_5)
+
         self.group_lists["Dice Masters Collective"] = group_card_5
 
         # Group 6
@@ -110,7 +106,7 @@ class GroupListScreen(MDScreen):
             session_length="3 - 5 Hrs",
             participant='6/8 Attending',
         )
-        self.ids.group_list.add_widget(group_card_6)
+
         self.group_lists["Board Game Enthusiasts"] = group_card_6
 
         # Group 7
@@ -127,7 +123,7 @@ class GroupListScreen(MDScreen):
             session_length="2 - 3 Hrs",
             participant='5/7 Attending',
         )
-        self.ids.group_list.add_widget(group_card_7)
+
         self.group_lists["Card Game Crew"] = group_card_7
 
         # Group 8
@@ -144,7 +140,7 @@ class GroupListScreen(MDScreen):
             session_length="2 - 4 Hrs",
             participant='4/6 Attending',
         )
-        self.ids.group_list.add_widget(group_card_8)
+
         self.group_lists["Family Board Gaming"] = group_card_8
 
         # Group 9
@@ -161,40 +157,23 @@ class GroupListScreen(MDScreen):
             session_length="2 - 3 Hrs",
             participant='7/10 Attending',
         )
-        self.ids.group_list.add_widget(group_card_9)
+
         self.group_lists["Classic Board Games Night"] = group_card_9
 
-        print ("here 2")
+    def add_new_group(self, new_group):
+        self.ids.group_list.add_widget(new_group)
+        self.group_lists[new_group.title] = new_group
+        self.update_groups_list()
 
+    def update_groups_list(self):
+        self.ids.group_list.clear_widgets()
 
-        # print("Hello 2, I am Learning the screen")
-        # game_card = GameCard(title="Catan")
-        # game_card.pre_load()
-        # self.ids.game_results.add_widget(game_card)
-
-        # game_card1 = GameCard(title="Risk")
-        # game_card1.pre_load()
-        # self.ids.game_results.add_widget(game_card1)
-
-        # game_card2 = GameCard(title="Monopoly")
-        # game_card2.pre_load()
-        # self.ids.game_results.add_widget(game_card2)
-
-        # self.game_card_list["Catan"] = game_card
-        # self.game_card_list["Risk"] = game_card1
-        # self.game_card_list["Monopoly"] = game_card2
-
-
-
+        for group in self.group_lists.values():
+            self.ids.group_list.add_widget(group)
 
     def search_games(self, text):
-        # if there is an empty field, clear widgets
-        #if text == "":
-        #    self.ids.search_board_game.clear_widgets()
-        #    return
-
         # Clear previous search results
-        
+
         self.ids.search_board_game.clear_widgets()
         self.ids.group_list.clear_widgets()
 
@@ -204,8 +183,4 @@ class GroupListScreen(MDScreen):
         # Display the filtered results
         for result in search_results:
             game_card = self.group_lists[result]
-            # game_card.pre_load()
             self.ids.group_list.add_widget(game_card)
-
-
-

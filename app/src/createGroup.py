@@ -90,7 +90,7 @@ class CreateGroupScreen(Screen):
 
         if self.currPrefPage > 6:
             self.new_created_group["new_group"] = True
-            self.new_created_group["owner"] = False
+            self.new_created_group["owner"] = True
             App.get_running_app().change_screen("game_group_screen", direction="right", load_deps=self.new_created_group)
             return
 

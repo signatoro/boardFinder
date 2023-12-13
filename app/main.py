@@ -2,6 +2,7 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import NoTransition, SlideTransition
 from kivy.core.window import Window
 from kivymd.app import MDApp
+from kivy.config import Config
 
 from src.createAccountScreen import CreateAccountScreen
 from src.signInScreen import SignInScreen
@@ -52,6 +53,7 @@ class MyApp(MDApp):
         self.force_window_ratio()
         self.title = 'BoardGame Group Finder'
         self.theme_cls.primary_palette = "Teal"
+        Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
         # self.theme_cls.theme_style = "Dark"
         # Window.bind(on_resize=self.force_window_ratio)
         return Builder.load_file("kv/main.kv")  # GUI
@@ -78,10 +80,13 @@ class MyApp(MDApp):
         if load_deps:
             if self.main_screen_manager.current_screen.name == 'home_screen' and screen_name == 'game_group_screen':
                 # rendering already published group from group card
-                self.main_screen_manager.get_screen(screen_name).load_screen_data(load_deps)
+                self.main_screen_manager.get_screen(screen_name).load_screen_data(load_deps, self.main_screen_manager.current_screen.name)
             elif self.main_screen_manager.current_screen.name == 'create_group_screen' and screen_name == 'game_group_screen':
                 # rendering review of group host created
-                self.main_screen_manager.get_screen(screen_name).load_depends(load_deps)
+                self.main_screen_manager.get_screen(screen_name).load_depends(load_deps, self.main_screen_manager.current_screen.name)
+            elif self.main_screen_manager.current_screen.name == 'group_list_screen' and screen_name == 'game_group_screen':
+                # rendering group from find group list screen
+                self.main_screen_manager.get_screen(screen_name).load_screen_data(load_deps, self.main_screen_manager.current_screen.name)
 
         self.main_screen_manager.transition = SlideTransition(direction=direction)  # mode=mode)
 
