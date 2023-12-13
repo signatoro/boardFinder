@@ -11,21 +11,17 @@
         TopBar:
             id: topBar
 
-        MDBoxLayout:
-            orientation: "horizontal"
+        #MDBoxLayout:
+        #    orientation: "vertical"
+        #    size_hint_y: 0.2
 
-            MDFillRoundFlatIconButton:
-                text: "Back"
-                on_release: root.go_to_sign_in_page()
-
-            MDLabel:
-                id: create_account_label
-                text: "Create an Account"
-                text_size: self.size
-                valign: 'center'
-                #font_size: 26
-                halign: "center"
-
+        MDLabel:
+            id: create_account_label
+            text: "Create an Account"
+            font_size: 26
+            # text_size: self.size
+            valign: 'center'
+            halign: "center"
 
 
 # USERNAME WIDGETS
@@ -222,3 +218,15 @@
 
         MDLabel:
             opacity: 0
+
+# BACK BUTTON
+
+        AnchorLayout:
+            anchor_x: 'left'
+            anchor_y: 'bottom'
+            padding: 15
+            #spacing: 15
+
+            MDFillRoundFlatIconButton:
+                text: "Back to Sign In"
+                on_release: root.go_to_sign_in_page()

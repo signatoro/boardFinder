@@ -406,23 +406,23 @@ class SignInPopup(Popup):
         self.dismiss()
 
 
-
 class RedirectSitePopup(Popup):
     def __init__(self, item_text, **kwargs):
         super(RedirectSitePopup, self).__init__(**kwargs)
         self.item_text = item_text
-        self.title = f"!!  Warning  !! You are being redirected !!  Warning  !!"
-        self.title_size = 42
+        self.title = f"Warning! You are being redirected!"
+        self.title_size = (self.size[0] + self.size[1]) / 15  # 42
         self.title_color = (1, 0, 0, 1)
         self.title_align = 'center'
-        self.size_hint_y = 0.5
-        self.size_hint_x = 0.5
+        self.size_hint_y = 0.7
+        self.size_hint_x = 0.7
         self.content = MDBoxLayout(orientation="vertical", spacing=dp(10), padding=dp(10))
         popup_label = MDLabel(
-            text=f"You are going to '{item_text}'. This website is not controlled by us!?",
-            text_size= "root.size",
-            valign ="center", halign = "center",
-            font_style = "H5",
+            text=f"You are going to '{item_text}'. This website is not controlled by us.",
+            # text_size= "root.size",
+            #text_size=root.size,#(self.size[0] + self.size[1]) / 15,  # 42
+            valign="center", halign="center",
+            #font_style="H5",
             theme_text_color="Custom", text_color=(1, 1, 1, 1)
         )
         self.content.add_widget(popup_label)
