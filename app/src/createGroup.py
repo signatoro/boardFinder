@@ -3,7 +3,7 @@ from datetime import datetime
 from kivy.app import App
 from kivy.metrics import dp
 from kivy.uix.popup import Popup
-from kivy.uix.screenmanager import Screen, SlideTransition
+from kivy.uix.screenmanager import Screen, SlideTransition, NoTransition
 from kivymd.uix.behaviors.toggle_behavior import MDToggleButton
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDRaisedButton, MDRectangleFlatButton
@@ -91,13 +91,14 @@ class CreateGroupScreen(Screen):
         screen_name = f"create_group_pref{self.currPrefPage}"
 
         if self.currPrefPage > 6:
+            self.currPrefPage = 6
             self.new_created_group["new_group"] = True
             
             # TODO: This needs to be fixed make it so the username is somehow converted to the whole UserCard Bullshit
             self.new_created_group["owner"] = UserCard(first_name=App.get_running_app().get_username())
             self.new_created_group["list_of_members"] = []
             self.new_created_group["list_of_pending"] = []
-            App.get_running_app().change_screen("game_group_screen", direction="right", load_deps=self.new_created_group)
+            App.get_running_app().change_screen("game_group_screen", direction="left", load_deps=self.new_created_group)
             return
 
         screen_manager.transition = SlideTransition(direction=direction)
@@ -106,6 +107,21 @@ class CreateGroupScreen(Screen):
 
     def display_progress_bar_value(self):
         return self.currPrefPage / 6
+
+    def reset_fields(self):
+        self.child1.reset_fields()
+        self.child2.reset_fields()
+        self.child3.reset_fields()
+        self.child4.reset_fields()
+        self.child5.reset_fields()
+        self.child6.reset_fields()
+        self.new_created_group = {}
+        self.currPrefPage = 1
+        self.screen_name = "create_group_pref1"
+        screen_manager = self.ids.create_group_screen_manager
+        screen_manager.transition = NoTransition()
+        screen_manager.current = self.screen_name
+        self.ids.progress_bar.value = self.display_progress_bar_value()
 
 
 class CreateGroupScreenPref1(Screen):
@@ -117,9 +133,17 @@ class CreateGroupScreenPref1(Screen):
         self.generate_all_games()
         self.update_buttons()
 
+    def reset_fields(self):
+        self.selected_games = []
+        self.ids.selected_games.clear_widgets()
+        self.generate_all_games()
+        self.update_buttons()
+
     def generate_all_games(self):
+        self.ids.game_results.clear_widgets()
+        games_list.sort()
         for game in games_list:
-            list_item = OneLineAvatarIconListItem(text=game)
+            list_item = OneLineAvatarIconListItem(text=game,id=game)
             # list_item.bind(on_touch_down=self.on_item_touch)
             icon = IconRightWidget(icon="plus", on_release=self.on_item_touch)
             icon.list_item_ref = list_item
@@ -158,8 +182,10 @@ class CreateGroupScreenPref1(Screen):
         if game.text not in self.selected_games:
             # Add the item to the selected items list
             self.selected_games.append(game.text)
+            games_list.remove(game.text)
             # Update the selected items MDList
             self.update_selected_games()
+            self.generate_all_games()
         self.update_buttons()
 
     def update_selected_games(self):
@@ -188,7 +214,9 @@ class CreateGroupScreenPref1(Screen):
 
     def delete_item(self, item_text):
         self.selected_games.remove(item_text)
+        games_list.append(item_text)
         self.update_selected_games()
+        self.generate_all_games()
         self.update_buttons()
 
     def add_data_to_final(self, new_page, direction="left"):
@@ -205,7 +233,7 @@ class CreateGroupScreenPref1(Screen):
 
 
 class CreateGroupScreenPref2(Screen):
-    image_source = ""
+    image_source = 'images/avatar_stock.png'
     general_description_text = ""
     group_title = ""
     curr_word_count = 0
@@ -216,6 +244,18 @@ class CreateGroupScreenPref2(Screen):
         self.class_parent = parent
         self.imagePopup = PopupImageSelection(self)
         self.max_word_count = self.ids.general_description_text_field.max_input_size
+        self.update_buttons()
+
+    def reset_fields(self):
+        self.image_source = 'images/avatar_stock.png'
+        self.general_description_text = ""
+        self.group_title = ""
+        self.curr_word_count = 0
+
+        self.ids.group_image.source = 'images/avatar_stock.png'
+        self.ids.group_title.text = ""
+        self.ids.general_description_text_field.text = ""
+        self.update_and_limit_word_count("")
         self.update_buttons()
 
     def set_group_title(self, text):
@@ -273,8 +313,29 @@ class CreateGroupScreenPref3(Screen):
         )
         self.max_players = 4
         self.ids.recurring_toggle_btn.set_parent(self)
-        self.ids.non_recurring_toggle_btn.set_parent(self)
+        # self.ids.non_recurring_toggle_btn.set_parent(self)
         # self.update_buttons()
+
+    def reset_fields(self):
+        self.meeting_days.clear()
+        self.dow = ""
+        self.meeting_start_time = ""
+        self.meeting_end_time = ""
+        self.menu_items = []
+        self.max_players = 0
+        self.recurring_meeting = False
+        self.meeting_location = ""
+
+        self.ids.recurring_toggle_btn.text = "Non-Recurring"
+        self.ids.recurring_toggle_btn.state = 'normal'
+        self.ids.dow_button.text = "Select Day"
+        self.ids.location_text_field.hint_text: "Ex: Boston Public Library"
+        self.ids.location_text_field.text = ""
+        self.ids.location_text_field.hint_text: "Ex: Boston Public Library"
+        self.ids.max_players_slider.value = 4
+        self.ids.start_time_button.text = "Select Start Time"
+        self.ids.end_time_button.text = "Select End Time"
+        self.update_buttons()
 
     def setup_dow_menu(self):
         for day in days:
@@ -289,21 +350,24 @@ class CreateGroupScreenPref3(Screen):
     def menu_callback(self, text_item):
         self.ids.dow_button.text = text_item
         self.dow = text_item
+        self.meeting_days.clear()
+        self.meeting_days[text_item] = self.recurring_meeting
         self.menu.dismiss()
-        # self.update_buttons()
+        self.update_buttons()
 
     def show_days_dropdown(self):
         self.ids.dow_drop_down_selection.set_item(days)
         self.ids.dow_drop_down_selection.bind(on_release=self.on_dropdown_select)
-        # self.update_buttons()
+        self.update_buttons()
 
     def on_dropdown_select(self, instance_drop):
         selected_day = instance_drop.get_item()
         print(f"in dropdown select - {selected_day}")
         if selected_day:
+            self.meeting_days.clear()
             self.ids.dow_drop_down_selection.text = selected_day.text
-            # self.meeting_days[selected_day.text] = False
-        # self.update_buttons()
+            self.meeting_days[selected_day.text] = self.recurring_meeting
+        self.update_buttons()
 
     def get_start_time(self, instance, time):
         military_time = datetime.strptime(str(time), "%H:%M:%S")
@@ -311,7 +375,7 @@ class CreateGroupScreenPref3(Screen):
         twelve_hr_time = military_time.strftime("%I:%M:%S %p")
         self.ids.start_time_button.text = str(twelve_hr_time)
         self.meeting_start_time = str(twelve_hr_time)
-        # self.update_buttons()
+        self.update_buttons()
 
     def get_end_time(self, instance, time):
         military_time = datetime.strptime(str(time), "%H:%M:%S")
@@ -319,7 +383,7 @@ class CreateGroupScreenPref3(Screen):
         twelve_hr_time = military_time.strftime("%I:%M:%S %p")
         self.ids.end_time_button.text = str(twelve_hr_time)
         self.meeting_end_time = str(twelve_hr_time)
-        # self.update_buttons()
+        self.update_buttons()
 
     def open_time_button(self, btn_type):
         time_dialog = MDTimePicker()
@@ -328,7 +392,7 @@ class CreateGroupScreenPref3(Screen):
         elif btn_type == "end":
             time_dialog.bind(time=self.get_end_time)
         time_dialog.open()
-        # self.update_buttons()
+        self.update_buttons()
 
     def set_mp_slider_value(self, mp_slider_val):
         new_mp = math.floor(mp_slider_val)
@@ -340,15 +404,21 @@ class CreateGroupScreenPref3(Screen):
             return str(new_mp)
 
     def toggle_recurring_meeting(self, state):
+        if state:
+            self.ids.recurring_toggle_btn.text = "    Recurring    "
+        else:
+            self.ids.recurring_toggle_btn.text = "Non-Recurring"
+
         self.recurring_meeting = state
         if self.dow != "":
-            self.meeting_days[self.dow] = self.recurring_meeting # TODO need to fix this for multiple days
-            self.dow = ""
-        # self.update_buttons()
+            self.meeting_days.clear()
+            self.meeting_days[self.dow] = self.recurring_meeting
+            # self.dow = ""
+        self.update_buttons()
 
     def set_meeting_location(self, text):
         self.meeting_location = text
-        # self.update_buttons()
+        self.update_buttons()
 
     def add_data_to_final(self, new_page, direction="left"):
         self.class_parent.new_created_group["group_mtg_day_and_recurring_info"] = self.meeting_days
@@ -359,18 +429,15 @@ class CreateGroupScreenPref3(Screen):
         self.class_parent.load_next_pref_page(new_page, direction)
 
     def update_buttons(self):
-        # if len(self.meeting_days) <= 0 \
-        #         or self.meeting_start_time == "" \
-        #         or self.meeting_end_time == "" \
-        #         or self.meeting_location == "":
-        #     self.ids.next_pref_button.disabled = True
-        #     self.ids.next_pref_button.opacity = 0
-        # else:
-        #     self.ids.next_pref_button.disabled = False
-        #     self.ids.next_pref_button.opacity = 1
-
-        self.ids.next_pref_button.disabled = False
-        self.ids.next_pref_button.opacity = 1
+        if self.dow == "" \
+                or self.meeting_start_time == "" \
+                or self.meeting_end_time == "" \
+                or self.meeting_location == "":
+            self.ids.next_pref_button.disabled = True
+            self.ids.next_pref_button.opacity = 0
+        else:
+            self.ids.next_pref_button.disabled = False
+            self.ids.next_pref_button.opacity = 1
 
 
 class CreateGroupScreenPref4(Screen):
@@ -382,6 +449,17 @@ class CreateGroupScreenPref4(Screen):
     def __init__(self, parent, **kwargs):
         super(CreateGroupScreenPref4, self).__init__(**kwargs)
         self.class_parent = parent
+        self.update_buttons()
+
+    def reset_fields(self):
+        self.host_fname = ""
+        self.host_lname = ""
+        self.host_email = ""
+        self.host_phone_num = ""
+        self.ids.first_name_text_field.text = ""
+        self.ids.last_name_text_field.text = ""
+        self.ids.email_text_field.text = ""
+        self.ids.phone_num_text_field.text = ""
         self.update_buttons()
 
     def set_host_fname(self, text):
@@ -434,6 +512,13 @@ class CreateGroupScreenPref5(Screen):
         super(CreateGroupScreenPref5, self).__init__(**kwargs)
         self.class_parent = parent
         self.display_database_tags()
+
+    def reset_fields(self):
+        self.added_tags = {}
+        self.group_tags = []
+        self.ids.common_tags.clear_widgets()
+        self.display_database_tags()
+        # self.update_buttons()
 
     def display_database_tags(self):
         # Display the filtered results
@@ -539,11 +624,16 @@ class CreateGroupScreenPref6(Screen):
         super(CreateGroupScreenPref6, self).__init__(**kwargs)
         self.curr_word_count = 0
         self.class_parent = parent
-        self.field_default_text = ("Enter additional information: -rules to follow, -what to expect, -what to bring, "
-                                  "-will food be served?")
+        self.field_default_text = ("Enter additional information: -rules to follow, -what to expect, "
+                                   + "-what to bring, -will food be served?")
         self.ids.additional_info_text_field.text = ("Enter additional information: -rules to follow, -what to expect, "
-                                                    "-what to bring, -will food be served?")
+                                                    + "-what to bring, -will food be served?")
         self.ids.additional_info_text_field.helper_text = f'0/{self.max_word_count}'
+        # self.update_buttons()
+
+    def reset_fields(self):
+        self.ids.additional_info_text_field.text = ""
+        self.clear_text(False)
         # self.update_buttons()
 
     def clear_text(self, is_focused):
@@ -633,8 +723,8 @@ class MyToggleButton(MDRectangleFlatButton, MDToggleButton):
         self.parent_instance = pref_parent
 
     def on_toggle(self, text):
-        if text == "Recurring":
-            self.parent_instance.toggle_recurring_meeting(True)
-        else:
+        if text == "    Recurring    ":
             self.parent_instance.toggle_recurring_meeting(False)
+        else:
+            self.parent_instance.toggle_recurring_meeting(True)
 

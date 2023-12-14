@@ -158,6 +158,10 @@ class MyApp(MDApp):
     def remove_group(self, group):
         self.groups_list.remove(group)
 
+    def reset_create_group(self):
+        self.main_screen_manager.get_screen("create_group_screen").reset_fields()
+        return
+
 
 if __name__ == "__main__":
     MyApp().run()

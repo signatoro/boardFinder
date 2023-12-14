@@ -27,6 +27,9 @@ class CreateAccountScreen(Screen):
         self.password_input_state = InputState.empty
         self.password_confirm_input_state = InputState.empty
 
+    def go_to_sign_in_page(self):
+        App.get_running_app().change_screen("sign_in_screen", direction="right")
+
     def submit_username(self):
         accounts = App.get_running_app().get_accounts()
         new_username_input_state = None

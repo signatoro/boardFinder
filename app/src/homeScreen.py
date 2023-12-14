@@ -234,7 +234,7 @@ class HomeScreen(Screen):
         for group in self.group_cards:
             if group.title == game_group_screen_info.group_title:
                 self.group_cards.remove(group)
-
+        print(f"game group not found")
         self.load_group_cards()
 
     def create_redirect_popup(self, url: str):
@@ -283,7 +283,6 @@ class HomeScreen(Screen):
         elif tab_id == "My Groups":
             self.ids.group_card_carou.load_next()
 
-    
     def on_thing_switch(self, *args):
         tab_id = self.ids.home_tabs.get_current_tab().tab_label_text
 
@@ -297,7 +296,20 @@ class HomeScreen(Screen):
         total_index = len(current_car.slides)
         self.carol_index = f"{current_index}/{total_index}"
 
-    
+    def on_tab_switch(self, *args):
+        tab_id = self.ids.home_tabs.get_current_tab().tab_label_text
+
+        # Intentionally reversed! When this is called, it is mid-transition
+        current_car = None
+        if tab_id == "My Groups":
+            current_car = self.ids.local_event_carou
+        elif tab_id == "Local Events":
+            current_car = self.ids.group_card_carou
+
+        current_index = current_car.index + 1
+        total_index = len(current_car.slides)
+        self.carol_index = f"{current_index}/{total_index}"
+
     def on_carousel_slide(self, *args):
 
         tab_id = self.ids.home_tabs.get_current_tab().tab_label_text
@@ -344,23 +356,23 @@ class SignInPopup(Popup):
         self.dismiss()
 
 
-
 class RedirectSitePopup(Popup):
     def __init__(self, item_text, **kwargs):
         super(RedirectSitePopup, self).__init__(**kwargs)
         self.item_text = item_text
-        self.title = f"!!  Warning  !! You are being redirected !!  Warning  !!"
-        self.title_size = 42
+        self.title = f"Warning! You are being redirected!"
+        self.title_size = (self.size[0] + self.size[1]) / 15  # 42
         self.title_color = (1, 0, 0, 1)
         self.title_align = 'center'
-        self.size_hint_y = 0.5
-        self.size_hint_x = 0.5
+        self.size_hint_y = 0.7
+        self.size_hint_x = 0.7
         self.content = MDBoxLayout(orientation="vertical", spacing=dp(10), padding=dp(10))
         popup_label = MDLabel(
-            text=f"You are going to '{item_text}'. This website is not controlled by us!?",
-            text_size= "root.size",
-            valign ="center", halign = "center",
-            font_style = "H5",
+            text=f"You are going to '{item_text}'. This website is not controlled by us.",
+            # text_size= "root.size",
+            #text_size=root.size,#(self.size[0] + self.size[1]) / 15,  # 42
+            valign="center", halign="center",
+            #font_style="H5",
             theme_text_color="Custom", text_color=(1, 1, 1, 1)
         )
         self.content.add_widget(popup_label)
