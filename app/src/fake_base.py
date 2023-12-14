@@ -305,7 +305,7 @@ class Database():
     def get_group_list_cards(cls) -> list[GroupListCard]:
         temp = []
         [temp.append(group) for group in cls.__group_list_cards.values()]
-        return temp
+        return cls.__group_list_cards
     
 
 
