@@ -345,7 +345,6 @@ class HomeScreen(Screen):
         elif tab_id == "My Groups":
             self.ids.group_card_carou.load_next()
 
-    
     def on_thing_switch(self, *args):
         tab_id = self.ids.home_tabs.get_current_tab().tab_label_text
 
@@ -359,7 +358,19 @@ class HomeScreen(Screen):
         total_index = len(current_car.slides)
         self.carol_index = f"{current_index}/{total_index}"
 
-    
+    def on_tab_switch(self, *args):
+        tab_id = self.ids.home_tabs.get_current_tab().tab_label_text
+
+        current_car = None
+        if tab_id == "My Groups":
+            current_car = self.ids.local_event_carou
+        elif tab_id == "Local Events":
+            current_car = self.ids.group_card_carou
+
+        current_index = current_car.index + 1
+        total_index = len(current_car.slides)
+        self.carol_index = f"{current_index}/{total_index}"
+
     def on_carousel_slide(self, *args):
 
         tab_id = self.ids.home_tabs.get_current_tab().tab_label_text
