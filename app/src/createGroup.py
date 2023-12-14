@@ -392,7 +392,7 @@ class CreateGroupScreenPref3(Screen):
         self.ids.recurring_toggle_btn.text = "Non-Recurring"
         self.ids.recurring_toggle_btn.state = 'normal'
         self.ids.dow_button.text = "Select Day"
-        self.ids.location_text_field.hint_text: "Ex: Boston Public Library"
+        self.ids.location_text_field.hint_text= "Ex: Boston Public Library"
         self.ids.location_text_field.text = ""
         self.ids.max_players_slider.value = 4
         self.ids.start_time_button.text = "Select Start Time"
@@ -411,7 +411,7 @@ class CreateGroupScreenPref3(Screen):
         self.ids.recurring_toggle_btn.text = "Recurring" if self.recurring_meeting else "Non-Recurring"
         self.ids.recurring_toggle_btn.state = "down" if self.recurring_meeting else "normal"
         self.ids.dow_button.text = self.dow
-        self.ids.location_text_field.hint_text: "Ex: Boston Public Library"
+        self.ids.location_text_field.hint_text= "Ex: Boston Public Library"
         self.ids.location_text_field.text = game_group_info.group_meeting_location
         self.ids.max_players_slider.value = game_group_info.group_max_players
         self.ids.start_time_button.text = game_group_info.group_meeting_start_time

@@ -25,7 +25,7 @@ from src.gameGroupScreen import GameGroupScreen
 
 from src.groupListCard import GroupListCard
 
-from app.src.groupCard import DeleteGroupCardPopup
+from src.groupCard import DeleteGroupCardPopup
 
 
 class Tab(MDFloatLayout, MDTabsBase):
