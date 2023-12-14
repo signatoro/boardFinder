@@ -195,7 +195,7 @@ class Database():
         game_data = {
             "group_board_games": ["catan", "monopoly"],
             "group_image": "images/piplup.jpg",
-            "group_title": "test group",
+            "group_title": "Lee's Group of Luck",
             "group_general_description": "Come have a grand ol' time with your boi, chef Rish",
             "group_additional_description": "this is addy info",
             "group_mtg_day_and_recurring_info": {"Saturday": True},
@@ -221,7 +221,7 @@ class Database():
         # GameGroupScreen instances
         game_data_1 = {
             "group_board_games": ["chess", "scrabble"],
-            "group_image": "images/group_image_1.jpg",
+            "group_image": "images/gold_dice.png",
             "group_title": "Strategic Game Enthusiasts",
             "group_general_description": "Join us for intense and strategic board gaming sessions. We play a variety of games that challenge the mind and entertain the soul.",
             "group_additional_description": "All skill levels are welcome. Whether you're a seasoned strategist or just getting started, there's a game for everyone.",
@@ -248,7 +248,7 @@ class Database():
         # GameGroupScreen instances
         game_data_2 = {
             "group_board_games": ["risk", "ticket to ride"],
-            "group_image": "images/group_image_2.jpg",
+            "group_image": "images/red_dice.png",
             "group_title": "Adventure Board Gamers",
             "group_general_description": "Embark on thrilling adventures through board games! Join us for epic journeys, strategic conquests, and exciting quests. All adventurers are welcome!",
             "group_additional_description": "No experience necessary. Whether you're a seasoned explorer or a newcomer, our group is all about fun and camaraderie.",
