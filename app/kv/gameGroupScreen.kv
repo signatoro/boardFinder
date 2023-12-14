@@ -197,13 +197,15 @@
                         orientation: "vertical"
                         spacing: dp(5)
                         size_hint_y: None
+                        adaptive_height: True
 
                         # meet days and times
                         MDBoxLayout:
                             orientation: "vertical"
                             id: game_group_days_and_times
                             height: self.minimum_height
-                            #adaptive_height: True
+                            adaptive_height: True
+                            padding: [0, dp(10), 0, 0]
 
                         # meet location
                         MDLabel:
@@ -216,11 +218,14 @@
                             height: self.texture_size[1]
                             #text_size: self.width, None
                             halign: "left"
+                            adaptive_height: True
+                            padding: [0, dp(10), 0, 0]
 
                         # meet board games
                         MDStackLayout:
                             id: game_group_board_games
                             orientation: 'lr-tb'
+                            adaptive_height: True
                             spacing: dp(5)
                             #padding: [15, 10, 0, 0]
                             halign: "left"
@@ -250,11 +255,18 @@
                         halign: "center"
                         height: self.texture_size[1]  # Adjust the size based on text size
 
-                    # users attending list
-                    MDBoxLayout:
-                        id: game_group_users_list
-                        orientation: 'horizontal'
-                        spacing: dp(5)
+                    MDScrollView:
+                        do_scroll_x: True
+                        do_scroll_y: True
+
+                        # users attending list
+                        MDBoxLayout:
+                            id: game_group_users_list
+                            orientation: 'horizontal'
+                            spacing: dp(5)
+                            size_hint_x: None
+                            width: self.minimum_width
+                            height: self.minimum_height
 
 
                 # looking for players... label
@@ -291,6 +303,9 @@
                         id: game_group_buttons_leave
                         game_group_screen: root
 
+                    GameGroupActionButtonsEditOrSave
+                        id: game_group_buttons_edit_or_save
+                        game_group_screen: root
 
 
 <SeparatorLine>:
@@ -313,7 +328,7 @@
         MDFillRoundFlatIconButton:
             text: "Edit Details"
             icon: "pencil"
-            on_release: app.change_screen("create_group_screen",direction='right')
+            on_release: root.edit_game_group_in_preview_pressed()
 
     AnchorLayout:
         anchor_x: 'right'
@@ -353,7 +368,7 @@
         MDFillRoundFlatIconButton:
             text: "Edit Details"
             icon: "pencil"
-            on_release: app.change_screen("create_group_screen")
+            on_release: root.edit_game_group_once_published_pressed()
 
     AnchorLayout:
         anchor_x: 'right'
@@ -379,3 +394,28 @@
         MDFillRoundFlatIconButton:
             text: "Leave Group"
             on_release: root.open_leave_group_popup()
+
+<GameGroupActionButtonsEditOrSave>:
+    orientation: "horizontal"
+    size_hint_y: None
+    padding: 0
+
+    AnchorLayout:
+        anchor_x: 'left'
+        anchor_y: 'bottom'
+        padding: [dp(5), 0, 0, dp(10)]
+
+        MDFillRoundFlatIconButton:
+            text: "Edit Details"
+            icon: "pencil"
+            on_release: root.edit_game_group_once_published_pressed()
+
+    AnchorLayout:
+        anchor_x: 'right'
+        anchor_y: 'bottom'
+        padding: [0, 0, dp(5), dp(10)]
+
+        MDFillRoundFlatIconButton:
+            text: "Save Edits"
+            icon: "content-save"
+            on_release: root.open_save_group_popup()

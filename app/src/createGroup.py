@@ -19,6 +19,8 @@ from src.userCard import UserCard
 
 games_list = ('sorry,monopoly,risk,catan,mancala,gameoflife,chess,gloomhaven,scrabble,jenga,codenames,carcassonne,'
               'campaign').split(',')
+non_mutable_games_list = ('sorry,monopoly,risk,catan,mancala,gameoflife,chess,gloomhaven,scrabble,jenga,codenames,carcassonne,'
+              'campaign').split(',')
 tags_list = ('AllLevels,Casual,Hardcore,LGBTQIA+,Food Included,Pet Friendly,21+,Public Location,Private Location,'
              'Long-Term,Short-Term,Frequent Meeting,Free,New Players Welcome,Buy Materials,Materials Included,'
              'Women Only,Easy To Learn,Short-Game Length,Long-Game Length,Cosplay').split(',')
@@ -56,6 +58,7 @@ class CreateGroupScreen(Screen):
     currPrefPage = 1
     screen_name = ""
     initialized = False
+    game_group_info = None
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -92,12 +95,14 @@ class CreateGroupScreen(Screen):
 
         if self.currPrefPage > 6:
             self.currPrefPage = 6
-            self.new_created_group["new_group"] = True
-            
+
             # TODO: This needs to be fixed make it so the username is somehow converted to the whole UserCard Bullshit
-            self.new_created_group["owner"] = UserCard(first_name=App.get_running_app().get_username())
-            self.new_created_group["list_of_members"] = []
-            self.new_created_group["list_of_pending"] = []
+            if self.game_group_info:
+                self.new_created_group["owner"] = self.game_group_info.owner
+                self.new_created_group["new_group"] = self.game_group_info.new_group
+            else:
+                self.new_created_group["owner"] = UserCard(first_name=App.get_running_app().get_username())
+                self.new_created_group["new_group"] = True
             App.get_running_app().change_screen("game_group_screen", direction="left", load_deps=self.new_created_group)
             return
 
@@ -123,6 +128,38 @@ class CreateGroupScreen(Screen):
         screen_manager.current = self.screen_name
         self.ids.progress_bar.value = self.display_progress_bar_value()
 
+    def populate_fields(self, game_group_info):
+        if not self.initialized:
+            self.ids.create_group_screen_manager.add_widget(self.child1)
+            self.ids.create_group_screen_manager.add_widget(self.child2)
+            self.ids.create_group_screen_manager.add_widget(self.child3)
+            self.ids.create_group_screen_manager.add_widget(self.child4)
+            self.ids.create_group_screen_manager.add_widget(self.child5)
+            self.ids.create_group_screen_manager.add_widget(self.child6)
+            self.initialized = True
+        self.game_group_info = game_group_info
+        self.child1.populate_fields(game_group_info)
+        self.child2.populate_fields(game_group_info)
+        self.child3.populate_fields(game_group_info)
+        self.child4.populate_fields(game_group_info)
+        self.child5.populate_fields(game_group_info)
+        self.child6.populate_fields(game_group_info)
+        self.new_created_group = {}
+        self.currPrefPage = 1
+        self.screen_name = "create_group_pref1"
+        screen_manager = self.ids.create_group_screen_manager
+        screen_manager.transition = NoTransition()
+        screen_manager.current = self.screen_name
+        self.ids.progress_bar.value = self.display_progress_bar_value()
+
+    def reset_to_first_pref(self):
+        self.currPrefPage = 1
+        self.screen_name = "create_group_pref1"
+        screen_manager = self.ids.create_group_screen_manager
+        screen_manager.transition = NoTransition()
+        screen_manager.current = self.screen_name
+        self.ids.progress_bar.value = self.display_progress_bar_value()
+
 
 class CreateGroupScreenPref1(Screen):
     selected_games = []
@@ -137,6 +174,21 @@ class CreateGroupScreenPref1(Screen):
         self.selected_games = []
         self.ids.selected_games.clear_widgets()
         self.generate_all_games()
+        self.reset_games_list()
+        self.update_buttons()
+
+    def reset_games_list(self):
+        games_list.clear()
+        for game in non_mutable_games_list:
+            games_list.append(game)
+
+    def populate_fields(self, game_group_info):
+        self.selected_games = game_group_info.group_board_games
+        self.update_selected_games()
+        for game in non_mutable_games_list:
+            games_list.append(game)
+        for game in self.selected_games:
+            games_list.remove(game)
         self.update_buttons()
 
     def generate_all_games(self):
@@ -258,6 +310,17 @@ class CreateGroupScreenPref2(Screen):
         self.update_and_limit_word_count("")
         self.update_buttons()
 
+    def populate_fields(self, game_group_info):
+        self.image_source = game_group_info.group_image
+        self.general_description_text = game_group_info.group_general_description
+        self.group_title = game_group_info.group_title
+        self.curr_word_count = len(game_group_info.group_general_description.split())
+
+        self.ids.group_image.source = game_group_info.group_image
+        self.ids.group_title.text = game_group_info.group_title
+        self.ids.general_description_text_field.text = game_group_info.group_general_description
+        self.update_buttons()
+
     def set_group_title(self, text):
         self.group_title = text
         self.update_buttons()
@@ -331,10 +394,28 @@ class CreateGroupScreenPref3(Screen):
         self.ids.dow_button.text = "Select Day"
         self.ids.location_text_field.hint_text: "Ex: Boston Public Library"
         self.ids.location_text_field.text = ""
-        self.ids.location_text_field.hint_text: "Ex: Boston Public Library"
         self.ids.max_players_slider.value = 4
         self.ids.start_time_button.text = "Select Start Time"
         self.ids.end_time_button.text = "Select End Time"
+        self.update_buttons()
+
+    def populate_fields(self, game_group_info):
+        self.meeting_days = game_group_info.group_mtg_day_and_recurring_info
+        self.dow = next(iter(game_group_info.group_mtg_day_and_recurring_info.keys()))
+        self.meeting_start_time = game_group_info.group_meeting_start_time
+        self.meeting_end_time = game_group_info.group_meeting_end_time
+        self.max_players = game_group_info.group_max_players
+        self.recurring_meeting = game_group_info.group_mtg_day_and_recurring_info[self.dow]
+        self.meeting_location = game_group_info.group_meeting_location
+
+        self.ids.recurring_toggle_btn.text = "Recurring" if self.recurring_meeting else "Non-Recurring"
+        self.ids.recurring_toggle_btn.state = "down" if self.recurring_meeting else "normal"
+        self.ids.dow_button.text = self.dow
+        self.ids.location_text_field.hint_text: "Ex: Boston Public Library"
+        self.ids.location_text_field.text = game_group_info.group_meeting_location
+        self.ids.max_players_slider.value = game_group_info.group_max_players
+        self.ids.start_time_button.text = game_group_info.group_meeting_start_time
+        self.ids.end_time_button.text = game_group_info.group_meeting_end_time
         self.update_buttons()
 
     def setup_dow_menu(self):
@@ -362,7 +443,6 @@ class CreateGroupScreenPref3(Screen):
 
     def on_dropdown_select(self, instance_drop):
         selected_day = instance_drop.get_item()
-        print(f"in dropdown select - {selected_day}")
         if selected_day:
             self.meeting_days.clear()
             self.ids.dow_drop_down_selection.text = selected_day.text
@@ -387,6 +467,7 @@ class CreateGroupScreenPref3(Screen):
 
     def open_time_button(self, btn_type):
         time_dialog = MDTimePicker()
+        time_dialog.multitouch = False
         if btn_type == "start":
             time_dialog.bind(time=self.get_start_time)
         elif btn_type == "end":
@@ -462,6 +543,17 @@ class CreateGroupScreenPref4(Screen):
         self.ids.phone_num_text_field.text = ""
         self.update_buttons()
 
+    def populate_fields(self, game_group_info):
+        self.host_fname = game_group_info.group_host_fname
+        self.host_lname = game_group_info.group_host_lname
+        self.host_email = game_group_info.group_host_email
+        self.host_phone_num = game_group_info.group_host_phone_num
+        self.ids.first_name_text_field.text = game_group_info.group_host_fname
+        self.ids.last_name_text_field.text = game_group_info.group_host_lname
+        self.ids.email_text_field.text = game_group_info.group_host_email
+        self.ids.phone_num_text_field.text = game_group_info.group_host_phone_num
+        self.update_buttons()
+
     def set_host_fname(self, text):
         self.host_fname = text
         self.update_buttons()
@@ -520,6 +612,30 @@ class CreateGroupScreenPref5(Screen):
         self.display_database_tags()
         # self.update_buttons()
 
+    def populate_fields(self, game_group_info):
+        self.group_tags = game_group_info.group_tags
+        for tag in self.group_tags:
+            if self.is_tag_unique(tag):
+                self.added_tags[tag] = True
+            else:
+                self.added_tags[tag] = False
+        self.display_updated_database_tags()
+
+    def display_updated_database_tags(self):
+        self.ids.common_tags.clear_widgets()
+        for tag in tags_list:
+            chip = MDChip(
+                text=tag,
+                on_release=self.on_tag_click
+            )
+            if tag in self.group_tags:
+                print("tag recolored")
+                chip.md_bg_color = "teal"
+            else:
+                chip.md_bg_color = (0.74, 0.74, 0.74, 1)
+            self.ids.common_tags.add_widget(chip)
+
+
     def display_database_tags(self):
         # Display the filtered results
         for tag in tags_list:
@@ -529,6 +645,7 @@ class CreateGroupScreenPref5(Screen):
             )
             chip.md_bg_color = (0.74, 0.74, 0.74, 1)
             self.ids.common_tags.add_widget(chip)
+
 
     def search_tags(self, text):
         # if there is an empty field, clear widgets
@@ -561,10 +678,10 @@ class CreateGroupScreenPref5(Screen):
             # Add the item to the selected items list
             if self.is_tag_unique(instance.text):
                 self.added_tags[instance.text] = True
-                self.group_tags.append(instance)
+                self.group_tags.append(instance.text)
             else:
                 self.added_tags[instance.text] = False
-                self.group_tags.append(instance)
+                self.group_tags.append(instance.text)
             instance.md_bg_color = "teal"
             if self.added_tags[instance.text]:
                 self.update_common_tags(instance)
@@ -573,7 +690,7 @@ class CreateGroupScreenPref5(Screen):
             if self.added_tags[instance.text]:
                 self.ids.common_tags.remove_widget(instance)
             del self.added_tags[instance.text]
-            self.group_tags.remove(instance)
+            self.group_tags.remove(instance.text)
 
     def on_list_item_clicked(self, instance):
         self.ids.tag_results.clear_widgets()
@@ -582,11 +699,11 @@ class CreateGroupScreenPref5(Screen):
             # Add the item to the selected items list
             if self.is_tag_unique(instance.text):
                 self.added_tags[instance.text] = True
-                self.group_tags.append(instance)
+                self.group_tags.append(instance.text)
                 self.update_common_tags(instance)
             else:
                 self.added_tags[instance.text] = False
-                self.group_tags.append(instance)
+                self.group_tags.append(instance.text)
                 for chip in self.ids.common_tags.children:
                     if chip.text == instance.text:
                         chip.md_bg_color = "teal"
@@ -595,7 +712,7 @@ class CreateGroupScreenPref5(Screen):
                 if chip.text == instance.text:
                     chip.md_bg_color = (0.74, 0.74, 0.74, 1)
             del self.added_tags[instance.text]
-            self.group_tags.remove(instance)
+            self.group_tags.remove(instance.text)
 
     def is_tag_unique(self, tag):
         return tag not in tags_list
@@ -617,6 +734,8 @@ class CreateGroupScreenPref5(Screen):
 class CreateGroupScreenPref6(Screen):
     field_default_text = ""
     additional_description_text = ""
+    list_of_members = []
+    list_of_pending = []
     curr_word_count = 0
     max_word_count = 1000
 
@@ -635,6 +754,14 @@ class CreateGroupScreenPref6(Screen):
         self.ids.additional_info_text_field.text = ""
         self.clear_text(False)
         # self.update_buttons()
+
+    def populate_fields(self, game_group_info):
+        self.additional_description_text = game_group_info.group_additional_description
+        self.ids.additional_info_text_field.text = game_group_info.group_additional_description
+        if game_group_info.list_of_members or game_group_info.list_of_pending:
+            self.list_of_members = game_group_info.list_of_members
+            self.list_of_pending = game_group_info.list_of_pending
+        self.update_buttons()
 
     def clear_text(self, is_focused):
         if is_focused and self.ids.additional_info_text_field.text == self.field_default_text:
@@ -661,6 +788,8 @@ class CreateGroupScreenPref6(Screen):
 
     def add_data_to_final(self, new_page, direction="left"):
         self.class_parent.new_created_group["group_additional_description"] = self.additional_description_text
+        self.class_parent.new_created_group["list_of_members"] = self.list_of_members
+        self.class_parent.new_created_group["list_of_pending"] = self.list_of_pending
         self.class_parent.load_next_pref_page(new_page, direction)
 
     def update_buttons(self):

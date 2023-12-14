@@ -25,6 +25,8 @@ from src.gameGroupScreen import GameGroupScreen
 
 from src.groupListCard import GroupListCard
 
+from app.src.groupCard import DeleteGroupCardPopup
+
 
 class Tab(MDFloatLayout, MDTabsBase):
     '''Class implementing content for a tab.'''
@@ -44,21 +46,22 @@ class HomeScreen(Screen):
     dummy_group_data_1 = None
 
     group_list_screen_reference = None
+    group_card_screen_reference = None
 
     def __init__(self, **kwargs):
         super(HomeScreen, self).__init__(**kwargs)
         self.days = [day.lower() for day in createGroup.days]
-        self.add_dummy_local_events_to_list() # TODO: delete eventually
+        self.add_dummy_local_events_to_list()
         self.database = Database()
         self.database.initialize()
         self.successful_card_delete_popup = SuccessPopup(self, "delete card")
+        self.set_values_for_group_cards()
 
     def on_enter(self, *args):
         Clock.schedule_once(self.load_depends)
         return super().on_enter(*args)
 
     def load_depends(self, load_deps=None):
-        print("load depends called in homescreen")
         self.ids.local_event_carou.bind(on_slide_complete=self.on_carousel_slide)
         self.ids.group_card_carou.bind(on_slide_complete=self.on_carousel_slide)
         self.ids.home_tabs.bind(on_tab_switch=self.on_thing_switch)
@@ -68,6 +71,10 @@ class HomeScreen(Screen):
         self.carol_index = "1/3"
         self.load_local_events()
         self.load_group_cards()
+
+    def set_values_for_group_cards(self):
+        for group in self.database.get_group_cards():
+            self.database.set_group_card_home_screen(group.title, self)
 
     def add_dummy_cards_to_group_list(self):
         group_card_2 = GroupCard(
@@ -152,8 +159,7 @@ class HomeScreen(Screen):
         for event in self.local_event_l:
             self.ids.local_event_carou.add_widget(event)
 
-    def remove_group_card_and_refresh(self, group):
-        self.group_cards.remove(group)
+    def deletion_successful(self):
         self.successful_card_delete_popup.open()
 
     def get_updated_date_of_next_meeting(self, next_dow):
@@ -334,7 +340,7 @@ class SignInPopup(Popup):
         self.title_align = 'center'
         self.size_hint_y = 0.5
         self.size_hint_x = 0.5
-        self.content = MDBoxLayout(orientation="vertical", spacing=dp(10), padding=dp(10))
+        self.content = MDBoxLayout(orientation="vertical", spacing=dp(10))
         popup_label = MDLabel(
             text=f"Please sign in before proceeding!",
             text_size="root.size",

@@ -54,14 +54,14 @@ class GroupCard(MDCard):
 
     delete_group_popup = None
 
-    def __init__(self, game_group, *args, **kwargs):
+    def __init__(self, game_group, database_ref, *args, **kwargs):
         self.game_group_screen = game_group
+        self.delete_group_popup = DeleteGroupCardPopup(self.game_group_screen.group_title, database_ref)
         super().__init__(*args, **kwargs)
         
 
     def on_pre_enter(self, *args):
-        if not self.delete_group_popup:
-            self.delete_group_popup = DeleteGroupCardPopup(self, self.game_group_screen, App.get_running_app().main_screen_manager.get_screen("home_screen"))
+        pass
 
 
     def load_depends(self, load_deps=None):
@@ -71,7 +71,11 @@ class GroupCard(MDCard):
         return MONTHS[month_n]
 
     def open_delete_card_popup(self):
+        if not self.delete_group_popup.home_screen_set:
+            home_screen_ref = App.get_running_app().main_screen_manager.get_screen("home_screen")
+            self.delete_group_popup.set_home_screen(home_screen_ref)
         self.delete_group_popup.open()
+
 
     def open_game_group_screen(self):
         App.get_running_app().change_screen("game_group_screen", direction="right", load_deps=self.game_group_screen)
@@ -95,16 +99,17 @@ class GroupCard(MDCard):
 
 
 class DeleteGroupCardPopup(Popup):
-    def __init__(self, game_card, game_group, home_screen, **kwargs):
+    home_screen_ref = None
+    home_screen_set = False
+    def __init__(self, card_title, database, **kwargs):
         super(DeleteGroupCardPopup, self).__init__(**kwargs)
-        self.card_parent = game_card
-        self.game_group_ref = game_group
-        self.app_home_screen = home_screen
+        self.group_card_title = card_title
+        self.database_ref = database
         self.title = f"Delete Group Card Warning"
         self.size_hint_y = 0.5
         self.content = MDBoxLayout(orientation="vertical", spacing=dp(10), padding=dp(10))
         popup_label = MDLabel(
-            text=f"Are you sure you want to delete '{self.card_parent.title}'?\nThis will also delete the group "
+            text=f"Are you sure you want to delete '{self.group_card_title}'?\nThis will also delete the group "
                  f"page! This action cannot be undone!",
             theme_text_color="Custom", text_color=(1, 1, 1, 1)
         )
@@ -114,11 +119,14 @@ class DeleteGroupCardPopup(Popup):
         self.buttons_layout.add_widget(MDRaisedButton(text="Delete Group", on_release=self.on_delete_group))
         self.content.add_widget(self.buttons_layout)
 
+    def set_home_screen(self, home_screen):
+        self.home_screen_ref = home_screen
+        self.home_screen_set = True
+
     def on_delete_group(self, instance):
         self.dismiss()
-        if self.game_group_ref:
-            self.game_group_ref.delete_group()
-        self.app_home_screen.remove_group_card_and_refresh(self.card_parent)
+        self.database_ref.remove_group_card_info(self.group_card_title)
+        self.home_screen_ref.deletion_successful()
 
     def on_go_back(self, instance):
         self.dismiss()
