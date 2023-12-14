@@ -70,6 +70,10 @@ class GroupListCard(MDCard):
         return MONTHS[month_n]
 
     def open_game_group_screen(self):
-        App.get_running_app().change_screen("game_group_screen", direction="right", load_deps=self.game_group_screen)
+        db = App.get_running_app().get_database()
+        group_screen = db.get_game_group_screen(self.title)
+        print("Here on Button DB entry")
+        print(group_screen.group_title)
+        App.get_running_app().change_screen("game_group_screen", direction="right", load_deps=group_screen)
 
 

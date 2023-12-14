@@ -1,4 +1,5 @@
-# from kivy.uix import webview
+
+from kivy.app import App
 from kivymd.uix.screen import MDScreen
 from kivy.properties import StringProperty, ListProperty
 
@@ -38,17 +39,27 @@ class BoardGameScreen(MDScreen):
 
     def load_depends(self, load_deps=None):
         print("Loading Deps")
-        self.title: str = load_deps
-        self.image_path: str = 'images/pikachu.jpg'
-        self.general_description: str = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.'
-        self.main_description: str = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.'
-        self.tutorial_video_link: str = 'videos/Videotemp1.mp4'
+        # TODO: Get the board game json data and fill it out
+        
+        data = App.get_running_app().get_database().get_board_game(load_deps)
 
-        self.tags: list[str] = ['Helpful', 'Awesome', 'Cool', 'Helpful', 'Awesome', 'Cool', 'Helpful', 'Awesome', 'Cool', 'Helpful', 'Awesome', 'Cool']
-        self.helpful_links: list[str] = ['Long.link.1', 'Long.link.2', 'Long.link.3']
+        print("This is the data for the board game screen.")
+        print(data['title'])
+        print(data['image_path'])
+        print(data['general_description'])
+
+        self.title: str = data['title']
+        self.image_path = data["image_path"]
+        self.general_description = data['general_description']
+        self.main_description = data["main_description"]
+        self.tutorial_video_link = data["tutorial_video_link"]
+
+        self.tags = data["tags"]
+        self.helpful_links = data["helpful_links"]
 
         self.add_urls()
         self.add_tags()
+        
 
     def add_urls(self):
         self.ids.url_stack.clear_widgets()

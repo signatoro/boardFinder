@@ -42,6 +42,8 @@ new_group is for notifying whether to render gameGroupScreen with Publish/Edit (
 '''
 
 
+
+
 class GameGroupScreen(Screen):
     group_title = StringProperty()
     group_image = StringProperty()
@@ -73,7 +75,9 @@ class GameGroupScreen(Screen):
     actionButtonEditOrDeleteReference = ObjectProperty()
     actionButtonLeaveGroupReference = ObjectProperty()
     home_screen_reference = None
-    list_of_members = []
+    database_reference = None
+    list_of_members:list[UserCard] = ListProperty()
+    list_of_pending: list[UserCard] = ListProperty()
     prev_screen = None
 
     def __init__(self, **kwargs):
@@ -88,14 +92,17 @@ class GameGroupScreen(Screen):
         self.actionButtonRequestToJoinReference = GameGroupActionButtonsRequestToJoin()
         self.actionButtonEditOrDeleteReference = GameGroupActionButtonsEditOrDelete()
         self.actionButtonLeaveGroupReference = GameGroupActionButtonsLeave()
+        #self.database = Database()
         Clock.schedule_once(self.setup_action_buttons, 0)
 
     def on_pre_enter(self, *args):
         print("pre enter called")
         # Access the ScreenManager and get the HomeScreen
-        self.home_screen_reference = App.get_running_app().main_screen_manager.get_screen("home_screen")
+        self.database_reference = App.get_running_app().get_database()
         print(f"owner: {self.owner}")
         print(f"new_group: {self.new_group}")
+
+        # TODO: Add the logic and stuff for button based of current user in app and owner
 
         # after create a group
         if self.owner and self.new_group:
@@ -178,6 +185,8 @@ class GameGroupScreen(Screen):
         self.group_meeting_end_time = load_deps["group_mtg_end_time"]
         self.new_group = load_deps["new_group"]
         self.owner = load_deps["owner"]
+        self.list_of_members = load_deps["list_of_members"]
+        self.list_of_pending = load_deps["list_of_pending"]
         self.add_meeting_days_and_times()
         self.add_board_games()
         self.add_host_to_member_list()
@@ -188,6 +197,9 @@ class GameGroupScreen(Screen):
 
 
     def load_screen_data(self, game_group_data, prev_screen):
+
+        print(f"game_group_data.group_title")
+        print(game_group_data)
         print("load screen data called")
         self.group_title = game_group_data.group_title
         self.group_image = game_group_data.group_image
@@ -248,7 +260,6 @@ class GameGroupScreen(Screen):
 
         '''
         UserCard: 
-            parent: Screen
             first_name: str
             last_name: str
             avatar_path: str
@@ -256,11 +267,9 @@ class GameGroupScreen(Screen):
         '''
 
         host_card = UserCard(
-            parent=self,
             first_name=self.group_host_fname,
             last_name=self.group_host_lname,
             avatar_path="images/avatar_stock.png",
-            member_type="Host",
         )
         self.ids.game_group_users_list.add_widget(host_card)
         self.list_of_members.append(host_card)
@@ -276,7 +285,8 @@ class GameGroupScreen(Screen):
         self.new_group = False
 
         # send info to home screen for it to create a game card
-        self.home_screen_reference.add_created_group_card(game_group_screen_info=self)
+        #self.home_screen_reference.add_created_group_card(game_group_screen_info=self)
+        self.database_reference.add_game_group_screen(self)
 
         # generate popup
         self.success_popup.open()

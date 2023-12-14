@@ -138,6 +138,7 @@ class SignInScreen(Screen):
             self.ids.password_message_label.color = [0.8, 0.4, 0.4, 1]
             self.password_input_state = InputState.invalid
         else:
+            App.get_running_app().set_username(self.ids.username_text_field.text)
             App.get_running_app().set_signed_in(True)
             App.get_running_app().change_screen("home_screen", direction="left")
 

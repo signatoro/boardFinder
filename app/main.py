@@ -4,6 +4,7 @@ from kivy.core.window import Window
 from kivymd.app import MDApp
 from kivy.config import Config
 
+from src.fake_base import Database
 from src.createAccountScreen import CreateAccountScreen
 from src.signInScreen import SignInScreen
 from src.homeScreen import HomeScreen
@@ -40,6 +41,7 @@ class MyApp(MDApp):
     signed_in = False
     username = None
     main_screen_manager = None
+    database: Database  = None
 
     def build(self):
         self.signed_in = False
@@ -49,6 +51,11 @@ class MyApp(MDApp):
                          "Chloe": "password"}
         Window.minimum_width = 400
         Window.minimum_height = 600
+
+        # self.database = Database()
+        #
+        # self.database.initialize()
+
         # self.lastResize = time.time()-2
         self.force_window_ratio()
         self.title = 'BoardGame Group Finder'
@@ -59,8 +66,14 @@ class MyApp(MDApp):
         return Builder.load_file("kv/main.kv")  # GUI
 
     def on_start(self):
+        print("on start called in main")
         self.main_screen_manager = self.root.ids['screen_manager']
+        self.database = Database()
+        self.database.initialize()
 
+    def get_database(self) -> Database:
+        return self.database
+    
     def get_screen_manager(self):
         return self.root.ids['screen_manager']
 
@@ -86,7 +99,12 @@ class MyApp(MDApp):
                 self.main_screen_manager.get_screen(screen_name).load_depends(load_deps, self.main_screen_manager.current_screen.name)
             elif self.main_screen_manager.current_screen.name == 'group_list_screen' and screen_name == 'game_group_screen':
                 # rendering group from find group list screen
+                print("Here on Main DB entry")
+                print(load_deps.group_title)
                 self.main_screen_manager.get_screen(screen_name).load_screen_data(load_deps, self.main_screen_manager.current_screen.name)
+            elif screen_name == "board_game_screen":
+                self.main_screen_manager.get_screen(screen_name).load_depends(load_deps)
+
 
         self.main_screen_manager.transition = SlideTransition(direction=direction)  # mode=mode)
 
@@ -114,6 +132,9 @@ class MyApp(MDApp):
 
     def set_signed_in(self, signed_in):
         self.signed_in = signed_in
+
+    def set_username(self, username):
+        self.username = username
 
     def get_username(self):
         return self.username

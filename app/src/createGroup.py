@@ -15,6 +15,8 @@ from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.pickers import MDTimePicker
 import math
 
+from src.userCard import UserCard
+
 games_list = ('sorry,monopoly,risk,catan,mancala,gameoflife,chess,gloomhaven,scrabble,jenga,codenames,carcassonne,'
               'campaign').split(',')
 tags_list = ('AllLevels,Casual,Hardcore,LGBTQIA+,Food Included,Pet Friendly,21+,Public Location,Private Location,'
@@ -91,7 +93,11 @@ class CreateGroupScreen(Screen):
         if self.currPrefPage > 6:
             self.currPrefPage = 6
             self.new_created_group["new_group"] = True
-            self.new_created_group["owner"] = True
+            
+            # TODO: This needs to be fixed make it so the username is somehow converted to the whole UserCard Bullshit
+            self.new_created_group["owner"] = UserCard(first_name=App.get_running_app().get_username())
+            self.new_created_group["list_of_members"] = []
+            self.new_created_group["list_of_pending"] = []
             App.get_running_app().change_screen("game_group_screen", direction="left", load_deps=self.new_created_group)
             return
 
