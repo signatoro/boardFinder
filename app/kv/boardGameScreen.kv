@@ -1,241 +1,228 @@
 <BoardGameScreen>:
     name: 'board_game_screen'
 
+
     MDBoxLayout:
         orientation: "vertical"
 
         # top bar
         TopBar:
             id: topBar
-            size_hint_y: 0.1
-
-
-        # Title and Back button
-        MDBoxLayout:
-            size_hint_y: 0.15
-            orientation: "vertical"
-            spacing: 10
-            padding: 5
-            pos_hint:{'top': 1}
-            size_hint_y: 0.15
-            #set_height: 100
-            #padding: [0,0,50,0]
-
-            # Title
-            MDLabel:
-                valign: "center"
-                text: f"{root.title}"
-                # pos_hint: {"center_x":0, "center_y": 0.01}
-                underline: "true"
-                font_style: "H3"
-                size_hint_y: 0.5
-                height: self.texture_size[1] + 5  # Set the height based on text size
-                theme_text_color: "Custom"
-                text_color: app.theme_cls.primary_color
-
-            AnchorLayout:
-                size_hint_y: 0.5
-                anchor_x: 'left'
-                anchor_y: 'center'
-                padding: 15
-                #spacing: 15
-
-                MDFillRoundFlatIconButton:
-                    text: "Back to games"
-                    size_hint: (.2, .5)
-                    # pos_hint: {"center_x":0, "center_y": 0.01}
-                    # Adjust the size as needed
-                    # theme_text_color: "Custom"
-                    text_color: [1,1,1,1]  # Set text color to the primary color
-                    on_release: app.change_screen('learn_game_screen', direction="right")
 
         # to create scrolling effect
         MDScrollView:
-            size_hint: (1, 0.75)
-            valign: "bottom"
+            size_hint: (1, 1)
             do_scroll_y: True
             do_scroll_x: False
 
             # Container for whole scrolling container
             MDBoxLayout:
-                id: board_game_screen_container
+                id: game_group_screen_container
                 orientation: "vertical"
-                size_hint_y: 1
+                size_hint_y: None
                 size_hint_x: 1
                 adaptive_height: True
-                #padding: [dp(10), dp(15), dp(10), dp(15)]
-                #spacing: dp(10)
+                padding: [dp(10), dp(15), dp(10), dp(15)]
+                spacing: dp(10)
 
-    ##MDScrollView:
-    #MDBoxLayout:
-    #    orientation: "vertical"
-    #    size_hint: (1, 1)
-    #    #do_scroll_y: True
-    #    #scroll_type: ['bars', 'content']
-    #    #bar_width: dp(20)
-
-    #    MDBoxLayout:
-    #        orientation: "vertical"
-    #        spacing: 5
-    #        size_hint_y: 1
-
-    #        TopBar:
-    #            id: topBar
-    #            size_hint_y: 0.1
-
-    #        # Title and Back button
-    #        MDBoxLayout:
-    #            orientation: "vertical"
-    #            spacing: 10
-    #            padding: 5
-    #            pos_hint:{'top': 1}
-    #            size_hint_y: 0.15
-    #            #set_height: 100
-    #            #padding: [0,0,50,0]
-                
-    #            # Title
-    #            MDLabel:
-    #                valign: "center"
-    #                text: f"{root.title}"
-    #                # pos_hint: {"center_x":0, "center_y": 0.01}
-    #                underline: "true"
-    #                font_style: "H3"
-    #                size_hint_y: 0.5
-    #                height: self.texture_size[1] + 5  # Set the height based on text size
-    #                theme_text_color: "Custom"
-    #                text_color: app.theme_cls.primary_color
-
-    #            AnchorLayout:
-    #                size_hint_y: 0.5
-    #                anchor_x: 'left'
-    #                anchor_y: 'center'
-    #                padding: 15
-    #                #spacing: 15
-
-    #                MDFillRoundFlatIconButton:
-    #                    text: "Back to games"
-    #                    size_hint: (.2, .5)
-    #                    # pos_hint: {"center_x":0, "center_y": 0.01}
-    #                    # Adjust the size as needed
-    #                    # theme_text_color: "Custom"
-    #                    text_color: [1,1,1,1]  # Set text color to the primary color
-    #                    on_release: app.change_screen('learn_game_screen', direction="right")
-
-            #Video 
-            #MDBoxLayout:
-            #    orientation: "horizontal"
-            #    spacing: 10
-            #    padding: [50,50,0,50]
-            #    radius: 25
-            #    size_hint: (.8, .8)
-            #    pos_hint: {"center_x": 0.5, "center_y": 0.5}
-            #    md_bg_color: app.theme_cls.primary_color
-            #
-            #    VideoPlayer:
-            #        id: video_player
-            #        source: f"{root.tutorial_video_link}"  # Replace with the path to your video file
-            #        allow_stretch: True
-            #
-            #        state: "pause"  # You can set it to 'stop', 'pause', or 'play'
-            #        options: {"eos": "loop"}  # 'eos': 'loop' will make the video loop
-            #        # size_hint: (1, 1)  # Adjust the size as needed
-
-                # General Description
-                MDLabel:
-                    text: f"{root.general_description}"
-                    font_style: "H6"
-                    padding: [50,50, 0,50]
-                    theme_text_color: "Custom"
-                    text_color: app.theme_cls.primary_color
-                    size_hint_y: 0.4
-                    height: self.texture_size[1] # Set the height based on text size
-
-                # Big Description
-                MDLabel:
-                    text: f"{root.main_description}"
-                    font_style: "H6"
-                    padding: [50,0,10,50]
-                    theme_text_color: "Custom"
-                    text_color: app.theme_cls.primary_color
-                    size_hint_y: 0.4
-                    height: self.texture_size[1]  # Set the height based on text size
-
-                #Links and Tags
                 MDBoxLayout:
-                    orientation: "horizontal"
-                    spacing: 10
-                    padding: [15, 0, 10, 15]
-                    size_hint_y: 0.25
+                    orientation: "vertical"
+                    size_hint_y: None
+                    padding: [0, dp(5), 0, 0]
 
-                    # # Links
+                    AnchorLayout:
+                        anchor_x: 'left'
+                        anchor_y: 'top'
+                        padding: [dp(5), 0, 0, dp(30)]
+
+                        MDFillRoundFlatIconButton:
+                            text: "Back"
+                            on_release: root.go_to_page_before()
+
+                # group image
+                FitImage:
+                    id: game_group_image
+                    md_bg_color: (0.76, 0.74, 0.78, 1)
+                    allow_stretch: True
+                    keep_ratio: True
+                    source: root.image_path
+                    size_hint: None, None
+                    size: dp(400), dp(300)
+                    halign: "center"
+                    pos_hint: {"center_x": 0.5}
+
+                # group title
+                MDLabel:
+                    id: game_group_title
+                    text: root.title
+                    font_style: "H2"
+                    text_color: "teal"
+                    md_bg_color: (0.76, 0.74, 0.78, 1)
+                    size_hint_y: None
+                    halign: "center"
+                    height: self.texture_size[1]  # Adjust the size based on text size
+
+                # group description label:
+                MDLabel:
+                    id: gen_description_label
+                    text: "Description"
+                    font_style: "H6"
+                    text_color: (0, 0, 0, 0) # black
+                    size_hint_y: None
+                    halign: "left"
+                    height: self.texture_size[1]  # Adjust the size based on text size
+
+                # group general description
+                MDLabel:
+                    id: game_group_gen_description
+                    text: root.general_description
+                    text_color: (0, 0, 0, 1) # black
+                    #font_style: "H5"
+                    size_hint_y: None
+                    halign: "center"
+                    height: self.texture_size[1]  # Adjust the size based on text size
+
+                SeparatorLine:
+                    size_hint: 1, None
+                    size: dp(3), dp(3)
+
+                # group additional description
+                MDLabel:
+                    id: game_group_additional_description
+                    text: root.main_description
+                    #font_style: "normal"
+                    text_color: (0, 0, 0, 1) # black
+                    size_hint_y: None
+                    halign: "center"
+                    height: self.texture_size[1]  # Adjust the size based on text size
+
+                # Tags section
+                MDStackLayout:
+                    id: tags_list
+                    orientation: 'lr-tb'
+                    spacing: dp(10)
+                    adaptive_height: True
+
+                # host info
+                MDBoxLayout:
+                    id: game_group_host_info_container
+                    orientation: "vertical"
+                    padding: [20, 0, 20, 50]
+                    size_hint: 1, None
+                    adaptive_height: True
+                    radius: 25
+                    md_bg_color: app.theme_cls.primary_color
+
+                    # host info header
+                    MDLabel:
+                        id: game_group_host_info_header
+                        radius: 25
+                        text: "Helpful Websites"
+                        font_style: "H4"
+                        theme_text_color: "Custom"
+                        text_color: 1, 1, 1, 1  # White text color
+                        md_bg_color: app.theme_cls.primary_color  # Use the primary color as the outline color
+                        size_hint_y: None
+                        halign: "center"
+                        height: self.texture_size[1]  # Adjust the size based on text size
+
+                    # host info content
                     MDBoxLayout:
                         orientation: "vertical"
-                        padding: [20, 0, 20, 20]
+                        spacing: dp(5)
+                        size_hint_y: .5
+                        adaptive_height: True
+                        id: url_stack
+                        
+                        # MDBoxLayout:
+                        # orientation: "vertical"
+                        #     id: url_stack
 
-                        size_hint_x: .5
-                        id: tag_table
+                        # host name
+                        # MDLabel:
+                        #     id: game_group_host_name
+                        #     text: f"Name: {root.group_host_fname} {root.group_host_lname}"
+                        #     color: [.2, .2, .2, 1]
+                        #     font_size: 24
+                        #     size_hint_x: 1
+                        #     size_hint_y: None
+                        #     halign: "left"
+                        #     height: self.texture_size[1]
 
-                        radius: 25
-                        md_bg_color: app.theme_cls.primary_color
+                        # # host email
+                        # MDLabel:
+                        #     id: game_group_host_email
+                        #     text: f"Email: {root.group_host_email}"
+                        #     color: [.2, .2, .2, 1]
+                        #     font_size: 24
+                        #     size_hint_x: 1
+                        #     size_hint_y: None
+                        #     halign: "left"
+                        #     height: self.texture_size[1]
 
-                        # Headers
-                        MDLabel:
-                            radius: 25
+                        # # host phone number
+                        # MDLabel:
+                        #     id: game_group_host_phone_num
+                        #     text: f"Phone #: {root.group_host_phone_num}"
+                        #     color: [.2, .2, .2, 1]
+                        #     font_size: 24
+                        #     size_hint_x: 1
+                        #     size_hint_y: None
+                        #     halign: "left"
+                        #     height: self.texture_size[1]
 
-                            text: "Sites"
-                            font_style: "H4"
-                            pos_hint: {"center_x":.5, "center_y": 1}
-                            theme_text_color: "Custom"
-                            text_color: 1, 1, 1, 1  # White text color
-                            md_bg_color: app.theme_cls.primary_color  # Use the primary color as the outline color
-                            size_hint_y: None
-                            height: self.texture_size[1]  # Adjust the size based on text size
+                # meet info
+                # MDBoxLayout:
+                #     id: game_group_meet_info_container
+                #     orientation: "vertical"
+                #     padding: [20, 0, 20, 50]
+                #     size_hint: 1, None
+                #     adaptive_height: True
+                #     radius: 25
+                #     md_bg_color: app.theme_cls.primary_color
 
-                        MDStackLayout:
-                            orientation: 'tb-lr'
-                            # md_bg_color: [.9, .9, .9, .5]
-                            spacing: dp(10)
-                            padding: [0, 10, 0, 0]
-                            height: self.height
-                            id: url_stack
+                #     # meet info header
+                #     MDLabel:
+                #         id: game_group_meet_info_header
+                #         radius: 25
+                #         text: "Meet Info"
+                #         font_style: "H4"
+                #         theme_text_color: "Custom"
+                #         text_color: 1, 1, 1, 1  # White text color
+                #         md_bg_color: app.theme_cls.primary_color  # Use the primary color as the outline color
+                #         size_hint_y: None
+                #         halign: "center"
+                #         height: self.texture_size[1]  # Adjust the size based on text size
 
-                    # Tags
-                    MDBoxLayout:
-                        orientation: "vertical"
-                        padding: [20, 0, 20, 0]
+                #     # meet info content
+                #     MDBoxLayout:
+                #         orientation: "vertical"
+                #         spacing: dp(5)
+                #         size_hint_y: None
 
-                        size_hint_x: .5
-                        size_hint_y: 1
-                        id: tag_table
+                #         # meet days and times
+                #         MDBoxLayout:
+                #             orientation: "vertical"
+                #             id: game_group_days_and_times
+                #             height: self.minimum_height
+                #             #adaptive_height: True
 
-                        radius: 25
+                #         # meet location
+                #         MDLabel:
+                #             id: game_group_meet_location
+                #             text: f"Location: {root.group_meeting_location}"
+                #             color: [.2, .2, .2, 1]
+                #             font_size: 24
+                #             size_hint_x: 1
+                #             size_hint_y: None
+                #             height: self.texture_size[1]
+                #             #text_size: self.width, None
+                #             halign: "left"
 
-                        # Headers
-                        MDLabel:
-                            radius: 25
-
-                            text: "  Tags"
-                            font_style: "H4"
-                            pos_hint: {"center_x":.5, "center_y": 1}
-                            theme_text_color: "Custom"
-                            text_color: 1, 1, 1, 1  # White text color
-                            md_bg_color: app.theme_cls.primary_color  # Use the primary color as the outline color
-                            size_hint_y: None
-                            height: self.texture_size[1]  # Adjust the size based on text size
-
-                        MDScrollView:
-                            #size_hint_y: 1
-                            bar_inactive_color: [0.2, 0.2, 0.2, 0.5]
-                            bar_color: [0, 0, 0, 1]
-                            do_scroll_y: True
-                            scroll_type: ['bars', 'content']
-                            bar_width: dp(5)
-
-                            # Tags section
-                            MDList:#MDStackLayout:
-                                #size_hint_y: 1
-                                orientation: 'lr-tb'
-                                md_bg_color: [.9, .9, .9, .5]
-                                spacing: dp(8)
-                                padding: [15, 10, 0, 0]
-                                id: tags_stack
+                #         # meet board games
+                #         MDStackLayout:
+                #             id: game_group_board_games
+                #             orientation: 'lr-tb'
+                #             spacing: dp(5)
+                #             #padding: [15, 10, 0, 0]
+                #             halign: "left"
