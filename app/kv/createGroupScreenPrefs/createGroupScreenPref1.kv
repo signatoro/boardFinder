@@ -23,16 +23,16 @@
             # search board game text field
             MDTextField:
                 id: search_board_game
-                pos_hint:{ 'center_x': 0.5 , 'top': 1}
+                # pos_hint:{ 'center_x': 0.5 , 'top': 1}
                 size_hint_x: 1
-                size_hint_y: 0.1
-                halign: "center"
-                valign: "center"
+                # size_hint_y: 0.15
+                # halign: "center"
+                # valign: "center"
                 hint_text: 'Search Board Game'
                 hint_text_color: 1,1,1,1
                 icon_left: 'magnify'
                 mode: "rectangle"
-                font_size: 22
+                # font_size: 22
                 active_line: False
                 multiline: False
                 on_text: root.generate_search_game_options(self.text)
