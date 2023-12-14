@@ -1,3 +1,4 @@
+import copy
 from datetime import time, datetime, timedelta
 
 from kivy.app import App
@@ -45,23 +46,19 @@ class HomeScreen(Screen):
     group_list_screen_reference = None
 
     def __init__(self, **kwargs):
-        
-        # self.local_event_l: list = []
         super(HomeScreen, self).__init__(**kwargs)
         self.days = [day.lower() for day in createGroup.days]
-        # self.generate_one_game_group()  # TODO: Delete for testing
-        # self.add_dummy_cards_to_group_list() # TODO: delete eventually
         self.add_dummy_local_events_to_list() # TODO: delete eventually
         self.database = Database()
+        self.database.initialize()
         self.successful_card_delete_popup = SuccessPopup(self, "delete card")
 
     def on_enter(self, *args):
         Clock.schedule_once(self.load_depends)
-        # self.load_local_events()
-        # self.load_group_cards()
         return super().on_enter(*args)
 
     def load_depends(self, load_deps=None):
+        print("load depends called in homescreen")
         self.ids.local_event_carou.bind(on_slide_complete=self.on_carousel_slide)
         self.ids.group_card_carou.bind(on_slide_complete=self.on_carousel_slide)
         self.ids.home_tabs.bind(on_tab_switch=self.on_thing_switch)
@@ -72,70 +69,8 @@ class HomeScreen(Screen):
         self.load_local_events()
         self.load_group_cards()
 
-    def generate_one_game_group(self):
-        # tags_list = []
-        # for i in range(3):
-        #     chip = MDChip(
-        #         text=f"tag {i}",
-        #         text_color=(0, 0, 0, 1),
-        #     )
-        #     chip.md_bg_color = "teal"
-        #     tags_list.append(chip)
-
-        # game_data = {
-        #     "board_game_list": ["catan", "monopoly"],
-        #     "group_image": "images/piplup.jpg",
-        #     "group_title": "test group",
-        #     "group_general_description": "Come have a grand ol' time with your boi, chef Rish",
-        #     "group_additional_description": "this is addy info",
-        #     "group_mtg_day_and_recurring_info": {"Saturday": True},
-        #     "group_mtg_start_time": "4:00:00 PM",
-        #     "group_mtg_end_time": "8:00:00 PM",
-        #     "group_mtg_location": "BPD",
-        #     "group_max_players": "8",
-        #     "group_host_fname": "alice",
-        #     "group_host_lname": "bobol",
-        #     "group_host_email": "bobol.alice@gmail.com",
-        #     "group_host_phone_num": "911-991-1000",
-        #     "group_tags": tags_list,
-        #     "new_group": False,
-        #     "owner": False,
-        #     "list_of_members": [],
-        #     "list_of_pending": []
-        # }
-        # game_group_1 = GameGroupScreen()
-        # game_group_1.load_depends(game_data, 'home_screen')
-
-        # dow = ""
-        # for key in game_group_1.group_mtg_day_and_recurring_info.keys():
-        #     dow = key
-        # next_date_of_meeting = self.get_updated_date_of_next_meeting(dow)
-        # session_length = self.get_hours_between_times(game_group_1.group_meeting_start_time,
-        #                                               game_group_1.group_meeting_end_time)
-
-        # created_group_card = GroupCard(
-        #     parent=self,
-        #     game_group=game_group_1,
-        #     title=game_group_1.group_title,
-        #     description=game_group_1.group_general_description,
-        #     user_status="Open To New Members",
-        #     month=str(next_date_of_meeting.month),
-        #     day=str(next_date_of_meeting.day),
-        #     dow=dow,
-        #     time=f"{game_group_1.group_meeting_start_time} - {game_group_1.group_meeting_end_time}",
-        #     location=game_group_1.group_meeting_location,
-        #     image_path=game_group_1.group_image,
-        #     session_length=f"{str(int(session_length))} Hrs",
-        #     participant=f'1/{game_group_1.group_max_players} Attending',
-        # )
-
-        # self.group_cards.insert(0, created_group_card)
-
-        pass
-
     def add_dummy_cards_to_group_list(self):
         group_card_2 = GroupCard(
-            parent=self,
             game_group=None,  # Dummy Group Card
             title="Scott's Group",
             description="By the end of it we might hate each other, but boy will we have fun!",
@@ -151,7 +86,6 @@ class HomeScreen(Screen):
         )
 
         group_card_3 = GroupCard(
-            parent=self,
             game_group=None,  # Dummy Group Card
             title="Matty's Group",
             description="We give free stuff!! Please come! Free food, water, new dice set!!! ~Join now~",
@@ -213,12 +147,9 @@ class HomeScreen(Screen):
 
     def load_local_events(self):
         self.ids.local_event_carou.clear_widgets()
-        # print("Loading Depends")
-        #TODO: Call endpoint get list of Local events
 
         # adds widgets 
         for event in self.local_event_l:
-            # event.add_parent(self)
             self.ids.local_event_carou.add_widget(event)
 
     def remove_group_card_and_refresh(self, group):
@@ -292,15 +223,10 @@ class HomeScreen(Screen):
         self.load_group_cards()
     
     def load_group_cards(self):
-        print("Here q")
         self.ids.group_card_carou.clear_widgets()
 
         # adds widgets
         for group in self.database.get_group_cards():
-            print(group)
-            print(group.title)
-            # TODO: THIS WORKS, BUT NOTHING DISPLAYS >:(
-            # event.add_parent(self)
             self.ids.group_card_carou.add_widget(group)
         pass
 

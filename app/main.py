@@ -52,9 +52,9 @@ class MyApp(MDApp):
         Window.minimum_width = 400
         Window.minimum_height = 600
 
-        self.database = Database()
-
-        self.database.initialize()
+        # self.database = Database()
+        #
+        # self.database.initialize()
 
         # self.lastResize = time.time()-2
         self.force_window_ratio()
@@ -66,8 +66,13 @@ class MyApp(MDApp):
         return Builder.load_file("kv/main.kv")  # GUI
 
     def on_start(self):
+        print("on start called in main")
         self.main_screen_manager = self.root.ids['screen_manager']
+        self.database = Database()
+        self.database.initialize()
 
+    def get_database(self):
+        return self.database
     def get_screen_manager(self):
         return self.root.ids['screen_manager']
 

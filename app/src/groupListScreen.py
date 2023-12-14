@@ -15,12 +15,12 @@ class GroupListScreen(MDScreen):
 
         self.update_groups_list()
 
-        # print("Hello 1, I am Learning the screen")
         return super().on_pre_enter(*args)
 
     def __init__(self, **kwargs):
         super(GroupListScreen, self).__init__(**kwargs)
-        self.add_game_card()
+        #self.add_game_card()
+        self.load_database_group_list_cards()
 
     def load_depends(self, load_deps=None):
         # TODO call the endpoint to get data
@@ -159,6 +159,7 @@ class GroupListScreen(MDScreen):
         )
 
         self.group_lists["Classic Board Games Night"] = group_card_9
+
 
     def add_new_group(self, new_group):
         self.ids.group_list.add_widget(new_group)

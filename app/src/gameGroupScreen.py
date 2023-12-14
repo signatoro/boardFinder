@@ -42,6 +42,8 @@ new_group is for notifying whether to render gameGroupScreen with Publish/Edit (
 '''
 
 
+
+
 class GameGroupScreen(Screen):
     group_title = StringProperty()
     group_image = StringProperty()
@@ -71,6 +73,7 @@ class GameGroupScreen(Screen):
     actionButtonEditOrDeleteReference = ObjectProperty()
     actionButtonLeaveGroupReference = ObjectProperty()
     home_screen_reference = None
+    database_reference = None
     list_of_members:list[UserCard] = ListProperty()
     list_of_pending: list[UserCard] = ListProperty()
     prev_screen = None
@@ -85,12 +88,13 @@ class GameGroupScreen(Screen):
         self.actionButtonRequestToJoinReference = GameGroupActionButtonsRequestToJoin()
         self.actionButtonEditOrDeleteReference = GameGroupActionButtonsEditOrDelete()
         self.actionButtonLeaveGroupReference = GameGroupActionButtonsLeave()
+        #self.database = Database()
         Clock.schedule_once(self.setup_action_buttons, 0)
 
     def on_pre_enter(self, *args):
         print("pre enter called")
         # Access the ScreenManager and get the HomeScreen
-        self.home_screen_reference = App.get_running_app().main_screen_manager.get_screen("home_screen")
+        self.database_reference = App.get_running_app().get_database()
         print(f"owner: {self.owner}")
         print(f"new_group: {self.new_group}")
 
@@ -264,7 +268,8 @@ class GameGroupScreen(Screen):
         self.new_group = False
 
         # send info to home screen for it to create a game card
-        self.home_screen_reference.add_created_group_card(game_group_screen_info=self)
+        #self.home_screen_reference.add_created_group_card(game_group_screen_info=self)
+        self.database_reference.add_game_group_screen(self)
 
         # generate popup
         self.success_popup.open()

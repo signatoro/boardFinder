@@ -1,22 +1,20 @@
-
 from kivymd.uix.chip import MDChip
 from datetime import time, datetime, timedelta
-
 
 from src.userCard import UserCard
 from src.groupCard import GroupCard
 from src.groupListCard import GroupListCard
 from src.gameGroupScreen import GameGroupScreen
+
 DAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 
-class GroupDB():
 
+class GroupDB():
     pass
 
 
-
 class Database():
-
+    __initialize = False
     _database = None
 
     __user: dict[str, UserCard] = None
@@ -25,25 +23,23 @@ class Database():
     __group_list_cards: dict[str, GroupListCard] = None
     __games: dict = None
 
-
     def __new__(cls):
         if not cls._database:
             cls._database = super().__new__(cls)
         return cls._database
-    
+
     def __init__(cls):
         pass
 
-
-
     def initialize(cls):
-        cls.__user = {}
-        cls.__groups_cards = {}
-        cls.__groups_screen = {}
-        cls.__group_list_cards = {}
-        cls.__games = {}
-
-        cls.generate_information()
+        if not cls.__initialize:
+            cls.__user = {}
+            cls.__groups_cards = {}
+            cls.__groups_screen = {}
+            cls.__group_list_cards = {}
+            cls.__games = {}
+            cls.generate_information()
+            cls.__initialize = True
 
     def generate_information(cls):
 
@@ -70,23 +66,21 @@ class Database():
         cls.add_user(user9)
         cls.add_user(user10)
 
-
-
         tags_list = [
             MDChip(
                 text=f"Competitive",
                 text_color=(0, 0, 0, 1),
-                md_bg_color = "teal"
+                md_bg_color="teal"
             ),
             MDChip(
                 text=f"Family Friendly",
                 text_color=(0, 0, 0, 1),
-                md_bg_color = "teal"
+                md_bg_color="teal"
             ),
             MDChip(
                 text=f"21+",
                 text_color=(0, 0, 0, 1),
-                md_bg_color = "teal"
+                md_bg_color="teal"
             )
         ]
 
@@ -169,51 +163,43 @@ class Database():
         game_group_2 = GameGroupScreen(**game_data_2)
         # game_group_2.load_depends(game_data_2, 'home_screen')
         cls.add_game_group_screen(game_group_2)
-        
 
         pass
-
-
-
 
     def add_game_group_screen(cls, group_screen: GameGroupScreen):
         cls.__groups_screen[group_screen.group_title] = GameGroupScreen
         cls.created_group_cards(group_screen)
-    
+
     def get_game_group_screen(cls, title: str) -> GameGroupScreen:
         return cls.__groups_screen[title]
 
-
     def add_group_card(cls, groupCard: GroupCard):
-        cls.__groups_cards[groupCard.title] = groupCard 
+        cls.__groups_cards[groupCard.title] = groupCard
 
     def get_group_card(cls, title: str) -> GroupCard:
         return cls.__groups_cards[title]
-    
+
     def get_group_cards(cls) -> list[GroupCard]:
         temp = []
         [temp.append(group) for group in cls.__groups_cards.values()]
-        return cls.__groups_cards.values()
-    
+        return temp
+
     def add_user(cls, userCard: UserCard):
         cls.__user[userCard.first_name] = userCard
 
     def get_user(cls, first_name: str) -> UserCard:
         return cls.__user[first_name]
 
-    
-    
-
     ## OMG This code is a mess
     ## TODO: Clean up code
-    
+
     def created_group_cards(cls, game_group_screen_info: GameGroupScreen):
         dow = ""
         for key in game_group_screen_info.group_mtg_day_and_recurring_info.keys():
             dow = key
         next_date_of_meeting = cls.get_updated_date_of_next_meeting(dow)
         session_length = cls.get_hours_between_times(game_group_screen_info.group_meeting_start_time,
-                                                      game_group_screen_info.group_meeting_end_time)
+                                                     game_group_screen_info.group_meeting_end_time)
 
         created_group_card = GroupCard(
             game_group=game_group_screen_info,
@@ -230,7 +216,7 @@ class Database():
             participant=f'1/{game_group_screen_info.group_max_players} Attending',
         )
 
-        cls.__groups_cards[created_group_card.title] = created_group_card
+        cls.add_group_card(created_group_card)
 
         # adding new group to group list
         created_group_list_card = GroupListCard(
@@ -258,7 +244,7 @@ class Database():
 
         days_until_next = (target_day - current_day + 7) % 7
         return current_date + timedelta(days=days_until_next)
-    
+
     def get_hours_between_times(self, start_time, end_time):
         time_format = "%I:%M:%S %p"
 
@@ -270,6 +256,3 @@ class Database():
         total_hours = time_difference.total_seconds() / 3600
 
         return total_hours
-
-
-    
