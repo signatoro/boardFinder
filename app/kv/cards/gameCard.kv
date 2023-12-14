@@ -7,7 +7,7 @@
     size_hint_y: None
     height: "175dp" 
     md_bg_color: app.theme_cls.primary_color  
-    on_release: app.change_screen(screen_name="board_game_screen",load_deps=f'{root.title}')
+    on_release: app.change_screen(screen_name="board_game_screen",load_deps=f"{root.title}")
     
     
     MDBoxLayout:
@@ -63,14 +63,7 @@
             spacing: 8
             padding: [20, 0, 0, 10]  
 
-            MDChip:
-                label: 'Pill Shape'
-                text: "Family Game"
-                font_size: "8sp"  
-                icon: 'pill'
-                type: 'outline'
-                pos_hint: {'center_x': 0.5}
-                size_hint_y: 0.5
+            id: tag_box
 
 
             

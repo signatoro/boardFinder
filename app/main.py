@@ -102,6 +102,9 @@ class MyApp(MDApp):
                 print("Here on Main DB entry")
                 print(load_deps.group_title)
                 self.main_screen_manager.get_screen(screen_name).load_screen_data(load_deps, self.main_screen_manager.current_screen.name)
+            elif screen_name == "board_game_screen":
+                self.main_screen_manager.get_screen(screen_name).load_depends(load_deps)
+
 
         self.main_screen_manager.transition = SlideTransition(direction=direction)  # mode=mode)
 
