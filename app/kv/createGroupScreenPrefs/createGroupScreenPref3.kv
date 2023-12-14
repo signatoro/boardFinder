@@ -58,14 +58,14 @@
                 MyToggleButton:
                     id: recurring_toggle_btn
                     #md_bg_color: (1, 1, 1, 1)
-                    text: "Recurring"
-                    group: "general_info"
-
-                MyToggleButton:
-                    id: non_recurring_toggle_btn
-                    #md_bg_color: "teal"
                     text: "Non-Recurring"
                     group: "general_info"
+
+                #MyToggleButton:
+                #    id: non_recurring_toggle_btn
+                #    #md_bg_color: "teal"
+                #    text: "Non-Recurring"
+                #    group: "general_info"
 
             MDLabel:
                 id: start_time_label
@@ -115,6 +115,7 @@
                 spacing: 5
 
             MDTextField:
+                id: location_text_field
                 hint_text: "Ex: Boston Public Library"
                 mode: "rectangle"
                 multiline: True
