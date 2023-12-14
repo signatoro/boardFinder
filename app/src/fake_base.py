@@ -250,6 +250,12 @@ class Database():
         cls.add_game_group_screen(game_group_2)
         pass
 
+    def add_user_to_group(cls, user: UserCard, game_group_title: str):
+        game_group = cls.get_game_group_screen(game_group_title)
+        game_group.list_of_pending.append(user)  # technically should be this
+        game_group.list_of_members.append(user)
+        cls.created_group_cards(game_group)
+
     def get_board_game_cards(cls):
         temp = {}
         [temp.update({data['title']: GameCard(**data)}) for data in cls.__game_data.values()]

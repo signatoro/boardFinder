@@ -62,7 +62,6 @@ class CreateGroupScreen(Screen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        print("init in create group screen called")
         self.screen_name = "create_group_pref1"
         if not self.initialized:
             self.child1 = CreateGroupScreenPref1(self)
