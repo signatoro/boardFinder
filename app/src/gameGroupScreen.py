@@ -34,14 +34,12 @@ Load Deps Dictionary:
 "group_host_lname": ""
 "group_host_email": ""
 "group_host_phone_num": ""
-"group_tags": [chip]
+"group_tags": [string]
 "new_group": bool
 "owner": bool
 
 new_group is for notifying whether to render gameGroupScreen with Publish/Edit (true) or with Close/Edit (false)
 '''
-
-
 
 
 class GameGroupScreen(Screen):
@@ -57,7 +55,6 @@ class GameGroupScreen(Screen):
     group_tags = ListProperty()
     group_max_players = StringProperty()
     group_meeting_location = StringProperty()
-    # day_meetings = []
     group_mtg_day_and_recurring_info = DictProperty()
     group_meeting_start_time = StringProperty()
     group_meeting_end_time = StringProperty()
@@ -65,62 +62,72 @@ class GameGroupScreen(Screen):
     owner = BooleanProperty()
 
     warning_popup = None
-    success_popup = None
     delete_group_warning_popup = None
+    publish_success_popup = None
     deletion_success_popup = None
+    save_success_popup = None
+    save_group_warning_popup = None
     leave_group_success_popup = None
     leave_group_warning_popup = None
     actionButtonEditAndPublishReference = ObjectProperty()
     actionButtonRequestToJoinReference = ObjectProperty()
     actionButtonEditOrDeleteReference = ObjectProperty()
     actionButtonLeaveGroupReference = ObjectProperty()
+    actionButtonEditOrSaveReference = ObjectProperty()
     home_screen_reference = None
     database_reference = None
-    list_of_members:list[UserCard] = ListProperty()
+    list_of_members: list[UserCard] = ListProperty()
     list_of_pending: list[UserCard] = ListProperty()
     prev_screen = None
+    original_group_title = ""
+    editing_published_group_screen = False
 
     def __init__(self, **kwargs):
         super(GameGroupScreen, self).__init__(**kwargs)
         self.warning_popup = PublishPostWarningPopup(parent=self)
-        self.success_popup = PublishSuccessPopup(parent=self)
+        self.publish_success_popup = SuccessPopup(parent=self, popup_type="Publish", title="Publish Success!")
         self.delete_group_warning_popup = DeletePostWarningPopup(parent=self)
-        self.deletion_success_popup = DeletePostSuccessPopup(parent=self)
+        self.deletion_success_popup = SuccessPopup(parent=self, popup_type="Delete", title="Delete Group Success!")
+        self.save_success_popup = SuccessPopup(parent=self, popup_type="Save", title="Save Group Success!")
+        self.save_group_warning_popup = SaveGroupWarningPopup(parent=self)
         self.leave_group_warning_popup = LeaveGroupWarningPopup(parent=self)
-        self.leave_group_success_popup = LeaveGroupSuccessPopup(parent=self)
+        self.leave_group_success_popup = SuccessPopup(parent=self, popup_type="Leave", title="Leave Group Success!")
         self.actionButtonEditAndPublishReference = GameGroupActionButtonsEditAndPublish()
         self.actionButtonRequestToJoinReference = GameGroupActionButtonsRequestToJoin()
         self.actionButtonEditOrDeleteReference = GameGroupActionButtonsEditOrDelete()
         self.actionButtonLeaveGroupReference = GameGroupActionButtonsLeave()
-        #self.database = Database()
+        self.actionButtonEditOrSaveReference = GameGroupActionButtonsEditOrSave()
         Clock.schedule_once(self.setup_action_buttons, 0)
 
     def on_pre_enter(self, *args):
         print("pre enter called")
         # Access the ScreenManager and get the HomeScreen
         self.database_reference = App.get_running_app().get_database()
-        print(f"owner: {self.owner}")
-        print(f"new_group: {self.new_group}")
 
         # TODO: Add the logic and stuff for button based of current user in app and owner
 
-        # after create a group
-        if self.owner and self.new_group:
+        # after creating a group, host should be able to edit or save published post
+        if self.editing_published_group_screen:
+            self.add_edit_or_save_action_buttons()
+        # after creating a group, host should be able to edit or publish
+        elif self.owner and self.new_group:
             self.add_edit_and_publish_action_buttons()
-        # host looks at group after creating
+        # after clicking on group from MyGroups, host should be able to edit or delete
         elif self.owner and not self.new_group:
             self.add_edit_or_delete_action_buttons()
-        # member looks at group that is published
-        elif not self.owner and not self.new_group:
-            self.add_leave_group_action_buttons()
-        else:
+        # after viewing group in FindAGroup, non-member should be able to request to join
+        elif not self.is_owner() and not self.is_member():
             self.add_request_to_join_action_button()
+        # after clicking on group from MyGroups, member should be able to leave
+        elif not self.is_owner() and not self.new_group:
+            self.add_leave_group_action_buttons()
 
     def setup_action_buttons(self, *args):
         self.actionButtonEditAndPublishReference.game_group_screen = self
         self.actionButtonRequestToJoinReference.game_group_screen = self
         self.actionButtonEditOrDeleteReference.game_group_screen = self
         self.actionButtonLeaveGroupReference.game_group_screen = self
+        self.actionButtonEditOrSaveReference.game_group_screen = self
 
     def add_request_to_join_action_button(self):
         if self.ids.game_group_action_button_container:
@@ -142,15 +149,20 @@ class GameGroupScreen(Screen):
             self.ids.game_group_action_button_container.clear_widgets()
             self.ids.game_group_action_button_container.add_widget(self.actionButtonLeaveGroupReference)
 
+    def add_edit_or_save_action_buttons(self):
+        if self.ids.game_group_action_button_container:
+            self.ids.game_group_action_button_container.clear_widgets()
+            self.ids.game_group_action_button_container.add_widget(self.actionButtonEditOrSaveReference)
+
     def go_to_page_before(self):
         if self.prev_screen:
-            App.get_running_app().change_screen(self.prev_screen,direction='right')
+            App.get_running_app().change_screen(self.prev_screen, direction='right')
 
     def delete_group(self):
         App.get_running_app().remove_group(self)
         if self.home_screen_reference:
             self.home_screen_reference.delete_group_card(game_group_screen_info=self)
-        #del self
+        # del self
 
     def leave_group(self):
         for user in self.list_of_members:
@@ -163,8 +175,16 @@ class GameGroupScreen(Screen):
         self.leave_group_success_popup.open()
         print("user not found")
 
+    def save_group(self):
+        self.database_reference.update_game_group_screen(self, self.original_group_title)
+
+        self.save_success_popup.open()
+
     def proceed_to_delete(self):
         self.deletion_success_popup.open()
+
+    def is_member(self):
+        return App.get_running_app().get_username() in self.list_of_members
 
     def load_depends(self, load_deps, prev_screen):
         print("load depends called")
@@ -189,18 +209,14 @@ class GameGroupScreen(Screen):
         self.list_of_pending = load_deps["list_of_pending"]
         self.add_meeting_days_and_times()
         self.add_board_games()
-        self.add_host_to_member_list()
+        self.add_members_to_member_list()
         self.set_looking_for_players()
         self.render_tags()
         App.get_running_app().add_group(self)
         self.prev_screen = prev_screen
-
+        print(f"editing flag is: {self.editing_published_group_screen}")
 
     def load_screen_data(self, game_group_data, prev_screen):
-
-        print(f"game_group_data.group_title")
-        print(game_group_data)
-        print("load screen data called")
         self.group_title = game_group_data.group_title
         self.group_image = game_group_data.group_image
         self.group_general_description = game_group_data.group_general_description
@@ -217,19 +233,26 @@ class GameGroupScreen(Screen):
         self.group_meeting_start_time = game_group_data.group_meeting_start_time
         self.group_meeting_end_time = game_group_data.group_meeting_end_time
         self.new_group = game_group_data.new_group
+        self.list_of_members = game_group_data.list_of_members
+        self.list_of_pending = game_group_data.list_of_pending
         self.owner = game_group_data.owner
         self.add_meeting_days_and_times()
         self.add_board_games()
-        self.add_host_to_member_list()
+        self.add_members_to_member_list()
         self.set_looking_for_players()
         self.render_tags()
         self.prev_screen = prev_screen
+        print(f"editing flag is: {self.editing_published_group_screen}")
 
     def render_tags(self):
         self.ids.group_tags_list.clear_widgets()
-        for tag in self.group_tags:
+        for tag_name in self.group_tags:
+            tag = MDChip(
+                text=tag_name,
+            )
+            tag.md_bg_color = "teal"
             # clear former parent of tag
-            tag.parent = None
+            # tag.parent = None
             self.ids.group_tags_list.add_widget(tag)
 
     def add_meeting_days_and_times(self):
@@ -255,9 +278,9 @@ class GameGroupScreen(Screen):
             chip.text_color = [1, 1, 1, 1]
             self.ids.game_group_board_games.add_widget(chip)
 
-    def add_host_to_member_list(self):
+    def add_members_to_member_list(self):
         self.ids.game_group_users_list.clear_widgets()
-
+        self.list_of_members.insert(0, self.owner)
         '''
         UserCard: 
             first_name: str
@@ -265,41 +288,56 @@ class GameGroupScreen(Screen):
             avatar_path: str
             member_type: str
         '''
+        for user in self.list_of_members:
+            user.parent = None
+            self.ids.game_group_users_list.add_widget(user)
 
-        host_card = UserCard(
-            first_name=self.group_host_fname,
-            last_name=self.group_host_lname,
-            avatar_path="images/avatar_stock.png",
-        )
-        self.ids.game_group_users_list.add_widget(host_card)
-        self.list_of_members.append(host_card)
+    def is_owner(self):
+        # TODO: technically no way of knowing what current users first name/last name is
+        return self.group_host_email == App.get_running_app().get_email()
 
     def set_looking_for_players(self):
-        self.ids.game_group_max_players.text = f"Looking for {int(self.group_max_players) - 1} / {self.group_max_players} more players"
+        if self.group_host_email == App.get_running_app().get_email():
+            self.ids.game_group_max_players.text = f"Looking for {int(self.group_max_players) - 1} / {self.group_max_players} more players"
+        else:
+            self.ids.game_group_max_players.text = f"Looking for {int(self.group_max_players) - len(self.list_of_members)} / {self.group_max_players} more players"
 
     def open_publish_warning_popup(self):
         self.warning_popup.open()
+
+    def edit_game_group_in_preview_pressed(self):
+        App.get_running_app().main_screen_manager.get_screen("create_group_screen").reset_to_first_pref()
+        App.get_running_app().change_screen("create_group_screen")
+
+    def edit_game_group_once_published_pressed(self):
+        print("in this func")
+        self.original_group_title = self.group_title
+        self.editing_published_group_screen = True
+        App.get_running_app().main_screen_manager.get_screen("create_group_screen").populate_fields(
+            game_group_info=self)
+        App.get_running_app().change_screen("create_group_screen")
 
     def publish_group(self):
         print("publish group called")
         self.new_group = False
 
         # send info to home screen for it to create a game card
-        #self.home_screen_reference.add_created_group_card(game_group_screen_info=self)
+        # self.home_screen_reference.add_created_group_card(game_group_screen_info=self)
         self.database_reference.add_game_group_screen(self)
+        self.database_reference.set_group_card_home_screen(self.group_title, self.home_screen_reference)
 
         # generate popup
         self.success_popup.open()
 
     def request_to_join(self):
         print("request to join called")
-        #self.new_group = False
+        # self.new_group = False
 
         # send info to home screen for it to create a game card
-        #self.home_screen_reference.add_created_group_card(game_group_screen_info=self)
+        # self.home_screen_reference.add_created_group_card(game_group_screen_info=self)
 
         # generate popup
-        #self.success_popup.open()
+        # self.success_popup.open()
 
 
 class PublishPostWarningPopup(Popup):
@@ -328,30 +366,6 @@ class PublishPostWarningPopup(Popup):
         self.dismiss()
 
 
-class PublishSuccessPopup(Popup):
-    def __init__(self, parent, **kwargs):
-        super(PublishSuccessPopup, self).__init__(**kwargs)
-        self.class_parent = parent
-        self.title = f"Publish Success!"
-        self.size_hint_y = 0.5
-        self.content = MDBoxLayout(orientation="vertical", spacing=dp(10), padding=dp(10))
-        popup_label = MDLabel(
-            text=f"Your group posting was successfully published! You can view it on the Find Group Listings or "
-                 f"through the group cards in the MyGroup slides on the Home Page! Be on the lookout for users "
-                 f"requesting to join!",
-            theme_text_color="Custom", text_color=(1, 1, 1, 1)
-        )
-        self.content.add_widget(popup_label)
-        self.buttons_layout = AnchorLayout(anchor_x='center', anchor_y='bottom')
-        self.buttons_layout.add_widget(MDRaisedButton(text="Ok", on_release=self.on_ok))
-        self.content.add_widget(self.buttons_layout)
-
-    def on_ok(self, instance):
-        self.dismiss()
-        App.get_running_app().change_screen("home_screen")
-        App.get_running_app().reset_create_group()
-
-
 class DeletePostWarningPopup(Popup):
     def __init__(self, parent, **kwargs):
         super(DeletePostWarningPopup, self).__init__(**kwargs)
@@ -377,15 +391,18 @@ class DeletePostWarningPopup(Popup):
         self.dismiss()
 
 
-class DeletePostSuccessPopup(Popup):
-    def __init__(self, parent, **kwargs):
-        super(DeletePostSuccessPopup, self).__init__(**kwargs)
+class SuccessPopup(Popup):
+    label_text = ""
+
+    def __init__(self, parent, popup_type, title, **kwargs):
+        super(SuccessPopup, self).__init__(**kwargs)
         self.class_parent = parent
-        self.title = f"Deletion Success!"
+        self.title = title
+        self.type = popup_type
         self.size_hint_y = 0.5
         self.content = MDBoxLayout(orientation="vertical", spacing=dp(10), padding=dp(10))
         popup_label = MDLabel(
-            text=f"Your group posting was successfully deleted. You can recreate it again by going through Create A Group.",
+            text=self.label_text,
             theme_text_color="Custom", text_color=(1, 1, 1, 1)
         )
         self.content.add_widget(popup_label)
@@ -393,10 +410,30 @@ class DeletePostSuccessPopup(Popup):
         self.buttons_layout.add_widget(MDRaisedButton(text="Ok", on_release=self.on_ok))
         self.content.add_widget(self.buttons_layout)
 
+    def change_label_text(self):
+        if self.type == "Publish":
+            self.label_text = f"Your group posting was successfully published! You can view it on the Find Group Listings or through the group cards in the MyGroup slides on the Home Page! Be on the lookout for users requesting to join!"
+        if self.type == "Delete":
+            self.label_text = f"Your group posting was successfully deleted. You can recreate it again by going through Create A Group."
+        elif self.type == "Save":
+            self.label_text = "Your group posting was successfully saved!"
+        elif self.type == "Leave":
+            self.label_text = "You successfully left the group. You can rejoin if you want by going to the Find A Group Page."
+
     def on_ok(self, instance):
         self.dismiss()
-        self.class_parent.delete_group()
-        App.get_running_app().change_screen("home_screen")
+        if self.type == "Publish":
+            App.get_running_app().change_screen("home_screen")
+            App.get_running_app().reset_create_group()
+        if self.type == "Delete":
+            self.class_parent.delete_group()
+            App.get_running_app().change_screen("home_screen")
+        elif self.type == "Save":
+            self.class_parent.editing_published_group_screen = False
+            App.get_running_app().change_screen("home_screen")
+        elif self.type == "Leave":
+            App.get_running_app().change_screen("home_screen")
+
 
 class LeaveGroupWarningPopup(Popup):
     def __init__(self, parent, **kwargs):
@@ -423,25 +460,29 @@ class LeaveGroupWarningPopup(Popup):
         self.dismiss()
 
 
-class LeaveGroupSuccessPopup(Popup):
+class SaveGroupWarningPopup(Popup):
     def __init__(self, parent, **kwargs):
-        super(LeaveGroupSuccessPopup, self).__init__(**kwargs)
+        super(SaveGroupWarningPopup, self).__init__(**kwargs)
         self.class_parent = parent
-        self.title = f"Leave Group Success!"
+        self.title = f"Save Group Warning"
         self.size_hint_y = 0.5
         self.content = MDBoxLayout(orientation="vertical", spacing=dp(10), padding=dp(10))
         popup_label = MDLabel(
-            text=f"You successfully left the group. You can rejoin if you want by going to the Find A Group Page.",
+            text=f"Press Save to save your edits to your group! You should see your edits also reflected on the group card for this group!",
             theme_text_color="Custom", text_color=(1, 1, 1, 1)
         )
         self.content.add_widget(popup_label)
-        self.buttons_layout = AnchorLayout(anchor_x='center', anchor_y='bottom')
-        self.buttons_layout.add_widget(MDRaisedButton(text="Ok", on_release=self.on_ok))
+        self.buttons_layout = MDBoxLayout(orientation="horizontal", spacing=dp(10))
+        self.buttons_layout.add_widget(MDRaisedButton(text="Go Back", on_release=self.on_go_back))
+        self.buttons_layout.add_widget(MDRaisedButton(text="Save Edits!", on_release=self.on_leave))
         self.content.add_widget(self.buttons_layout)
 
-    def on_ok(self, instance):
+    def on_leave(self, instance):
         self.dismiss()
-        App.get_running_app().change_screen("home_screen")
+        self.class_parent.save_group()
+
+    def on_go_back(self, instance):
+        self.dismiss()
 
 
 class GameGroupActionButtonsEditAndPublish(MDBoxLayout):
@@ -452,6 +493,9 @@ class GameGroupActionButtonsEditAndPublish(MDBoxLayout):
 
     def open_publish_warning_popup(self):
         self.game_group_screen.warning_popup.open()
+
+    def edit_game_group_in_preview_pressed(self):
+        self.game_group_screen.edit_game_group_in_preview_pressed()
 
 
 class GameGroupActionButtonsRequestToJoin(MDBoxLayout):
@@ -473,6 +517,9 @@ class GameGroupActionButtonsEditOrDelete(MDBoxLayout):
     def open_delete_group_popup(self):
         self.game_group_screen.delete_group_warning_popup.open()
 
+    def edit_game_group_once_published_pressed(self):
+        self.game_group_screen.edit_game_group_once_published_pressed()
+
 
 class GameGroupActionButtonsLeave(MDBoxLayout):
     game_group_screen = ObjectProperty()
@@ -484,3 +531,14 @@ class GameGroupActionButtonsLeave(MDBoxLayout):
         self.game_group_screen.leave_group_warning_popup.open()
 
 
+class GameGroupActionButtonsEditOrSave(MDBoxLayout):
+    game_group_screen = ObjectProperty()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def open_save_group_popup(self):
+        self.game_group_screen.save_group_warning_popup.open()
+
+    def edit_game_group_once_published_pressed(self):
+        self.game_group_screen.edit_game_group_once_published_pressed()

@@ -44,7 +44,7 @@ class Database():
             cls.__initialize = True
 
     def generate_information(cls):
-       
+
         game1 = {
             "title": "Monopoly",
             "image_path": "images/monopoly.jpg",
@@ -53,12 +53,12 @@ class Database():
             "tutorial_video_link": "videos/monopoly_tutorial.mp4",
             "tags": ["Classic", "Real Estate", "Strategy", "Family", "Iconic"],
             "helpful_links": [
-            "http://monopoly.com/rules",
-            "http://monopolystrategy.com",
-            "http://monopolycommunity.com"
+                "http://monopoly.com/rules",
+                "http://monopolystrategy.com",
+                "http://monopolycommunity.com"
             ]
         }
-        cls.__game_data["Monopoly"]=game1
+        cls.__game_data["Monopoly"] = game1
         game2 = {
             "title": "Risk",
             "image_path": "images/risk.jpg",
@@ -67,12 +67,12 @@ class Database():
             "tutorial_video_link": "videos/risk_tutorial.mp4",
             "tags": ["Strategy", "Global Domination", "Alliances", "Classic", "Epic"],
             "helpful_links": [
-            "http://riskrules.com",
-            "http://riskstrategy.com",
-            "http://riskcommunity.com"
+                "http://riskrules.com",
+                "http://riskstrategy.com",
+                "http://riskcommunity.com"
             ]
         }
-        cls.__game_data["Risk"]=game2
+        cls.__game_data["Risk"] = game2
         game3 = {
             "title": "Catan",
             "image_path": "images/catan.jpg",
@@ -80,19 +80,19 @@ class Database():
             "main_description": "Catan, a modern classic in board gaming, transports players to an uninhabited island rich in resources. The game involves resource gathering, trading, and strategic expansion. Players must build roads, settlements, and cities while vying for dominance. Catan\"s modular board ensures a unique experience in each game. Embark on a journey of exploration, negotiation, and clever resource management!",
             "tutorial_video_link": "videos/catan_tutorial.mp4",
             "tags": [
-            "Resource Management",
-            "Trading",
-            "Settlements",
-            "Strategy",
-            "Classic"
+                "Resource Management",
+                "Trading",
+                "Settlements",
+                "Strategy",
+                "Classic"
             ],
             "helpful_links": [
-            "http://catanrules.com",
-            "http://catanstrategy.com",
-            "http://catancommunity.com"
+                "http://catanrules.com",
+                "http://catanstrategy.com",
+                "http://catancommunity.com"
             ]
         }
-        cls.__game_data["Catan"]=game3
+        cls.__game_data["Catan"] = game3
         game4 = {
             "title": "Sorry!",
             "image_path": "images/sorry.jpg",
@@ -101,33 +101,33 @@ class Database():
             "tutorial_video_link": "videos/sorry_tutorial.mp4",
             "tags": ["Classic", "Race", "Strategy", "Family", "Apologies"],
             "helpful_links": [
-            "http://sorryrules.com",
-            "http://sorrystrategy.com",
-            "http://sorrycommunity.com"
+                "http://sorryrules.com",
+                "http://sorrystrategy.com",
+                "http://sorrycommunity.com"
             ]
         }
-        cls.__game_data["Sorry!"]=game4
-        game5={
+        cls.__game_data["Sorry!"] = game4
+        game5 = {
             "title": "Scythe",
             "image_path": "images/scythe.jpg",
             "general_description": "Scythe is a board game set in an alternate history 1920s Eastern Europe. Players control factions vying for control over the mysterious Factory. It combines resource management, area control, and strategic combat.",
             "main_description": "Scythe unfolds in a beautifully crafted world where players navigate the aftermath of the Great War. Factions deploy mechs, harvest resources, and engage in diplomatic maneuvers to dominate the land. Each decision carries weight, and victory requires a delicate balance of expansion and diplomacy. Scythe is a masterpiece of strategy and storytelling, inviting players to shape the destiny of a war-torn world.",
             "tutorial_video_link": "videos/scythe_tutorial.mp4",
             "tags": [
-            "Alternate History",
-            "Strategy",
-            "Mechs",
-            "Resource Management",
-            "Diplomacy"
+                "Alternate History",
+                "Strategy",
+                "Mechs",
+                "Resource Management",
+                "Diplomacy"
             ],
             "helpful_links": [
-            "http://scytherules.com",
-            "http://scythestrategy.com",
-            "http://scythecommunity.com"
+                "http://scytherules.com",
+                "http://scythestrategy.com",
+                "http://scythecommunity.com"
             ]
         }
-        cls.__game_data["Scythe"]=game5
-        game6={
+        cls.__game_data["Scythe"] = game5
+        game6 = {
             "title": "Ticket to Ride",
             "image_path": "images/ticket_to_ride.jpg",
             "general_description": "Ticket to Ride is a railway-themed board game where players build train routes to connect cities and complete destination tickets. It\"s a game of strategic planning, blocking opponents, and racing to achieve railway dominance.",
@@ -135,21 +135,12 @@ class Database():
             "tutorial_video_link": "videos/ticket_to_ride_tutorial.mp4",
             "tags": ["Railway", "Strategy", "Destination Tickets", "Family", "Classic"],
             "helpful_links": [
-            "http://tickettoriderules.com",
-            "http://tickettoridestrategy.com",
-            "http://tickettoridecommunity.com"
+                "http://tickettoriderules.com",
+                "http://tickettoridestrategy.com",
+                "http://tickettoridecommunity.com"
             ]
         }
-        cls.__game_data["Ticket to Ride"]=game6
-
-
-
-
-
-
-
-
-
+        cls.__game_data["Ticket to Ride"] = game6
 
         user1 = UserCard(first_name="Matty", last_name="Pizza", avatar_path="images/avatar_stock.png")
         user2 = UserCard(first_name="Alice", last_name="Coders", avatar_path="images/avatar_stock.png")
@@ -175,48 +166,35 @@ class Database():
         cls.add_user(user10)
 
         tags_list = [
-            MDChip(
-                text=f"Competitive",
-                text_color=(0, 0, 0, 1),
-                md_bg_color="teal"
-            ),
-            MDChip(
-                text=f"Family Friendly",
-                text_color=(0, 0, 0, 1),
-                md_bg_color="teal"
-            ),
-            MDChip(
-                text=f"21+",
-                text_color=(0, 0, 0, 1),
-                md_bg_color="teal"
-            )
+            "Competitive",
+            "Family Friendly",
+            "21+",
         ]
 
         game_data = {
             "group_board_games": ["catan", "monopoly"],
             "group_image": "images/piplup.jpg",
-            "group_title": "Lee's Group of Luck",
-            "group_general_description": "Come have a grand ol' time with your boi, chef Rish",
+            "group_title": "Matty's Group of Luck",
+            "group_general_description": "Come have a grand ol' time with your boi, chef Matty",
             "group_additional_description": "this is addy info",
             "group_mtg_day_and_recurring_info": {"Saturday": True},
             "group_meeting_start_time": "4:00:00 PM",
             "group_meeting_end_time": "8:00:00 PM",
             "group_meeting_location": "BPD",
             "group_max_players": "8",
-            "group_host_fname": "alice",
-            "group_host_lname": "bobol",
-            "group_host_email": "bobol.alice@gmail.com",
+            "group_host_fname": "matty",
+            "group_host_lname": "pizza",
+            "group_host_email": "pizza.matty@gmail.com",
             "group_host_phone_num": "911-991-1000",
             "group_tags": tags_list,
             "new_group": False,
             "owner": user1,
-            "list_of_members": [user1],
+            "list_of_members": [user4, user5, user6, user7],
             "list_of_pending": []
         }
-        game_group_ = GameGroupScreen(**game_data)
-        # game_group_.load_depends(game_data, 'home_screen')
+        game_group = GameGroupScreen(**game_data)
 
-        cls.add_game_group_screen(game_group_)
+        cls.add_game_group_screen(game_group)
 
         # GameGroupScreen instances
         game_data_1 = {
@@ -237,8 +215,8 @@ class Database():
             "group_tags": [],
             "new_group": False,
             "owner": user2,
-            "list_of_members": [user1, user3],
-            "list_of_pending": [user4],
+            "list_of_members": [user1, user3, user9],
+            "list_of_pending": [user4, user6],
         }
 
         game_group_1 = GameGroupScreen(**game_data_1)
@@ -261,29 +239,32 @@ class Database():
             "group_host_lname": "Gamer",
             "group_host_email": "bob.gamer@gmail.com",
             "group_host_phone_num": "555-987-6543",
-            "group_tags": [],
+            "group_tags": ["Food Included", "All Players Welcome", "Casual"],
             "new_group": False,
             "owner": user3,
-            "list_of_members": [user1, user2],
+            "list_of_members": [user1, user2, user7, user10],
             "list_of_pending": [user4, user5],
         }
 
         game_group_2 = GameGroupScreen(**game_data_2)
         cls.add_game_group_screen(game_group_2)
-
         pass
 
     def get_board_game_cards(cls):
         temp = {}
         [temp.update({data['title']: GameCard(**data)}) for data in cls.__game_data.values()]
         return temp
-    
+
     def get_board_game(cls, title: str) -> dict:
         return cls.__game_data[title]
 
     def add_game_group_screen(cls, group_screen: GameGroupScreen):
         cls.__groups_screen[group_screen.group_title] = group_screen
         cls.created_group_cards(group_screen)
+
+    def update_game_group_screen(cls, group_screen: GameGroupScreen, original_title: str):
+        cls.__groups_screen[original_title] = group_screen
+        cls.update_group_cards(group_screen, original_title)
 
     def get_game_group_screen(cls, title: str) -> GameGroupScreen:
         return cls.__groups_screen[title]
@@ -298,7 +279,7 @@ class Database():
         temp = []
         [temp.append(group) for group in cls.__groups_cards.values()]
         return temp
-    
+
     def get_group_list_card(cls, title: str) -> list[GroupListCard]:
         return cls.__group_list_cards[title]
 
@@ -306,17 +287,53 @@ class Database():
         temp = []
         [temp.append(group) for group in cls.__group_list_cards.values()]
         return cls.__group_list_cards
-    
-
 
     def add_user(cls, userCard: UserCard):
         cls.__user[userCard.first_name] = userCard
 
     def get_user(cls, first_name: str) -> UserCard:
-        return cls.__user[first_name]
+        return cls.__user[first_name] if cls.__user[first_name] else ""
 
     ## OMG This code is a mess
     ## TODO: Clean up code
+
+    def update_group_cards(cls, game_group_screen_info: GameGroupScreen, original_title: str):
+        cls.set_group_card_fields(cls.__groups_cards[original_title], cls.__group_list_cards[original_title],
+                                  game_group_screen_info)
+
+    def set_group_card_fields(cls, group_card: GroupCard, group_list_card: GroupListCard,
+                              game_group_screen_info: GameGroupScreen):
+        dow = ""
+        for key in game_group_screen_info.group_mtg_day_and_recurring_info.keys():
+            dow = key
+        next_date_of_meeting = cls.get_updated_date_of_next_meeting(dow)
+        session_length = cls.get_hours_between_times(game_group_screen_info.group_meeting_start_time,
+                                                     game_group_screen_info.group_meeting_end_time)
+
+        group_card.title = game_group_screen_info.group_title
+        group_card.description = game_group_screen_info.group_general_description
+        group_card.user_status = "Open To New Members"
+        group_card.month = str(next_date_of_meeting.month)
+        group_card.day = str(int(next_date_of_meeting.day))
+        group_card.dow = dow
+        group_card.time = f"{game_group_screen_info.group_meeting_start_time} - {game_group_screen_info.group_meeting_end_time}"
+        group_card.location = game_group_screen_info.group_meeting_location
+        group_card.image_path = game_group_screen_info.group_image
+        group_card.session_length = f"{str(int(session_length))} Hrs"
+        group_card.participant = f'{len(game_group_screen_info.list_of_members)}/{game_group_screen_info.group_max_players} Attending'
+
+        # updating new group to group list
+        group_list_card.title = game_group_screen_info.group_title
+        group_list_card.description = game_group_screen_info.group_general_description
+        group_list_card.user_status = "Open To New Members"
+        group_list_card.month = str(next_date_of_meeting.month)
+        group_list_card.day = str(int(next_date_of_meeting.day))
+        group_list_card.dow = dow
+        group_list_card.time = f"{game_group_screen_info.group_meeting_start_time} - {game_group_screen_info.group_meeting_end_time}"
+        group_list_card.location = game_group_screen_info.group_meeting_location
+        group_list_card.image_path = game_group_screen_info.group_image
+        group_list_card.session_length = f"{str(int(session_length))} Hrs"
+        group_list_card.participant = f'{len(game_group_screen_info.list_of_members)}/{game_group_screen_info.group_max_players} Attending'
 
     def created_group_cards(cls, game_group_screen_info: GameGroupScreen):
         dow = ""
@@ -328,6 +345,7 @@ class Database():
 
         created_group_card = GroupCard(
             game_group=game_group_screen_info,
+            database_ref=cls,
             title=game_group_screen_info.group_title,
             description=game_group_screen_info.group_general_description,
             user_status="Open To New Members",
@@ -338,7 +356,7 @@ class Database():
             location=game_group_screen_info.group_meeting_location,
             image_path=game_group_screen_info.group_image,
             session_length=f"{str(int(session_length))} Hrs",
-            participant=f'1/{game_group_screen_info.group_max_players} Attending',
+            participant=f'{len(game_group_screen_info.list_of_members)}/{game_group_screen_info.group_max_players} Attending',
         )
 
         cls.add_group_card(created_group_card)
@@ -355,10 +373,22 @@ class Database():
             location=game_group_screen_info.group_meeting_location,
             image_path=game_group_screen_info.group_image,
             session_length=f"{str(int(session_length))} Hrs",
-            participant=f'1/{game_group_screen_info.group_max_players} Attending',
+            participant=f'{len(game_group_screen_info.list_of_members)}/{game_group_screen_info.group_max_players} Attending',
         )
 
         cls.__group_list_cards[created_group_list_card.title] = created_group_list_card
+
+    def set_group_card_home_screen(self, group_card_title, home_screen_ref):
+        self.__groups_cards[group_card_title].home_screen = home_screen_ref
+
+    def remove_group_card_info(self, group_card_title):
+        if self.__groups_cards[group_card_title]:
+            self.__groups_cards.__delitem__(group_card_title)
+        if self.__group_list_cards[group_card_title]:
+            self.__group_list_cards.__delitem__(group_card_title)
+        if self.__groups_screen[group_card_title]:
+            self.__groups_screen.__delitem__(group_card_title)
+        print(f"group card, group list card, and group screen with name {group_card_title} deleted in database")
 
     def get_updated_date_of_next_meeting(self, next_dow):
         current_date = datetime.now()

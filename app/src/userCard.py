@@ -12,7 +12,7 @@ class UserCard(MDCard):
     first_name = StringProperty()
     last_name = StringProperty()
     avatar_path = StringProperty()
-    member_type = None
+    #member_type = None
 
     def __init__(self,*args, **kwargs):
         super().__init__(*args, **kwargs)

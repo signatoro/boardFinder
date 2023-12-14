@@ -40,12 +40,14 @@ class MyApp(MDApp):
                 "Chloe": "password"}
     signed_in = False
     username = None
+    email = None
     main_screen_manager = None
     database: Database  = None
 
     def build(self):
         self.signed_in = False
         self.username = None
+        self.email = None
         self.accounts = {"Rishav": "123123",
                          "Johnny": "ratLover",
                          "Chloe": "password"}
@@ -66,7 +68,6 @@ class MyApp(MDApp):
         return Builder.load_file("kv/main.kv")  # GUI
 
     def on_start(self):
-        print("on start called in main")
         self.main_screen_manager = self.root.ids['screen_manager']
         self.database = Database()
         self.database.initialize()
@@ -99,8 +100,6 @@ class MyApp(MDApp):
                 self.main_screen_manager.get_screen(screen_name).load_depends(load_deps, self.main_screen_manager.current_screen.name)
             elif self.main_screen_manager.current_screen.name == 'group_list_screen' and screen_name == 'game_group_screen':
                 # rendering group from find group list screen
-                print("Here on Main DB entry")
-                print(load_deps.group_title)
                 self.main_screen_manager.get_screen(screen_name).load_screen_data(load_deps, self.main_screen_manager.current_screen.name)
             elif screen_name == "board_game_screen":
                 self.main_screen_manager.get_screen(screen_name).load_depends(load_deps)
@@ -139,6 +138,11 @@ class MyApp(MDApp):
     def get_username(self):
         return self.username
 
+    def set_email(self, email):
+        self.email = email
+
+    def get_email(self):
+        return self.email
     def get_accounts(self):
         return self.accounts
 
