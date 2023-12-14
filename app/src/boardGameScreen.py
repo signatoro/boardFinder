@@ -65,18 +65,38 @@ class BoardGameScreen(MDScreen):
         self.ids.url_stack.clear_widgets()
         
         for url in self.helpful_links:
-            chip = MDChip(
-                text=url,
+            # MDLabel:
+                        #     id: game_group_host_name
+                        #     text: f"Name: {root.group_host_fname} {root.group_host_lname}"
+                        #     color: [.2, .2, .2, 1]
+                        #     font_size: 24
+                        #     size_hint_x: 1
+                        #     size_hint_y: None
+                        #     halign: "left"
+                        #     height: self.texture_size[1]
+            # chip = MDChip(
+            #     text=url,
+            #     on_release= lambda x=f"{url}": self.create_redirect_popup(x),
+            # )
+            chip = MDChip(text= url,
+                # theme_text_color= "Custom",
+                text_color = [.2,.2,.8,1],
+                # underline = True,
+                font_size= 24,
+                size_hint_x = 1,
+                size_hint_y = None,
+                halign = "left",
                 on_release= lambda x=f"{url}": self.create_redirect_popup(x),
             )
-            chip.size_hint = (1,.3)
-            chip.text_color = App.get_running_app().theme_cls.primary_color
+
+            # chip.size_hint = (1,.3)
+            # chip.text_color = App.get_running_app().theme_cls.primary_color
             self.ids.url_stack.add_widget(chip)
 
         pass
 
     def add_tags(self):
-        self.ids.tags_stack.clear_widgets()
+        self.ids.tags_list.clear_widgets()
         for tag in self.tags:
             chip = MDChip(
                     text=tag
@@ -84,7 +104,7 @@ class BoardGameScreen(MDScreen):
             # chip.size_hint = (1,.3)
             chip.md_bg_color= [.5,.7,.7,1]
             chip.text_color = [1,1,1,1]
-            self.ids.tags_stack.add_widget(chip)
+            self.ids.tags_list.add_widget(chip)
 
     def create_redirect_popup(self, url:str):
         delete_popup = RedirectSitePopup(url.text)
