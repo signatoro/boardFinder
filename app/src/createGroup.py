@@ -134,8 +134,10 @@ class CreateGroupScreenPref1(Screen):
         self.update_buttons()
 
     def generate_all_games(self):
+        self.ids.game_results.clear_widgets()
+        games_list.sort()
         for game in games_list:
-            list_item = OneLineAvatarIconListItem(text=game)
+            list_item = OneLineAvatarIconListItem(text=game,id=game)
             # list_item.bind(on_touch_down=self.on_item_touch)
             icon = IconRightWidget(icon="plus", on_release=self.on_item_touch)
             icon.list_item_ref = list_item
@@ -174,8 +176,10 @@ class CreateGroupScreenPref1(Screen):
         if game.text not in self.selected_games:
             # Add the item to the selected items list
             self.selected_games.append(game.text)
+            games_list.remove(game.text)
             # Update the selected items MDList
             self.update_selected_games()
+            self.generate_all_games()
         self.update_buttons()
 
     def update_selected_games(self):
@@ -204,7 +208,9 @@ class CreateGroupScreenPref1(Screen):
 
     def delete_item(self, item_text):
         self.selected_games.remove(item_text)
+        games_list.append(item_text)
         self.update_selected_games()
+        self.generate_all_games()
         self.update_buttons()
 
     def add_data_to_final(self, new_page, direction="left"):

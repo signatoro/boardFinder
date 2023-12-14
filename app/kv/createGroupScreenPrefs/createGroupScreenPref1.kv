@@ -3,72 +3,96 @@
 
     MDBoxLayout:
         orientation: "vertical"
-        padding: [50, 0, 50, 0]
 
-        MDLabel:
-            text: 'Add your Board Game'
-            halign: "center"
-            pos_hint: {"center_x":.5, "top": 1}
-            underline: "true"
-            font_style: "H4"
-            size_hint_y: None
-            height: self.texture_size[1]
+        MDBoxLayout:
+            orientation: "vertical"
+            padding: [50, 0, 50, 0]
+            size_hint_y: 0.85
+            valign: "top"
 
-        # search board game text field
-        MDTextField:
-            id: search_board_game
-            pos_hint:{ 'center_x': 0.5 , 'top': 1}
-            size_hint_x: 0.8
-            hint_text: 'Search Board Game'
-            hint_text_color: 1,1,1,1
-            icon_left: 'magnify'
-            mode: "rectangle"
-            font_size: 22
-            active_line: False
-            multiline: False
-            on_text: root.generate_search_game_options(self.text)
-
-        MDScrollView:
-            size_hint: (1, 1)
-            do_scroll_y: True
-            do_scroll_x: False
-            bar_width: dp(5)
-
-            MDList:
-                adaptive_height: True
-                size_hint_y: None
-                md_bg_color: "darkgrey"
+            MDLabel:
+                text: 'Add Board Games'
                 halign: "center"
-                pos_hint: {"center_x": 0.5}
-                id: game_results
+                valign: "center"
+                pos_hint: {"center_x":.5, "top": 1}
+                underline: "true"
+                font_style: "H4"
+                size_hint_y: 0.1
+                height: self.texture_size[1]
 
-        MDLabel:
-            text: 'Added Board Games'
-            halign: "center"
-            underline: "true"
-            font_style: "H5"
-            size_hint_y: None
-            height: self.texture_size[1]
+            # search board game text field
+            MDTextField:
+                id: search_board_game
+                pos_hint:{ 'center_x': 0.5 , 'top': 1}
+                size_hint_x: 1
+                size_hint_y: 0.1
+                halign: "center"
+                valign: "center"
+                hint_text: 'Search Board Game'
+                hint_text_color: 1,1,1,1
+                icon_left: 'magnify'
+                mode: "rectangle"
+                font_size: 22
+                active_line: False
+                multiline: False
+                on_text: root.generate_search_game_options(self.text)
+
+            #MDLabel:
+            #    opacity: 0
+            #    size_hint_y: 0.05
+
+            MDScrollView:
+                bar_inactive_color: [0, 0, 0, 1]
+                bar_color: [0, 0, 0, 1]
+                #size_hint: (1, 1)
+                size_hint_x: 1
+                size_hint_y: 0.4
+                do_scroll_y: True
+                do_scroll_x: False
+                bar_width: dp(5)
+
+                MDList:
+                    adaptive_height: True
+                    size_hint_y: None
+                    md_bg_color: "darkgrey"
+                    halign: "center"
+                    pos_hint: {"center_x": 0.5}
+                    id: game_results
+
+            MDLabel:
+                size_hint_x: 1
+                size_hint_y: .1
+                text: 'Added Board Games'
+                halign: "center"
+                underline: "true"
+                font_style: "H5"
+                #size_hint_y: None
+                height: self.texture_size[1]
 
 
-        MDScrollView:
-            size_hint: (1, 1)
-            do_scroll_y: True
-            do_scroll_x: False
-            bar_width: dp(5)
+            MDScrollView:
+                bar_inactive_color: [0, 0, 0, 1]
+                bar_color: [0, 0, 0, 1]
+                #size_hint: (1, 1)
+                size_hint_x: 1
+                size_hint_y: 0.4
+                do_scroll_y: True
+                do_scroll_x: False
+                bar_width: dp(5)
 
-            MDList:
-                adaptive_height: True
-                size_hint_y: None
-                padding: dp(30)
-                #height: self.minimum_height
-                md_bg_color: "teal"
-                id: selected_games
+                MDList:
+                    adaptive_height: True
+                    size_hint_y: None
+                    padding: dp(30)
+                    #height: self.minimum_height
+                    md_bg_color: "teal"
+                    id: selected_games
 
         AnchorLayout:
             anchor_x: 'right'
             anchor_y: 'bottom'
-            padding: [0, 0, 0, dp(10)]
+            padding: [dp(10), dp(10), dp(10), dp(10)]
+            size_hint_y: 0.15
 
             MDFillRoundFlatIconButton:
                 id: next_pref_button
@@ -77,18 +101,4 @@
                 text: "Next Preference"
                 icon: "arrow-right"
                 on_release: root.add_data_to_final(1)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
