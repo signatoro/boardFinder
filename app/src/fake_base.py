@@ -167,7 +167,7 @@ class Database():
         pass
 
     def add_game_group_screen(cls, group_screen: GameGroupScreen):
-        cls.__groups_screen[group_screen.group_title] = GameGroupScreen
+        cls.__groups_screen[group_screen.group_title] = group_screen
         cls.created_group_cards(group_screen)
 
     def get_game_group_screen(cls, title: str) -> GameGroupScreen:
@@ -183,6 +183,16 @@ class Database():
         temp = []
         [temp.append(group) for group in cls.__groups_cards.values()]
         return temp
+    
+    def get_group_list_card(cls, title: str) -> list[GroupListCard]:
+        return cls.__group_list_cards[title]
+
+    def get_group_list_cards(cls) -> list[GroupListCard]:
+        temp = []
+        [temp.append(group) for group in cls.__group_list_cards.values()]
+        return temp
+    
+
 
     def add_user(cls, userCard: UserCard):
         cls.__user[userCard.first_name] = userCard

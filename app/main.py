@@ -71,8 +71,9 @@ class MyApp(MDApp):
         self.database = Database()
         self.database.initialize()
 
-    def get_database(self):
+    def get_database(self) -> Database:
         return self.database
+    
     def get_screen_manager(self):
         return self.root.ids['screen_manager']
 
@@ -98,6 +99,8 @@ class MyApp(MDApp):
                 self.main_screen_manager.get_screen(screen_name).load_depends(load_deps, self.main_screen_manager.current_screen.name)
             elif self.main_screen_manager.current_screen.name == 'group_list_screen' and screen_name == 'game_group_screen':
                 # rendering group from find group list screen
+                print("Here on Main DB entry")
+                print(load_deps.group_title)
                 self.main_screen_manager.get_screen(screen_name).load_screen_data(load_deps, self.main_screen_manager.current_screen.name)
 
         self.main_screen_manager.transition = SlideTransition(direction=direction)  # mode=mode)

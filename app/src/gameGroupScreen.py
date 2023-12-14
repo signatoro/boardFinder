@@ -183,6 +183,9 @@ class GameGroupScreen(Screen):
 
 
     def load_screen_data(self, game_group_data, prev_screen):
+
+        print(f"game_group_data.group_title")
+        print(game_group_data)
         print("load screen data called")
         self.group_title = game_group_data.group_title
         self.group_image = game_group_data.group_image
