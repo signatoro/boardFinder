@@ -137,7 +137,7 @@ class GameGroupScreen(Screen):
 
     def go_to_page_before(self):
         if self.prev_screen:
-            App.get_running_app().change_screen(self.prev_screen)
+            App.get_running_app().change_screen(self.prev_screen,direction='right')
 
     def delete_group(self):
         App.get_running_app().remove_group(self)
@@ -339,6 +339,7 @@ class PublishSuccessPopup(Popup):
     def on_ok(self, instance):
         self.dismiss()
         App.get_running_app().change_screen("home_screen")
+        App.get_running_app().reset_create_group()
 
 
 class DeletePostWarningPopup(Popup):

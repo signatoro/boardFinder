@@ -16,7 +16,7 @@
 
             # Title and Backbutton
             MDBoxLayout:
-                orientation: "horizontal"
+                orientation: "vertical"
                 spacing: 50
                 pos_hint:{'top': 1}
                 size_hint_y: None
@@ -34,15 +34,20 @@
                     theme_text_color: "Custom"
                     text_color: app.theme_cls.primary_color
 
-                MDFillRoundFlatIconButton:
-                    text: "Back"
-                    size_hint: (.2, .7)
-                    # pos_hint: {"center_x":0, "center_y": 0.01}
-                    # Adjust the size as needed
-                    # theme_text_color: "Custom"
-                    text_color: [1,1,1,1]  # Set text color to the primary color
-                    
-                    on_release: app.change_screen('learn_game_screen', direction="right")
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'center'
+                    padding: 15
+                    #spacing: 15
+
+                    MDFillRoundFlatIconButton:
+                        text: "Back to games"
+                        size_hint: (.2, .7)
+                        # pos_hint: {"center_x":0, "center_y": 0.01}
+                        # Adjust the size as needed
+                        # theme_text_color: "Custom"
+                        text_color: [1,1,1,1]  # Set text color to the primary color
+                        on_release: app.change_screen('learn_game_screen', direction="right")
 
             #Video 
             MDBoxLayout:

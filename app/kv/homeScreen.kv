@@ -36,18 +36,18 @@
                 font_size: self.width/6
                 #font_size: 22
                 #text_size: self.size
-                text: 'Learn a \nGame'
+                text: 'Create a \nGroup'
                 halign: 'center'
-                on_release: app.change_screen("learn_game_screen")
+                on_release: root.try_create_group()
             MDRectangleFlatButton:
                 ripple_scale: 2
                 size_hint: (1, 1)
                 font_size: self.width/6
                 #font_size: 22
                 #text_size: self.size
-                text: 'Create a \nGroup'
+                text: 'Learn a \nGame'
                 halign: 'center'
-                on_release: root.try_create_group()
+                on_release: app.change_screen("learn_game_screen")
 
         
         MDBoxLayout:
@@ -61,6 +61,7 @@
                 id: home_tabs
                 #anim_threshold: 0
                 #scroll_timeout: 0
+                on_tab_switch: root.on_tab_switch()
 
                 Tab:
                     title: "Local Events"
