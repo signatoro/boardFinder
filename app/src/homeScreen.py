@@ -361,6 +361,7 @@ class HomeScreen(Screen):
     def on_tab_switch(self, *args):
         tab_id = self.ids.home_tabs.get_current_tab().tab_label_text
 
+        # Intentionally reversed! When this is called, it is mid-transition
         current_car = None
         if tab_id == "My Groups":
             current_car = self.ids.local_event_carou
