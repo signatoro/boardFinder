@@ -136,8 +136,12 @@ class GameGroupScreen(Screen):
             self.ids.game_group_action_button_container.add_widget(self.actionButtonLeaveGroupReference)
 
     def go_to_page_before(self):
+        print("Trying to go to prev screen")
         if self.prev_screen:
-            App.get_running_app().change_screen(self.prev_screen,direction='right')
+            App.get_running_app().change_screen(self.prev_screen, direction='right')
+            print("self.prev_screen: " + self.prev_screen)
+        else:
+            print("self.prev_screen null")
 
     def delete_group(self):
         App.get_running_app().remove_group(self)

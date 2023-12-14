@@ -555,13 +555,13 @@ class CreateGroupScreenPref5(Screen):
             # Add the item to the selected items list
             if self.is_tag_unique(instance.text):
                 self.added_tags[instance.text] = True
-                self.group_tags.append(instance)
+                self.update_common_tags(instance)#self.group_tags.append(instance)
             else:
                 self.added_tags[instance.text] = False
                 self.group_tags.append(instance)
             instance.md_bg_color = "teal"
-            if self.added_tags[instance.text]:
-                self.update_common_tags(instance)
+            #if self.added_tags[instance.text]:
+            #    self.update_common_tags(instance)
         else:
             instance.md_bg_color = (0.74, 0.74, 0.74, 1)
             if self.added_tags[instance.text]:
@@ -576,7 +576,7 @@ class CreateGroupScreenPref5(Screen):
             # Add the item to the selected items list
             if self.is_tag_unique(instance.text):
                 self.added_tags[instance.text] = True
-                self.group_tags.append(instance)
+                # self.group_tags.append(instance)
                 self.update_common_tags(instance)
             else:
                 self.added_tags[instance.text] = False
@@ -601,6 +601,7 @@ class CreateGroupScreenPref5(Screen):
             on_release=self.on_tag_click,
         )
         chip.md_bg_color = "teal"
+        self.group_tags.append(chip)
         self.ids.common_tags.add_widget(chip)
 
     def add_data_to_final(self, new_page, direction="left"):
