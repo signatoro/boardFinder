@@ -27,7 +27,7 @@ Clock.max_iteration = 60
 class MyApp(MDApp):
 
     # This will need to be changed based on the current endpoint address
-    url: str = 'http://10.110.185.117:8000'
+    url: str = 'http://0.0.0.0:8000'
 
     lastResize = 0
     searched_games = []

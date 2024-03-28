@@ -1,13 +1,13 @@
-
+import os
 import asyncio
 import logging
 from typing import Any
 from bson import ObjectId
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends, HTTPException, status
-from api.src.constance import ACCESS_TOKEN_EXPIRE_MINUTES
 from motor.motor_asyncio import AsyncIOMotorCollection, AsyncIOMotorClient, AsyncIOMotorDatabase
 
 
@@ -15,19 +15,18 @@ from model.User import User, UserDb, Token
 from api.src.user_authenticator import Authenticator
 from model.BoardGame import BoardGame, BoardGameDB, BoardGameCard
 
-
+load_dotenv()
 
 class Controller():
 
     client: AsyncIOMotorClient
     db: AsyncIOMotorDatabase
-    
+
     users_collection: AsyncIOMotorCollection = None
     group_collection: AsyncIOMotorCollection = None
     boardgames_collection: AsyncIOMotorCollection = None
     local_events_collection: AsyncIOMotorCollection = None
     join_group_requests_collection: AsyncIOMotorCollection = None
-    
 
     def __init__(self, client, db) -> None:
         self.client = client
@@ -86,7 +85,7 @@ class Controller():
         if not user:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                                 detail="Incorrect username or password", headers={"WWW-Authenticate": "Bearer"})
-        access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        access_token_expires = timedelta(minutes=os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES'))
         access_token = self.authenticator.create_access_token(
             data={"sub": user.username}, expires_delta=access_token_expires)
         

@@ -1,18 +1,19 @@
-
+import os
 from fastapi import Depends
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from passlib.context import CryptContext
 from fastapi import HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from dotenv import load_dotenv
 
 from api.src.collects import DB_Collections
 from model.User import User, UserDb, Token, TokenData
-from api.src.constance import ALGORITHM, SECRET_KEY, ACCESS_TOKEN_EXPIRE_MINUTES
-
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/token")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+load_dotenv()
 
 
 def verify_password(plain_password, hashed_password):
@@ -47,7 +48,7 @@ def create_access_token(data: dict, expires_delta: timedelta or None = None):
         expire = datetime.utcnow() + timedelta(minutes=15)
 
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    encoded_jwt = jwt.encode(to_encode, os.getenv("SECRET_KEY"), algorithm=os.getenv("ALGORITHM"))
     return encoded_jwt
 
 
@@ -55,7 +56,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     credential_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                                          detail="Could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, os.getenv("SECRET_KEY"), algorithms=[os.getenv("ALGORITHM")])
         username: str = payload.get("sub")
         if username is None:
             raise credential_exception

@@ -1,3 +1,4 @@
+import os
 import asyncio
 import logging
 from typing import Any
@@ -8,10 +9,13 @@ from motor.motor_asyncio import AsyncIOMotorCollection
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
+from dotenv import load_dotenv
+
 
 from model.User import User, UserDb
 from api.src.constance import ALGORITHM, SECRET_KEY, ACCESS_TOKEN_EXPIRE_MINUTES
 
+load_dotenv()
 
 class Authenticator(object):
     _instance = None
@@ -100,10 +104,10 @@ class Authenticator(object):
         if expires_delta:
             expire = datetime.utcnow() + expires_delta
         else:
-            expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+            expire = datetime.utcnow() + timedelta(minutes=os.getenv('ACCESS_TOKEN_EXPIRE_MINUTES'))
         
         temp_encode.update({'exp': expire})
-        encoded_jw_token = jwt.encode(temp_encode, SECRET_KEY, algorithm=ALGORITHM)
+        encoded_jw_token = jwt.encode(temp_encode, os.getenv('SECRET_KEY'), algorithm=os.getenv('ALGORITHM'))
 
         return encoded_jw_token
 
